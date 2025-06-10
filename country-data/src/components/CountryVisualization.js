@@ -25,9 +25,11 @@ const CountryVisualization = ({ data }) => {
   const [isMobile, setIsMobile] = useState(false);
   const [selectedSystem, setSelectedSystem] = useState('All');
   const [searchTerm, setSearchTerm] = useState('');
-  const [opacityValue, setOpacityValue] = useState(0.7);
   const [minGdpFilter, setMinGdpFilter] = useState(0);
   const [maxGdpFilter, setMaxGdpFilter] = useState(Infinity);
+  
+  // Fixed opacity at 85%
+  const opacityValue = 0.85;
   
   // Extract unique political systems for filtering
   const politicalSystems = ['All', ...new Set(data.map(d => d.political_system))];
@@ -81,7 +83,7 @@ const CountryVisualization = ({ data }) => {
     d3.select(svgRef.current).selectAll('*').remove();
     
     // Create SVG with responsive margins
-    const margin = { top: 40, right: isMobile ? 20 : 180, bottom: 80, left: isMobile ? 60 : 80 };
+    const margin = { top: 40, right: isMobile ? 30 : 200, bottom: isMobile ? 100 : 80, left: isMobile ? 70 : 90 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     
@@ -298,97 +300,121 @@ const CountryVisualization = ({ data }) => {
         .style('opacity', 0.8);
     }
     
-    // Enhanced legends positioning
+    // Enhanced legends positioning with better responsiveness
     if (!isMobile) {
       // Political Systems Legend
+      const legendWidth = 170;
       const legendGroup = svg.append('g')
-        .attr('transform', `translate(${width - 160}, 60)`);
+        .attr('transform', `translate(${width - legendWidth - 20}, 60)`);
       
       legendGroup.append('rect')
-        .attr('x', -10)
-        .attr('y', -20)
-        .attr('width', 150)
-        .attr('height', Math.min(politicalSystems.length * 25 + 40, 300))
-        .attr('fill', 'rgba(255, 255, 255, 0.95)')
-        .attr('stroke', '#e2e8f0')
-        .attr('stroke-width', 1)
-        .attr('rx', 8)
-        .style('filter', 'drop-shadow(0 2px 8px rgba(0,0,0,0.1))');
+        .attr('x', -15)
+        .attr('y', -25)
+        .attr('width', legendWidth)
+        .attr('height', Math.min(politicalSystems.length * 25 + 50, 320))
+        .attr('fill', 'rgba(255, 255, 255, 0.98)')
+        .attr('stroke', 'rgba(37, 99, 235, 0.1)')
+        .attr('stroke-width', 2)
+        .attr('rx', 12)
+        .style('filter', 'drop-shadow(0 4px 16px rgba(0,0,0,0.1))')
+        .style('backdrop-filter', 'blur(10px)');
       
       legendGroup.append('text')
         .attr('x', 0)
-        .attr('y', -5)
-        .attr('font-weight', '600')
-        .attr('font-size', '13px')
-        .attr('fill', '#374151')
+        .attr('y', -10)
+        .attr('font-weight', '700')
+        .attr('font-size', '14px')
+        .attr('fill', '#1f2937')
         .text('Political Systems');
       
-      const uniqueSystems = [...new Set(data.map(d => d.political_system))].slice(0, 10);
+      const uniqueSystems = [...new Set(data.map(d => d.political_system))].slice(0, 12);
       
       uniqueSystems.forEach((system, i) => {
         const legendRow = legendGroup.append('g')
-          .attr('transform', `translate(0, ${i * 25 + 15})`);
+          .attr('transform', `translate(0, ${i * 22 + 15})`)
+          .style('cursor', 'pointer')
+          .on('mouseover', function() {
+            d3.select(this).select('rect')
+              .attr('fill', 'rgba(37, 99, 235, 0.08)');
+          })
+          .on('mouseout', function() {
+            d3.select(this).select('rect')
+              .attr('fill', 'transparent');
+          });
+        
+        legendRow.append('rect')
+          .attr('x', -10)
+          .attr('y', -8)
+          .attr('width', legendWidth - 20)
+          .attr('height', 18)
+          .attr('fill', 'transparent')
+          .attr('rx', 4);
         
         legendRow.append('circle')
-          .attr('cx', 8)
+          .attr('cx', 10)
           .attr('cy', 0)
-          .attr('r', 8)
+          .attr('r', 7)
           .attr('fill', colorScale(system))
           .attr('stroke', '#ffffff')
-          .attr('stroke-width', 1.5);
+          .attr('stroke-width', 2)
+          .style('filter', 'drop-shadow(0 1px 3px rgba(0,0,0,0.1))');
         
         legendRow.append('text')
-          .attr('x', 22)
+          .attr('x', 24)
           .attr('y', 4)
           .attr('text-anchor', 'start')
-          .style('font-size', '11px')
-          .attr('fill', '#4b5563')
-          .text(system.length > 18 ? system.substring(0, 15) + '...' : system);
+          .style('font-size', '12px')
+          .style('font-weight', '500')
+          .attr('fill', '#374151')
+          .text(system.length > 20 ? system.substring(0, 17) + '...' : system);
       });
       
       // Population Scale Legend
       const populationLegend = svg.append('g')
-        .attr('transform', `translate(80, ${height - 120})`);
+        .attr('transform', `translate(90, ${height - 140})`);
       
       populationLegend.append('rect')
-        .attr('x', -15)
-        .attr('y', -25)
-        .attr('width', 130)
-        .attr('height', 110)
-        .attr('fill', 'rgba(255, 255, 255, 0.95)')
-        .attr('stroke', '#e2e8f0')
-        .attr('stroke-width', 1)
-        .attr('rx', 8)
-        .style('filter', 'drop-shadow(0 2px 8px rgba(0,0,0,0.1))');
+        .attr('x', -20)
+        .attr('y', -30)
+        .attr('width', 140)
+        .attr('height', 120)
+        .attr('fill', 'rgba(255, 255, 255, 0.98)')
+        .attr('stroke', 'rgba(245, 158, 11, 0.1)')
+        .attr('stroke-width', 2)
+        .attr('rx', 12)
+        .style('filter', 'drop-shadow(0 4px 16px rgba(0,0,0,0.1))')
+        .style('backdrop-filter', 'blur(10px)');
       
       populationLegend.append('text')
         .attr('x', 0)
-        .attr('y', -10)
-        .attr('font-weight', '600')
-        .attr('font-size', '13px')
-        .attr('fill', '#374151')
+        .attr('y', -15)
+        .attr('font-weight', '700')
+        .attr('font-size', '14px')
+        .attr('fill', '#1f2937')
         .text('Population Scale');
       
       const populationSizes = [1000000, 50000000, 500000000];
       const populationLabels = ['1M', '50M', '500M'];
       
       populationSizes.forEach((size, i) => {
-        const cy = i * 25 + 10;
+        const cy = i * 28 + 10;
         
         populationLegend.append('circle')
-          .attr('cx', 15)
+          .attr('cx', 18)
           .attr('cy', cy)
           .attr('r', radiusScale(size))
           .attr('fill', 'none')
-          .attr('stroke', '#6b7280')
-          .attr('stroke-width', 1.5);
+          .attr('stroke', '#f59e0b')
+          .attr('stroke-width', 2)
+          .style('opacity', 0.8);
         
         populationLegend.append('text')
-          .attr('x', 35)
+          .attr('x', 40)
           .attr('y', cy + 4)
           .attr('text-anchor', 'start')
-          .style('font-size', '11px')
-          .attr('fill', '#4b5563')
+          .style('font-size', '12px')
+          .style('font-weight', '500')
+          .attr('fill', '#374151')
           .text(populationLabels[i]);
       });
     }
@@ -417,7 +443,7 @@ const CountryVisualization = ({ data }) => {
         .text(`Avg GDP: $${avgGdp.toLocaleString('en-US', { maximumFractionDigits: 0 })} | Avg Freedom: ${avgFreedom.toFixed(1)}`);
     }
     
-  }, [data, width, height, selectedSystem, searchTerm, opacityValue, minGdpFilter, maxGdpFilter, colorScale, isMobile]);
+  }, [data, width, height, selectedSystem, searchTerm, minGdpFilter, maxGdpFilter, colorScale, isMobile]);
   
   // Handle window resize and mobile detection
   useEffect(() => {
@@ -430,7 +456,7 @@ const CountryVisualization = ({ data }) => {
         
         // Responsive dimensions
         const newWidth = Math.min(containerWidth, 1200);
-        const newHeight = mobile ? newWidth * 0.75 : Math.max(newWidth * 0.6, 500);
+        const newHeight = mobile ? Math.max(newWidth * 0.8, 400) : Math.max(newWidth * 0.6, 500);
         
         setWidth(newWidth);
         setHeight(newHeight);
@@ -453,50 +479,122 @@ const CountryVisualization = ({ data }) => {
   
   return (
     <Box>
-      {/* Statistics Cards */}
-      <Grid container spacing={2} sx={{ mb: 3 }}>
+      {/* Enhanced Statistics Cards */}
+      <Grid container spacing={3} sx={{ mb: 4 }}>
         <Grid item xs={12} sm={4}>
-          <Card elevation={1} sx={{ borderRadius: 2, border: '1px solid #e2e8f0' }}>
-            <CardContent sx={{ display: 'flex', alignItems: 'center', p: '16px !important' }}>
-              <PublicIcon sx={{ color: 'primary.main', mr: 2, fontSize: 28 }} />
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {totalCountries}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Countries
-                </Typography>
+          <Card 
+            elevation={3} 
+            sx={{ 
+              borderRadius: 3, 
+              border: '1px solid rgba(37, 99, 235, 0.1)',
+              background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.02) 0%, rgba(37, 99, 235, 0.08) 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: '0 12px 24px rgba(37, 99, 235, 0.15)',
+              }
+            }}
+          >
+            <CardContent sx={{ p: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Box sx={{ 
+                  p: 1.5, 
+                  borderRadius: 2, 
+                  backgroundColor: 'rgba(37, 99, 235, 0.1)',
+                  mr: 2 
+                }}>
+                  <PublicIcon sx={{ color: 'primary.main', fontSize: 28 }} />
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'primary.main', mb: 0.5 }}>
+                    {totalCountries}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+                    Countries
+                  </Typography>
+                </Box>
               </Box>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                Represented in dataset
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Card elevation={1} sx={{ borderRadius: 2, border: '1px solid #e2e8f0' }}>
-            <CardContent sx={{ display: 'flex', alignItems: 'center', p: '16px !important' }}>
-              <TrendingUpIcon sx={{ color: 'success.main', mr: 2, fontSize: 28 }} />
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {uniqueSystems}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Political Systems
-                </Typography>
+          <Card 
+            elevation={3} 
+            sx={{ 
+              borderRadius: 3, 
+              border: '1px solid rgba(22, 163, 74, 0.1)',
+              background: 'linear-gradient(135deg, rgba(22, 163, 74, 0.02) 0%, rgba(22, 163, 74, 0.08) 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: '0 12px 24px rgba(22, 163, 74, 0.15)',
+              }
+            }}
+          >
+            <CardContent sx={{ p: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Box sx={{ 
+                  p: 1.5, 
+                  borderRadius: 2, 
+                  backgroundColor: 'rgba(22, 163, 74, 0.1)',
+                  mr: 2 
+                }}>
+                  <TrendingUpIcon sx={{ color: 'success.main', fontSize: 28 }} />
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'success.main', mb: 0.5 }}>
+                    {uniqueSystems}
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+                    Political Systems
+                  </Typography>
+                </Box>
               </Box>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                Unique governance types
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
         <Grid item xs={12} sm={4}>
-          <Card elevation={1} sx={{ borderRadius: 2, border: '1px solid #e2e8f0' }}>
-            <CardContent sx={{ display: 'flex', alignItems: 'center', p: '16px !important' }}>
-              <PeopleIcon sx={{ color: 'warning.main', mr: 2, fontSize: 28 }} />
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 600, mb: 0.5 }}>
-                  {(totalPopulation / 1e9).toFixed(1)}B
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Total Population
-                </Typography>
+          <Card 
+            elevation={3} 
+            sx={{ 
+              borderRadius: 3, 
+              border: '1px solid rgba(245, 158, 11, 0.1)',
+              background: 'linear-gradient(135deg, rgba(245, 158, 11, 0.02) 0%, rgba(245, 158, 11, 0.08) 100%)',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: '0 12px 24px rgba(245, 158, 11, 0.15)',
+              }
+            }}
+          >
+            <CardContent sx={{ p: 3 }}>
+              <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                <Box sx={{ 
+                  p: 1.5, 
+                  borderRadius: 2, 
+                  backgroundColor: 'rgba(245, 158, 11, 0.1)',
+                  mr: 2 
+                }}>
+                  <PeopleIcon sx={{ color: 'warning.main', fontSize: 28 }} />
+                </Box>
+                <Box sx={{ flex: 1 }}>
+                  <Typography variant="h4" sx={{ fontWeight: 700, color: 'warning.main', mb: 0.5 }}>
+                    {(totalPopulation / 1e9).toFixed(1)}B
+                  </Typography>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontWeight: 500 }}>
+                    Total Population
+                  </Typography>
+                </Box>
               </Box>
+              <Typography variant="caption" color="text.secondary" sx={{ display: 'block' }}>
+                Combined population
+              </Typography>
             </CardContent>
           </Card>
         </Grid>
@@ -508,8 +606,6 @@ const CountryVisualization = ({ data }) => {
         selectedSystem={selectedSystem}
         setSelectedSystem={setSelectedSystem}
         politicalSystems={politicalSystems}
-        opacityValue={opacityValue}
-        setOpacityValue={setOpacityValue}
         minGdpFilter={minGdpFilter}
         maxGdpFilter={maxGdpFilter}
         setMinGdpFilter={setMinGdpFilter}
@@ -519,25 +615,81 @@ const CountryVisualization = ({ data }) => {
       />
       
       <Paper 
-        elevation={2} 
+        elevation={4} 
         sx={{ 
           position: 'relative', 
-          borderRadius: 2,
-          border: '1px solid #e2e8f0',
-          overflow: 'hidden'
+          borderRadius: 3,
+          border: '1px solid rgba(0, 0, 0, 0.08)',
+          overflow: 'hidden',
+          background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+          '&:hover': {
+            boxShadow: '0 8px 32px rgba(0, 0, 0, 0.12)',
+          }
         }}
       >
         <svg ref={svgRef} style={{ width: '100%', height: 'auto', display: 'block' }}></svg>
         <div ref={tooltipRef}></div>
+        
+        {/* Mobile Legend */}
+        {isMobile && (
+          <Box sx={{ p: 2, borderTop: '1px solid rgba(0, 0, 0, 0.08)' }}>
+            <Typography variant="subtitle2" sx={{ fontWeight: 600, mb: 2, color: 'primary.main' }}>
+              🎨 Political Systems
+            </Typography>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
+              {[...new Set(data.map(d => d.political_system))].slice(0, 8).map((system, i) => (
+                <Chip
+                  key={system}
+                  label={system.length > 15 ? system.substring(0, 12) + '...' : system}
+                  size="small"
+                  sx={{
+                    backgroundColor: colorScale(system),
+                    color: 'white',
+                    fontWeight: 500,
+                    fontSize: '0.75rem'
+                  }}
+                />
+              ))}
+            </Box>
+          </Box>
+        )}
       </Paper>
       
-      <Box sx={{ mt: 3 }}>
-        <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
-          <strong>How to read this visualization:</strong> Each circle represents a country. 
-          Circle size indicates population, position on X-axis shows Economic Freedom Index, 
-          Y-axis shows GDP Per Capita, and colors represent different political systems. 
-          Hover over any circle for detailed information.
-        </Typography>
+      <Box sx={{ mt: 4 }}>
+        <Paper 
+          elevation={1} 
+          sx={{ 
+            p: 3, 
+            borderRadius: 3,
+            background: 'linear-gradient(135deg, rgba(37, 99, 235, 0.02) 0%, rgba(37, 99, 235, 0.06) 100%)',
+            border: '1px solid rgba(37, 99, 235, 0.1)'
+          }}
+        >
+          <Typography variant="h6" sx={{ fontWeight: 600, mb: 2, color: 'primary.main' }}>
+            📊 How to Read This Visualization
+          </Typography>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={6}>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6, mb: 1 }}>
+                <strong>🔵 Circle Size:</strong> Represents population size (larger = more people)
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                <strong>📈 X-Axis:</strong> Economic Freedom Index (higher = more economic freedom)
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6, mb: 1 }}>
+                <strong>💰 Y-Axis:</strong> GDP Per Capita in USD (higher = wealthier)
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6 }}>
+                <strong>🎨 Colors:</strong> Different political systems and governance types
+              </Typography>
+            </Grid>
+          </Grid>
+          <Typography variant="body2" color="text.secondary" sx={{ lineHeight: 1.6, mt: 2, fontStyle: 'italic' }}>
+            💡 <strong>Tip:</strong> Hover over any circle for detailed country information, use filters above to explore specific regions or systems.
+          </Typography>
+        </Paper>
       </Box>
     </Box>
   );

@@ -21,7 +21,6 @@ import {
   Search as SearchIcon, 
   AccountBalance as PoliticalIcon,
   AttachMoney as MoneyIcon,
-  Visibility as VisibilityIcon,
   ExpandMore as ExpandMoreIcon,
   FilterList as FilterIcon
 } from '@mui/icons-material';
@@ -32,8 +31,6 @@ const FilterPanel = ({
   selectedSystem,
   setSelectedSystem,
   politicalSystems,
-  opacityValue,
-  setOpacityValue,
   minGdpFilter,
   maxGdpFilter,
   setMinGdpFilter,
@@ -87,8 +84,6 @@ const FilterPanel = ({
               selectedSystem={selectedSystem}
               setSelectedSystem={setSelectedSystem}
               politicalSystems={politicalSystems}
-              opacityValue={opacityValue}
-              setOpacityValue={setOpacityValue}
               minGdpFilter={minGdpFilter}
               maxGdpFilter={maxGdpFilter}
               setMinGdpFilter={setMinGdpFilter}
@@ -130,8 +125,6 @@ const FilterPanel = ({
               selectedSystem={selectedSystem}
               setSelectedSystem={setSelectedSystem}
               politicalSystems={politicalSystems}
-              opacityValue={opacityValue}
-              setOpacityValue={setOpacityValue}
               minGdpFilter={minGdpFilter}
               maxGdpFilter={maxGdpFilter}
               setMinGdpFilter={setMinGdpFilter}
@@ -152,8 +145,6 @@ const FilterContent = ({
   selectedSystem,
   setSelectedSystem,
   politicalSystems,
-  opacityValue,
-  setOpacityValue,
   minGdpFilter,
   maxGdpFilter,
   setMinGdpFilter,
@@ -279,55 +270,6 @@ const FilterContent = ({
                 height: 20,
                 '&:hover, &.Mui-focusVisible': {
                   boxShadow: '0 0 0 8px rgba(25, 118, 210, 0.16)',
-                },
-              },
-              '& .MuiSlider-track': {
-                height: 4,
-              },
-              '& .MuiSlider-rail': {
-                height: 4,
-                opacity: 0.3,
-              },
-            }}
-          />
-        </Box>
-      </Grid>
-      
-      {/* Opacity Slider */}
-      <Grid item xs={12}>
-        <Box sx={{ 
-          p: 2, 
-          backgroundColor: 'rgba(76, 175, 80, 0.04)', 
-          borderRadius: 2,
-          border: '1px solid rgba(76, 175, 80, 0.1)'
-        }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-            <VisibilityIcon sx={{ color: '#4caf50', mr: 1 }} />
-            <Typography variant="subtitle2" sx={{ fontWeight: 600, color: '#4caf50' }}>
-              Visualization Opacity
-            </Typography>
-          </Box>
-          
-          <Typography variant="body2" color="text.secondary" gutterBottom>
-            {Math.round(opacityValue * 100)}% - Adjust dot transparency for better visibility
-          </Typography>
-          
-          <Slider
-            value={opacityValue}
-            min={0.1}
-            max={1}
-            step={0.1}
-            onChange={(e, newValue) => setOpacityValue(newValue)}
-            valueLabelDisplay="auto"
-            valueLabelFormat={(value) => `${Math.round(value * 100)}%`}
-            sx={{
-              mt: 1,
-              color: '#4caf50',
-              '& .MuiSlider-thumb': {
-                width: 20,
-                height: 20,
-                '&:hover, &.Mui-focusVisible': {
-                  boxShadow: '0 0 0 8px rgba(76, 175, 80, 0.16)',
                 },
               },
               '& .MuiSlider-track': {

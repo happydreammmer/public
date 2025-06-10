@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { 
   Box, 
   CircularProgress, 
@@ -36,9 +36,11 @@ const LoadingSpinner = ({
   showProgress = false, 
   progress = 0 
 }) => {
+  const loadingRef = useRef(null);
+  
   return (
-    <Fade in={true} timeout={500}>
-      <Paper
+    <Fade in={true} timeout={500} nodeRef={loadingRef}>
+      <Paper ref={loadingRef}
         elevation={0}
         sx={{
           display: 'flex',

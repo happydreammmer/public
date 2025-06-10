@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import CountryVisualization from './components/CountryVisualization';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
@@ -89,6 +89,12 @@ function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  
+  // Create refs for Fade transitions
+  const mainContentRef = useRef(null);
+  const errorContentRef = useRef(null);
+  const visualizationRef = useRef(null);
+  const footerRef = useRef(null);
 
   const loadData = async () => {
     try {
@@ -156,11 +162,7 @@ function App() {
       <Box sx={{ minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
         {/* App Bar */}
         <AppBar position="static" elevation={0} sx={{ background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)' }}>
-          <Toolbar>
-            <AnalyticsIcon sx={{ mr: 2, color: 'white' }} />
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, color: 'white', fontWeight: 600 }}>
-              Country Data Analytics
-            </Typography>
+          <Toolbar sx={{ justifyContent: 'flex-end' }}>
             <IconButton
               color="inherit"
               onClick={handleRefresh}
@@ -175,8 +177,8 @@ function App() {
 
         {/* Main Content */}
         <Container maxWidth="xl" sx={{ py: 4 }}>
-          <Fade in={true} timeout={800}>
-            <Box>
+          <Fade in={true} timeout={800} nodeRef={mainContentRef}>
+            <Box ref={mainContentRef}>
               {/* Header Section */}
               <Box sx={{ textAlign: 'center', mb: 4 }}>
                 <Typography 
@@ -191,17 +193,7 @@ function App() {
                 >
                   Interactive Country Data Visualization
                 </Typography>
-                <Typography 
-                  variant="h6" 
-                  sx={{ 
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    fontWeight: 400,
-                    maxWidth: 600,
-                    mx: 'auto'
-                  }}
-                >
-                  Explore relationships between GDP, population, economic freedom, and political systems across countries
-                </Typography>
+
               </Box>
 
               {/* Main Content Panel */}
@@ -222,8 +214,8 @@ function App() {
                     progress={loadingProgress}
                   />
                 ) : error ? (
-                  <Fade in={true}>
-                    <Alert 
+                  <Fade in={true} nodeRef={errorContentRef}>
+                    <Alert ref={errorContentRef} 
                       severity="error" 
                       sx={{ 
                         borderRadius: 2,
@@ -250,18 +242,20 @@ function App() {
                     </Alert>
                   </Fade>
                 ) : (
-                  <Fade in={true} timeout={600}>
-                    <ErrorBoundary>
-                      <CountryVisualization data={countryData} />
-                    </ErrorBoundary>
+                  <Fade in={true} timeout={600} nodeRef={visualizationRef}>
+                    <div ref={visualizationRef}>
+                      <ErrorBoundary>
+                        <CountryVisualization data={countryData} />
+                      </ErrorBoundary>
+                    </div>
                   </Fade>
                 )}
               </Paper>
 
               {/* Footer Info */}
               {!loading && !error && (
-                <Fade in={true} timeout={1000}>
-                  <Box sx={{ mt: 4, textAlign: 'center' }}>
+                <Fade in={true} timeout={1000} nodeRef={footerRef}>
+                  <Box ref={footerRef} sx={{ mt: 4, textAlign: 'center' }}>
                     <Typography 
                       variant="body2" 
                       sx={{ 
