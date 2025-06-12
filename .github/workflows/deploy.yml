@@ -28,13 +28,42 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "18"
+          cache: 'npm'
+          cache-dependency-path: './country-data/package-lock.json'
 
       - name: Install dependencies for Country Data
-        run: npm install
+        run: |
+          npm ci
+          # Fix permissions for all binaries
+          find node_modules/.bin -type f -exec chmod +x {} \;
+          # Install react-scripts globally as fallback
+          npm install -g react-scripts@5.0.1
+        working-directory: ./country-data
+
+      - name: Verify react-scripts installation
+        run: |
+          echo "Checking local react-scripts:"
+          ls -la node_modules/.bin/react-scripts || echo "Local react-scripts not found"
+          echo "Checking global react-scripts:"
+          which react-scripts || echo "Global react-scripts not found"
+          echo "Node and npm versions:"
+          node --version
+          npm --version
         working-directory: ./country-data
 
       - name: Build Country Data project
-        run: npm run build
+        run: |
+          # Try multiple approaches to build
+          if npm run build; then
+            echo "Build successful with npm run build"
+          elif npx react-scripts build; then
+            echo "Build successful with npx react-scripts build"
+          elif react-scripts build; then
+            echo "Build successful with global react-scripts build"
+          else
+            echo "All build attempts failed"
+            exit 1
+          fi
         working-directory: ./country-data
         
       - name: Setup Pages
