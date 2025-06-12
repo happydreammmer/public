@@ -191,22 +191,24 @@ const CountryVisualization = ({ data }) => {
       .attr('fill', '#cbd5e1')
       .text('GDP Per Capita (USD)');
     
-    // Enhanced tooltip with proper event-hunter styling
+    // Enhanced tooltip with proper event-hunter styling and improved positioning
     const tooltip = d3.select(tooltipRef.current)
-      .style('position', 'absolute')
+      .style('position', 'fixed')
       .style('visibility', 'hidden')
       .style('background-color', 'rgba(30, 41, 59, 0.98)')
       .style('border', 'none')
       .style('padding', '16px')
       .style('border-radius', '12px')
-      .style('box-shadow', '0 16px 48px rgba(0, 0, 0, 0.3)')
+      .style('box-shadow', '0 16px 48px rgba(0, 0, 0, 0.4)')
       .style('font-family', 'Inter, sans-serif')
       .style('font-size', '13px')
       .style('max-width', '280px')
       .style('backdrop-filter', 'blur(32px)')
       .style('pointer-events', 'none')
-      .style('z-index', '1000')
-      .style('border', '1px solid rgba(255, 255, 255, 0.1)');
+      .style('z-index', '9999')
+      .style('border', '1px solid rgba(255, 255, 255, 0.1)')
+      .style('transform', 'translateZ(0)') // Force hardware acceleration
+      .style('will-change', 'transform, opacity'); // Optimize for animations
     
     // Add circles for each country with enhanced styling
     const circles = chartGroup.selectAll('circle')
@@ -230,8 +232,14 @@ const CountryVisualization = ({ data }) => {
           .attr('opacity', 1)
           .style('filter', 'drop-shadow(0 4px 16px rgba(0,0,0,0.4))');
         
+        // Position tooltip initially using client coordinates for fixed positioning
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        
         tooltip
           .style('visibility', 'visible')
+          .style('top', (mouseY - 15) + 'px')
+          .style('left', (mouseX + 15) + 'px')
           .html(`
             <div style="border-bottom: 2px solid ${colorScale(d.political_system)}; padding-bottom: 10px; margin-bottom: 12px;">
               <strong style="font-size: 16px; color: #f8fafc; font-weight: 700;">${d.country}</strong>
@@ -257,28 +265,36 @@ const CountryVisualization = ({ data }) => {
           `);
       })
       .on('mousemove', (event, d) => {
-        const [mouseX, mouseY] = d3.pointer(event, svg.node());
-        const svgRect = svgRef.current.getBoundingClientRect();
-        const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        // Get the mouse position in the client viewport (for fixed positioning)
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
         
-        // Calculate tooltip position relative to the SVG and mouse position
-        const tooltipX = svgRect.left + scrollLeft + mouseX + 15;
-        const tooltipY = svgRect.top + scrollTop + mouseY - 10;
-        
-        // Check if tooltip would go off screen and adjust
+        // Tooltip dimensions for boundary checking
         const tooltipWidth = 280;
-        const tooltipHeight = 160;
-        const adjustedX = (tooltipX + tooltipWidth > window.innerWidth) 
-          ? tooltipX - tooltipWidth - 30 
-          : tooltipX;
-        const adjustedY = (tooltipY + tooltipHeight > window.innerHeight) 
-          ? tooltipY - tooltipHeight - 20 
-          : tooltipY;
+        const tooltipHeight = 180;
+        const offset = 15;
+        
+        // Calculate initial position (offset from mouse)
+        let tooltipX = mouseX + offset;
+        let tooltipY = mouseY - offset;
+        
+        // Adjust horizontal position if tooltip would go off screen
+        if (tooltipX + tooltipWidth > window.innerWidth) {
+          tooltipX = mouseX - tooltipWidth - offset;
+        }
+        
+        // Adjust vertical position if tooltip would go off screen
+        if (tooltipY + tooltipHeight > window.innerHeight) {
+          tooltipY = mouseY - tooltipHeight - offset;
+        }
+        
+        // Ensure tooltip doesn't go above or left of viewport
+        tooltipX = Math.max(10, tooltipX);
+        tooltipY = Math.max(10, tooltipY);
         
         tooltip
-          .style('top', adjustedY + 'px')
-          .style('left', adjustedX + 'px');
+          .style('top', tooltipY + 'px')
+          .style('left', tooltipX + 'px');
       })
       .on('mouseout', (event) => {
         d3.select(event.target)
