@@ -187,8 +187,13 @@ const CountryVisualization = ({ data }) => {
     
     const yAxis = d3.axisLeft(yScale)
       .tickSize(-innerWidth)
-      .tickFormat(d => `$${d3.format('.0s')(d)}`)
-      .ticks(8);
+      .tickFormat(d => {
+        if (d === 0) return '$0';
+        if (d >= 1000000) return `$${(d / 1000000).toFixed(d % 1000000 === 0 ? 0 : 1)}M`;
+        if (d >= 1000) return `$${(d / 1000).toFixed(d % 1000 === 0 ? 0 : 1)}k`;
+        return `$${d.toLocaleString()}`;
+      })
+      .ticks(6);
     
     // Add grid lines and axes with staggered animation
     const xAxisGroup = chartGroup.append('g')

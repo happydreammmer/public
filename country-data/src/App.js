@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import CountryVisualization from './components/CountryVisualization';
+import DataAnalysis from './components/DataAnalysis';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
 import { 
@@ -236,6 +237,7 @@ function App() {
                   <div ref={visualizationRef}>
                     <ErrorBoundary>
                       <CountryVisualization data={countryData} />
+                      <DataAnalysis data={countryData} />
                     </ErrorBoundary>
                   </div>
                 </Fade>
