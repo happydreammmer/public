@@ -20,15 +20,24 @@ function updateCounters() {
 function renderEvents(filteredEvents, statusFilter) {
     const eventsGrid = document.getElementById('eventsGrid');
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const t = translations[currentLang];
 
     const upcoming = filteredEvents
-        .filter(e => new Date(e.endDate || e.date) >= today)
-        .sort((a, b) => new Date(a.date) - new Date(b.date));
+        .filter(e => {
+            const eventEndDate = createSafeDate(e.endDate || e.date);
+            eventEndDate.setHours(0, 0, 0, 0);
+            return eventEndDate >= today;
+        })
+        .sort((a, b) => createSafeDate(a.date) - createSafeDate(b.date));
     
     const completed = filteredEvents
-        .filter(e => new Date(e.endDate || e.date) < today)
-        .sort((a, b) => new Date(b.date) - new Date(a.date));
+        .filter(e => {
+            const eventEndDate = createSafeDate(e.endDate || e.date);
+            eventEndDate.setHours(0, 0, 0, 0);
+            return eventEndDate < today;
+        })
+        .sort((a, b) => createSafeDate(b.date) - createSafeDate(a.date));
 
     let finalHtml = '';
     let cardIndex = 0;
@@ -75,7 +84,8 @@ function applyFilters() {
             event.city.toLowerCase().includes(searchTerm) ||
             event.description.toLowerCase().includes(searchTerm);
 
-        const eventMonth = new Date(event.date).getMonth().toString();
+        const eventDate = createSafeDate(event.date);
+        const eventMonth = eventDate.getMonth().toString();
         const monthMatch = month === 'all' || eventMonth === month;
         const continentMatch = continent === 'all' || countryToContinentMap[event.country] === continent;
         const industryMatch = industry === 'all' || event.category === industry;
@@ -203,19 +213,30 @@ function setupLazyLoading() {
                     lazyImageObserver.unobserve(img);
                 }
             });
+        }, {
+            // Add some margin for better user experience
+            rootMargin: '50px 0px',
+            threshold: 0.1
         });
 
         // Observe images when they're added to the DOM
-        const observer = new MutationObserver(() => {
-            document.querySelectorAll('img[data-src].lazy').forEach(img => {
-                lazyImageObserver.observe(img);
-            });
+        const observer = new MutationObserver((mutations) => {
+            // Throttle the observer to prevent excessive calls
+            clearTimeout(observer.timeout);
+            observer.timeout = setTimeout(() => {
+                document.querySelectorAll('img[data-src].lazy').forEach(img => {
+                    lazyImageObserver.observe(img);
+                });
+            }, 100);
         });
 
-        observer.observe(document.getElementById('eventsGrid'), {
-            childList: true,
-            subtree: true
-        });
+        const eventsGrid = document.getElementById('eventsGrid');
+        if (eventsGrid) {
+            observer.observe(eventsGrid, {
+                childList: true,
+                subtree: true
+            });
+        }
     }
 }
 
@@ -223,23 +244,63 @@ function setupLazyLoading() {
  * Initialize the application
  */
 function initializeApp() {
-    // Setup core functionality
-    updateCounters();
-    setupFilters();
-    setupControls();
-    setupLazyLoading();
+    try {
+        // Setup core functionality
+        updateCounters();
+        setupFilters();
+        setupControls();
+        setupLazyLoading();
+        
+        // Initial render
+        applyFilters();
+        
+        // Add mobile-specific event listeners
+        setupMobileOptimizations();
+        
+        // Handle potential errors gracefully
+        window.addEventListener('error', (e) => {
+            console.error('EventHunter Error:', e.error);
+            handleError(e.error, 'window error');
+        });
+        
+        // Log successful initialization
+        console.log('🔎 Event Hunter 2025 initialized successfully!');
+        
+    } catch (error) {
+        handleError(error, 'during initialization');
+    }
+}
+
+/**
+ * Setup mobile-specific optimizations
+ */
+function setupMobileOptimizations() {
+    // Prevent zoom on iOS when focusing on inputs
+    if (/iPhone|iPad|iPod/.test(navigator.userAgent)) {
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            // Ensure font-size is at least 16px to prevent zoom
+            const computedStyle = window.getComputedStyle(input);
+            const fontSize = parseFloat(computedStyle.fontSize);
+            if (fontSize < 16) {
+                input.style.fontSize = '16px';
+            }
+        });
+    }
     
-    // Initial render
-    applyFilters();
+    // Add passive touch listeners for better performance
+    if ('ontouchstart' in window) {
+        document.addEventListener('touchstart', () => {}, { passive: true });
+        document.addEventListener('touchmove', () => {}, { passive: true });
+    }
     
-    // Handle potential errors gracefully
-    window.addEventListener('error', (e) => {
-        console.error('EventHunter Error:', e.error);
-        // Could implement user notification here
+    // Handle orientation changes
+    window.addEventListener('orientationchange', () => {
+        setTimeout(() => {
+            // Recalculate layout after orientation change
+            window.dispatchEvent(new Event('resize'));
+        }, 100);
     });
-    
-    // Log successful initialization
-    console.log('🔎 Event Hunter 2025 initialized successfully!');
 }
 
 /**
