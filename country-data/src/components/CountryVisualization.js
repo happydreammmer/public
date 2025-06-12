@@ -82,8 +82,8 @@ const CountryVisualization = ({ data }) => {
     // Clear previous visualization
     d3.select(svgRef.current).selectAll('*').remove();
     
-    // Create SVG with responsive margins
-    const margin = { top: 20, right: isMobile ? 20 : 160, bottom: isMobile ? 60 : 50, left: isMobile ? 60 : 80 };
+    // Create SVG with improved margins to prevent legend overlap
+    const margin = { top: 20, right: isMobile ? 20 : 200, bottom: isMobile ? 60 : 50, left: isMobile ? 60 : 80 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     
@@ -256,14 +256,29 @@ const CountryVisualization = ({ data }) => {
             </div>
           `);
       })
-      .on('mousemove', (event) => {
-        const rect = event.target.getBoundingClientRect();
+      .on('mousemove', (event, d) => {
+        const [mouseX, mouseY] = d3.pointer(event, svg.node());
+        const svgRect = svgRef.current.getBoundingClientRect();
         const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         
+        // Calculate tooltip position relative to the SVG and mouse position
+        const tooltipX = svgRect.left + scrollLeft + mouseX + 15;
+        const tooltipY = svgRect.top + scrollTop + mouseY - 10;
+        
+        // Check if tooltip would go off screen and adjust
+        const tooltipWidth = 280;
+        const tooltipHeight = 160;
+        const adjustedX = (tooltipX + tooltipWidth > window.innerWidth) 
+          ? tooltipX - tooltipWidth - 30 
+          : tooltipX;
+        const adjustedY = (tooltipY + tooltipHeight > window.innerHeight) 
+          ? tooltipY - tooltipHeight - 20 
+          : tooltipY;
+        
         tooltip
-          .style('top', (rect.top + scrollTop - 10) + 'px')
-          .style('left', (rect.right + scrollLeft + 15) + 'px');
+          .style('top', adjustedY + 'px')
+          .style('left', adjustedX + 'px');
       })
       .on('mouseout', (event) => {
         d3.select(event.target)
@@ -305,17 +320,17 @@ const CountryVisualization = ({ data }) => {
         .style('opacity', 0.9);
     }
     
-    // Compact legend for desktop
+    // Improved legend positioning for desktop to avoid chart overlap
     if (!isMobile) {
-      const legendWidth = 140;
+      const legendWidth = 180;
       const legendGroup = svg.append('g')
-        .attr('transform', `translate(${width - legendWidth - 15}, 40)`);
+        .attr('transform', `translate(${width - legendWidth - 10}, 40)`);
       
       legendGroup.append('rect')
-        .attr('x', -12)
+        .attr('x', -15)
         .attr('y', -20)
         .attr('width', legendWidth)
-        .attr('height', Math.min(politicalSystems.length * 20 + 40, 280))
+        .attr('height', Math.min(politicalSystems.length * 22 + 40, 320))
         .attr('fill', 'rgba(30, 41, 59, 0.95)')
         .attr('stroke', 'rgba(255, 255, 255, 0.1)')
         .attr('stroke-width', 1)
@@ -326,33 +341,33 @@ const CountryVisualization = ({ data }) => {
         .attr('x', 0)
         .attr('y', -5)
         .attr('font-weight', '700')
-        .attr('font-size', '12px')
+        .attr('font-size', '13px')
         .attr('fill', '#f8fafc')
         .text('Political Systems');
       
-      const uniqueSystems = [...new Set(data.map(d => d.political_system))].slice(0, 10);
+      const uniqueSystems = [...new Set(data.map(d => d.political_system))].slice(0, 12);
       
       uniqueSystems.forEach((system, i) => {
         const legendRow = legendGroup.append('g')
-          .attr('transform', `translate(0, ${i * 18 + 12})`);
+          .attr('transform', `translate(0, ${i * 20 + 15})`);
         
         legendRow.append('circle')
           .attr('cx', 8)
           .attr('cy', 0)
-          .attr('r', 5)
+          .attr('r', 6)
           .attr('fill', colorScale(system))
           .attr('stroke', '#ffffff')
-          .attr('stroke-width', 1)
-          .style('filter', 'drop-shadow(0 1px 3px rgba(0,0,0,0.3))');
+          .attr('stroke-width', 1.5)
+          .style('filter', 'drop-shadow(0 2px 4px rgba(0,0,0,0.3))');
         
         legendRow.append('text')
-          .attr('x', 18)
+          .attr('x', 20)
           .attr('y', 3)
           .attr('text-anchor', 'start')
-          .style('font-size', '10px')
+          .style('font-size', '11px')
           .style('font-weight', '500')
           .attr('fill', '#cbd5e1')
-          .text(system.length > 16 ? system.substring(0, 13) + '...' : system);
+          .text(system.length > 18 ? system.substring(0, 15) + '...' : system);
       });
     }
     
