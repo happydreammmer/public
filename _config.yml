@@ -8,6 +8,13 @@ exclude:
   - package.json
   - package-lock.json
   - README.md
+  - .git/
+  - .github/
+
+# Include all HTML files explicitly
+include:
+  - public.html
+  - "*.html"
 
 # GitHub Pages specific settings
 plugins:
@@ -19,4 +26,12 @@ relative_links:
 
 # Basic Jekyll settings
 markdown: kramdown
-highlighter: rouge 
+highlighter: rouge
+
+# Disable Jekyll processing for static HTML files
+defaults:
+  - scope:
+      path: "*.html"
+    values:
+      layout: null
+      sitemap: false 
