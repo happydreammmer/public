@@ -143,6 +143,109 @@ function generateCompanyCardHTML(company) {
     `;
 }
 
+// Get total company count
+function getCompanyCount() {
+    return companies.length;
+}
+
+// Get total sector count
+function getSectorCount() {
+    return Object.keys(companiesData.sectors).length;
+}
+
+// Get high priority companies count
+function getHighPriorityCount() {
+    return companies.filter(company => company.priority === 'high').length;
+}
+
+// Get large enterprise companies count
+function getLargeEnterpriseCount() {
+    return companies.filter(company => company.size === 'large').length;
+}
+
+// Format numbers with commas
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+// Get country display name
+function getCountryDisplayName(countryCode) {
+    return countryDisplayNames[countryCode] || countryCode.toUpperCase();
+}
+
+// Get sector icon
+function getSectorIcon(sectorKey) {
+    return sectorIcons[sectorKey] || "🏢";
+}
+
+// Search companies by text
+function searchCompanies(searchTerm) {
+    if (!searchTerm) return companies;
+    
+    const term = searchTerm.toLowerCase();
+    return companies.filter(company => 
+        company.name.toLowerCase().includes(term) ||
+        company.description.toLowerCase().includes(term) ||
+        company.sector.toLowerCase().includes(term) ||
+        company.location.toLowerCase().includes(term) ||
+        company.ai_use_case.toLowerCase().includes(term)
+    );
+}
+
+// Filter companies by criteria
+function filterCompanies(filters) {
+    return companies.filter(company => {
+        if (filters.country && company.country !== filters.country) return false;
+        if (filters.sector && company.sector !== filters.sector) return false;
+        if (filters.location && company.location !== filters.location) return false;
+        if (filters.size && company.size !== filters.size) return false;
+        if (filters.priority && company.priority !== filters.priority) return false;
+        return true;
+    });
+}
+
+// Get unique values for a field
+function getUniqueValues(field) {
+    return [...new Set(companies.map(company => company[field]))].sort();
+}
+
+// Get companies by sector
+function getCompaniesBySector(sectorKey) {
+    return companies.filter(company => company.sector === sectorKey);
+}
+
+// Get companies by country
+function getCompaniesByCountry(countryCode) {
+    return companies.filter(company => company.country === countryCode);
+}
+
+// Get priority distribution
+function getPriorityDistribution() {
+    const distribution = {};
+    companies.forEach(company => {
+        distribution[company.priority] = (distribution[company.priority] || 0) + 1;
+    });
+    return distribution;
+}
+
+// Get size distribution
+function getSizeDistribution() {
+    const distribution = {};
+    companies.forEach(company => {
+        distribution[company.size] = (distribution[company.size] || 0) + 1;
+    });
+    return distribution;
+}
+
+// Get sector distribution
+function getSectorDistribution() {
+    const distribution = {};
+    companies.forEach(company => {
+        distribution[company.sector] = (distribution[company.sector] || 0) + 1;
+    });
+    return distribution;
+}
+
 // Export functions for use in other scripts
 if (typeof window !== 'undefined') {
     window.CompaniesUtils = {
@@ -157,6 +260,21 @@ if (typeof window !== 'undefined') {
         getCompanyCountBySector,
         getCompaniesByPriority,
         getCompaniesBySize,
-        generateCompanyCardHTML
+        generateCompanyCardHTML,
+        getCompanyCount,
+        getSectorCount,
+        getHighPriorityCount,
+        getLargeEnterpriseCount,
+        formatNumber,
+        getCountryDisplayName,
+        getSectorIcon,
+        searchCompanies,
+        filterCompanies,
+        getUniqueValues,
+        getCompaniesBySector,
+        getCompaniesByCountry,
+        getPriorityDistribution,
+        getSizeDistribution,
+        getSectorDistribution
     };
 } 

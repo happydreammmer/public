@@ -2377,3 +2377,79 @@ const countryDisplayNames = {
     uae: "🇦🇪 UAE",
     oman: "🇴🇲 Oman"
 };
+
+// Create the companiesData object structure expected by the script
+const companiesData = {
+    filters: {
+        sectors: [
+            { value: "investment-finance", label: "💰 Investment & Finance" },
+            { value: "holding-groups", label: "🌐 Holding Groups" },
+            { value: "energy", label: "⚡ Energy" },
+            { value: "logistics", label: "🚢 Logistics" },
+            { value: "aviation", label: "✈️ Aviation" },
+            { value: "telecommunications", label: "📱 Telecommunications" },
+            { value: "real-estate-construction", label: "🏗️ Real Estate & Construction" },
+            { value: "industrial-manufacturing", label: "🏭 Industrial & Manufacturing" },
+            { value: "retail", label: "🛒 Retail" },
+            { value: "healthcare", label: "🏥 Healthcare" },
+            { value: "food-beverage", label: "🍽️ Food & Beverage" },
+            { value: "it-technology", label: "💻 IT & Technology" },
+            { value: "media-publishing", label: "📰 Media & Publishing" },
+            { value: "education", label: "🎓 Education" },
+            { value: "automotive", label: "🚗 Automotive" },
+            { value: "utilities", label: "💡 Utilities" },
+            { value: "tourism", label: "🏨 Tourism" },
+            { value: "government", label: "🏛️ Government" }
+        ],
+        locations: [
+            { value: "abudhabi", label: "Abu Dhabi" },
+            { value: "dubai", label: "Dubai" },
+            { value: "sharjah", label: "Sharjah" },
+            { value: "rasalkhaimah", label: "Ras Al Khaimah" },
+            { value: "muscat", label: "Muscat" },
+            { value: "sohar", label: "Sohar" },
+            { value: "salalah", label: "Salalah" },
+            { value: "sur", label: "Sur" },
+            { value: "duqm", label: "Duqm" },
+            { value: "rusayl", label: "Rusayl" },
+            { value: "multiple", label: "Multiple Locations" }
+        ],
+        sizes: [
+            { value: "large", label: "Large Enterprise" },
+            { value: "medium", label: "Medium Enterprise" },
+            { value: "small", label: "Small/Medium Enterprise" }
+        ]
+    },
+    sectors: {}
+};
+
+// Organize companies by sector
+companies.forEach(company => {
+    const sector = company.sector;
+    if (!companiesData.sectors[sector]) {
+        companiesData.sectors[sector] = {
+            name: companiesData.filters.sectors.find(s => s.value === sector)?.label || sector,
+            icon: sectorIcons[sector] || "🏢",
+            companies: []
+        };
+    }
+    
+    // Transform company data to match expected format
+    const transformedCompany = {
+        name: company.name,
+        country: company.country,
+        location: company.location,
+        size: company.size,
+        priority: company.priority,
+        website: company.website,
+        services: company.description,
+        address: company.address,
+        socialLinks: company.social ? company.social.reduce((acc, link) => {
+            acc[link.name.toLowerCase()] = link.url;
+            return acc;
+        }, {}) : {},
+        aiUseCase: company.ai_use_case
+    };
+    
+    companiesData.sectors[sector].companies.push(transformedCompany);
+});
