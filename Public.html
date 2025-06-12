@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Public Projects 2025">
+    <meta name="theme-color" content="#0f172a">
+    <meta name="description" content="Showcase of public projects - Event Hunter, Companies Data, and Country Data Visualization">
+    <title>Public Projects 2025 - Portfolio Showcase</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Dark Theme (Default) */
+            --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            --bg-gradient-animated: 
+                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            --header-bg: rgba(30, 41, 59, 0.7);
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-primary: #f8fafc;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --highlight-bar: var(--accent-gradient);
+            --event-hunter-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --companies-gradient: linear-gradient(135deg, #10b981 0%, #22c55e 100%);
+            --country-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.2);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 24px 64px rgba(0, 0, 0, 0.4);
+            
+            --border-radius-sm: 12px;
+            --border-radius-md: 20px;
+            --border-radius-lg: 28px;
+            
+            /* iOS Safe Area Support */
+            --safe-area-inset-top: env(safe-area-inset-top);
+            --safe-area-inset-right: env(safe-area-inset-right);
+            --safe-area-inset-bottom: env(safe-area-inset-bottom);
+            --safe-area-inset-left: env(safe-area-inset-left);
+        }
+
+        body.light-theme {
+            /* Light Theme */
+            --bg-gradient: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            --bg-gradient-animated:
+                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.15) 0%, transparent 60%);
+            --header-bg: rgba(255, 255, 255, 0.7);
+            --card-bg: #ffffff;
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --accent-gradient: linear-gradient(135deg, #0ea5e9 0%, #6366f1 100%);
+            --highlight-bar: var(--accent-gradient);
+        }
+
+        /* ===== BASE STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html[lang="ar"] {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        html[lang="fa"] {
+            font-family: 'Vazirmatn', sans-serif;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            transition: background 0.4s ease, color 0.4s ease;
+            -webkit-overflow-scrolling: touch;
+            padding-left: var(--safe-area-inset-left);
+            padding-right: var(--safe-area-inset-right);
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--bg-gradient-animated);
+            z-index: -1;
+            animation: backgroundFloat 20s ease-in-out infinite;
+        }
+
+        /* Reduce motion for users who prefer it */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            body::before {
+                animation: none;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes backgroundFloat {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.1) rotate(1deg); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: var(--header-bg);
+            backdrop-filter: blur(32px);
+            border: 1px solid var(--glass-border);
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+            padding-top: calc(2rem + var(--safe-area-inset-top));
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--highlight-bar);
+        }
+
+        .header h1 {
+            text-align: center;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header p {
+            text-align: center;
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.5;
+        }
+
+        .header-controls {
+            position: absolute;
+            top: calc(1.5rem + var(--safe-area-inset-top));
+            right: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        [dir="rtl"] .header-controls {
+            right: auto;
+            left: 1.5rem;
+        }
+
+        .theme-toggle, 
+        .language-select {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            padding: 0.75rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            min-width: 44px;
+            min-height: 44px;
+            -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+        }
+
+        .language-select {
+            padding: 0.75rem 1rem;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-repeat: no-repeat;
+            background-position: right 0.7rem center;
+            padding-right: 2.5rem;
+            min-width: 80px;
+        }
+
+        [dir="rtl"] .language-select {
+            background-position: left 0.7rem center;
+            padding-right: 1rem;
+            padding-left: 2.5rem;
+        }
+
+        .theme-toggle:hover, 
+        .language-select:hover,
+        .theme-toggle:active,
+        .language-select:active {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ===== STATS SECTION ===== */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stat-card {
+            background: rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            padding: 1.5rem 1rem;
+            border-radius: var(--border-radius-sm);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+        }
+
+        .stat-card:hover,
+        .stat-card:active {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: var(--shadow-xl);
+            background: var(--accent-gradient);
+            color: white;
+        }
+
+        .stat-card:hover .stat-number,
+        .stat-card:active .stat-number {
+            -webkit-text-fill-color: white;
+            color: white;
+        }
+
+        .stat-card:hover .stat-label,
+        .stat-card:active .stat-label {
+             color: white;
+        }
+
+        .stat-number {
+            font-size: clamp(2rem, 3.5vw, 2.5rem);
+            font-weight: 800;
+            display: block;
+            margin-bottom: 0.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: all 0.4s ease;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            font-weight: 600;
+            opacity: 0.9;
+            letter-spacing: 0.3px;
+            line-height: 1.2;
+            color: var(--text-secondary);
+        }
+
+        /* ===== PROJECTS GRID ===== */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+            padding: 1rem 0;
+        }
+
+        /* ===== PROJECT CARDS ===== */
+        .project-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(32px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--border-radius-md);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-md);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            -webkit-tap-highlight-color: rgba(56, 189, 248, 0.2);
+        }
+
+        .project-card:nth-child(1) { animation-delay: 0.1s; }
+        .project-card:nth-child(2) { animation-delay: 0.2s; }
+        .project-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .project-card:hover,
+        .project-card:active {
+            transform: translateY(-12px) rotateX(2deg);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .project-card:hover::before,
+        .project-card:active::before { 
+            transform: scaleX(1); 
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+            transform-origin: left;
+        }
+
+        .project-card.event-hunter::before {
+            background: var(--event-hunter-gradient);
+        }
+
+        .project-card.companies-data::before {
+            background: var(--companies-gradient);
+        }
+
+        .project-card.country-data::before {
+            background: var(--country-gradient);
+        }
+
+        [dir="rtl"] .project-card::before {
+            transform-origin: right;
+        }
+
+        .project-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-icon {
+            font-size: 3rem;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .project-title {
+            font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+            font-weight: 800;
+            flex: 1;
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+            color: var(--text-primary);
+        }
+
+        .project-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .project-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text-secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+        }
+
+        body.light-theme .feature-tag {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .project-cta {
+            background: var(--accent-gradient);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: var(--shadow-md);
+            letter-spacing: 0.5px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            margin-top: auto;
+        }
+
+        .project-card.event-hunter .project-cta {
+            background: var(--event-hunter-gradient);
+        }
+
+        .project-card.companies-data .project-cta {
+            background: var(--companies-gradient);
+        }
+
+        .project-card.country-data .project-cta {
+            background: var(--country-gradient);
+        }
+
+        .project-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* ===== RESPONSIVE DESIGN ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .stats { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+            
+            .projects-grid { 
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .project-card { 
+                min-height: unset;
+                padding: 1.5rem;
+            }
+            
+            .header {
+                padding: 1.5rem 0;
+                padding-top: calc(1.5rem + var(--safe-area-inset-top));
+            }
+            
+            .header-controls { 
+                top: calc(1rem + var(--safe-area-inset-top));
+                right: 1rem;
+                gap: 0.75rem;
+            }
+            
+            [dir="rtl"] .header-controls { 
+                right: auto; 
+                left: 1rem; 
+            }
+        }
+
+        /* ===== EXTRA SMALL MOBILE ===== */
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 0.75rem;
+            }
+            
+            .header h1 {
+                font-size: clamp(2rem, 8vw, 2.5rem);
+            }
+            
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            
+            .stat-card {
+                padding: 1rem 0.5rem;
+                min-height: 100px;
+            }
+            
+            .projects-grid {
+                grid-template-columns: 1fr;
+                margin: 1rem 0;
+            }
+            
+            .project-card {
+                min-height: unset;
+                padding: 1rem;
+            }
+        }
+
+        /* ===== iOS SPECIFIC FIXES ===== */
+        @supports (-webkit-touch-callout: none) {
+            .project-card {
+                backdrop-filter: blur(20px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding-bottom: calc(1rem + var(--safe-area-inset-bottom));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-controls">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+            <select class="language-select" id="languageSelector" aria-label="Select language">
+                <option value="en">EN</option>
+                <option value="ar">AR</option>
+                <option value="fa">FA</option>
+            </select>
+        </div>
+        <div class="container">
+            <h1>🚀 Public Projects 2025</h1>
+            <p>Explore my collection of modern web applications built with cutting-edge technologies</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">Active Projects</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">100%</span>
+                    <span class="stat-label">Open Source</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">2025</span>
+                    <span class="stat-label">Latest Updates</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="projects-grid">
+            <!-- Event Hunter Project -->
+            <a href="event-hunter/Events.html" class="project-card event-hunter">
+                <div class="project-header">
+                    <span class="project-icon">🔎</span>
+                    <h2 class="project-title">Event Hunter 2025</h2>
+                </div>
+                
+                <div class="project-description">
+                    Discover and track global events with advanced filtering, multi-language support, and beautiful visualizations. Features real-time search, countdown timers, and comprehensive event details.
+                </div>
+                
+                <div class="project-features">
+                    <span class="feature-tag">🌍 Multi-language</span>
+                    <span class="feature-tag">🎨 Dark/Light Theme</span>
+                    <span class="feature-tag">📱 Mobile Ready</span>
+                    <span class="feature-tag">⚡ Real-time Search</span>
+                    <span class="feature-tag">📊 Analytics</span>
+                </div>
+                
+                <div class="project-cta">
+                    Launch Event Hunter →
+                </div>
+            </a>
+
+            <!-- Companies Data Project -->
+            <a href="companies-data/Companies.html" class="project-card companies-data">
+                <div class="project-header">
+                    <span class="project-icon">🏢</span>
+                    <h2 class="project-title">Companies Data</h2>
+                </div>
+                
+                <div class="project-description">
+                    Strategic companies database for UAE & Oman with AI use cases, priority filtering, and comprehensive business intelligence. Perfect for B2B research and market analysis.
+                </div>
+                
+                <div class="project-features">
+                    <span class="feature-tag">🤖 AI Integration</span>
+                    <span class="feature-tag">🎯 Priority Filtering</span>
+                    <span class="feature-tag">🌐 Multi-region</span>
+                    <span class="feature-tag">📈 Business Intel</span>
+                    <span class="feature-tag">🔍 Advanced Search</span>
+                </div>
+                
+                <div class="project-cta">
+                    Explore Companies →
+                </div>
+            </a>
+
+            <!-- Country Data Project -->
+            <a href="country-data/build/index.html" class="project-card country-data">
+                <div class="project-header">
+                    <span class="project-icon">🌍</span>
+                    <h2 class="project-title">Country Data Viz</h2>
+                </div>
+                
+                <div class="project-description">
+                    Interactive dashboard for analyzing global economic and political data with dynamic visualizations, comparative analysis, and comprehensive country profiles.
+                </div>
+                
+                <div class="project-features">
+                    <span class="feature-tag">📊 Data Visualization</span>
+                    <span class="feature-tag">🗺️ Interactive Maps</span>
+                    <span class="feature-tag">📈 Economic Analysis</span>
+                    <span class="feature-tag">🔄 Real-time Data</span>
+                    <span class="feature-tag">📱 Responsive</span>
+                </div>
+                
+                <div class="project-cta">
+                    View Dashboard →
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Theme Toggle Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            setupThemeToggle();
+            setupLanguageSelector();
+            animateStats();
+        });
+
+        function setupThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const currentTheme = localStorage.getItem('theme') || 'dark';
+            
+            if (currentTheme === 'light') {
+                document.body.classList.add('light-theme');
+                themeToggle.textContent = '☀️';
+            }
+            
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('light-theme');
+                const isLight = document.body.classList.contains('light-theme');
+                themeToggle.textContent = isLight ? '☀️' : '🌙';
+                localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            });
+        }
+
+        function setupLanguageSelector() {
+            const languageSelector = document.getElementById('languageSelector');
+            
+            languageSelector.addEventListener('change', (e) => {
+                const language = e.target.value;
+                document.documentElement.lang = language;
+                document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+            });
+        }
+
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            
+            statNumbers.forEach(stat => {
+                const target = stat.textContent;
+                if (target.includes('%')) {
+                    animateNumber(stat, 0, 100, '%');
+                } else if (target === '2025') {
+                    animateNumber(stat, 2020, 2025, '');
+                } else {
+                    animateNumber(stat, 0, parseInt(target), '');
+                }
+            });
+        }
+
+        function animateNumber(element, start, end, suffix) {
+            let current = start;
+            const increment = (end - start) / 50;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= end) {
+                    element.textContent = end + suffix;
+                    clearInterval(timer);
+                } else {
+                    element.textContent = Math.floor(current) + suffix;
+                }
+            }, 30);
+        }
+    </script>
+</body>
+</html>

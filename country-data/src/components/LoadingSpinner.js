@@ -47,11 +47,12 @@ const LoadingSpinner = ({
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          minHeight: '400px',
+          minHeight: '300px',
           p: 4,
-          background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.05) 0%, rgba(103, 58, 183, 0.05) 100%)',
-          borderRadius: 3,
-          border: '1px solid rgba(25, 118, 210, 0.1)',
+          background: 'rgba(30, 41, 59, 0.6)',
+          backdropFilter: 'blur(20px)',
+          borderRadius: 2,
+          border: '1px solid rgba(255, 255, 255, 0.1)',
           position: 'relative',
           overflow: 'hidden'
         }}
@@ -60,24 +61,25 @@ const LoadingSpinner = ({
         <Box
           sx={{
             position: 'absolute',
-            top: -50,
-            right: -50,
-            width: 100,
-            height: 100,
-            borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(25, 118, 210, 0.1), rgba(103, 58, 183, 0.1))',
-            animation: `${float} 6s ease-in-out infinite`,
-          }}
-        />
-        <Box
-          sx={{
-            position: 'absolute',
-            bottom: -30,
-            left: -30,
+            top: -30,
+            right: -30,
             width: 60,
             height: 60,
             borderRadius: '50%',
-            background: 'linear-gradient(135deg, rgba(103, 58, 183, 0.1), rgba(25, 118, 210, 0.1))',
+            background: 'radial-gradient(circle, rgba(56, 189, 248, 0.2), transparent)',
+            animation: `${float} 6s ease-in-out infinite`,
+          }}
+        />
+        
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: -20,
+            left: -20,
+            width: 40,
+            height: 40,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(124, 58, 237, 0.2), transparent)',
             animation: `${float} 8s ease-in-out infinite reverse`,
           }}
         />
@@ -85,10 +87,10 @@ const LoadingSpinner = ({
         {/* Main loading icon */}
         <Box sx={{ position: 'relative', mb: 3 }}>
           <CircularProgress 
-            size={80} 
+            size={60} 
             thickness={3} 
             sx={{ 
-              color: 'primary.main',
+              color: '#38bdf8',
               animation: `${float} 3s ease-in-out infinite`
             }} 
           />
@@ -102,8 +104,8 @@ const LoadingSpinner = ({
           >
             <AnalyticsIcon 
               sx={{ 
-                fontSize: 32, 
-                color: 'primary.main',
+                fontSize: 24, 
+                color: '#38bdf8',
                 animation: `${pulse} 2s ease-in-out infinite`
               }} 
             />
@@ -116,7 +118,7 @@ const LoadingSpinner = ({
           sx={{ 
             mb: 1,
             fontWeight: 600,
-            color: 'primary.main',
+            color: '#f8fafc',
             textAlign: 'center'
           }}
         >
@@ -125,89 +127,63 @@ const LoadingSpinner = ({
 
         <Typography 
           variant="body2" 
-          color="text.secondary" 
           sx={{ 
             mb: 3, 
             textAlign: 'center',
-            maxWidth: 400,
-            lineHeight: 1.5
+            maxWidth: 350,
+            lineHeight: 1.5,
+            color: '#94a3b8'
           }}
         >
-          We're fetching and processing country data including GDP, population, economic freedom indices, 
-          and political system information to create your interactive visualization...
+          Fetching and processing country data including GDP, population, economic freedom indices, 
+          and political system information...
         </Typography>
 
         {/* Progress bar */}
         {showProgress && (
-          <Box sx={{ width: '100%', maxWidth: 400, mb: 3 }}>
+          <Box sx={{ width: '100%', maxWidth: 300 }}>
             <LinearProgress 
               variant="determinate" 
               value={progress} 
               sx={{
-                height: 8,
-                borderRadius: 4,
-                backgroundColor: 'rgba(25, 118, 210, 0.1)',
+                height: 6,
+                borderRadius: 3,
+                backgroundColor: 'rgba(15, 23, 42, 0.6)',
                 '& .MuiLinearProgress-bar': {
-                  borderRadius: 4,
-                  background: 'linear-gradient(90deg, #1976d2, #673ab7)',
+                  backgroundColor: '#38bdf8',
+                  borderRadius: 3,
                 }
               }}
             />
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-              <Typography variant="caption" color="text.secondary">
-                {Math.round(progress)}% complete
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                {progress < 30 ? 'Connecting...' : 
-                 progress < 70 ? 'Downloading...' : 
-                 progress < 90 ? 'Processing...' : 'Almost done!'}
-              </Typography>
-            </Box>
+            <Typography 
+              variant="caption" 
+              sx={{ 
+                display: 'block', 
+                textAlign: 'center', 
+                mt: 1,
+                color: '#94a3b8',
+                fontWeight: 500
+              }}
+            >
+              {progress}% complete
+            </Typography>
           </Box>
         )}
 
         {/* Animated dots */}
-        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-          {[0, 0.3, 0.6].map((delay, index) => (
+        <Box sx={{ mt: 2, display: 'flex', gap: 0.5 }}>
+          {[0, 1, 2].map((i) => (
             <Box
-              key={index}
+              key={i}
               sx={{
-                width: 12,
-                height: 12,
-                bgcolor: 'primary.main',
+                width: 6,
+                height: 6,
                 borderRadius: '50%',
-                animation: `${pulse} 1.5s ease-in-out ${delay}s infinite`,
+                backgroundColor: '#38bdf8',
+                animation: `${pulse} 1.5s ease-in-out infinite`,
+                animationDelay: `${i * 0.2}s`,
               }}
             />
-          ))}
-        </Box>
-
-        {/* Loading steps indicator */}
-        <Box sx={{ display: 'flex', gap: 2, mt: 2 }}>
-          {['CSV', 'Parse', 'Validate', 'Ready'].map((step, index) => (
-            <Box
-              key={step}
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: 0.5,
-                opacity: progress > (index + 1) * 25 ? 1 : 0.3,
-                transition: 'opacity 0.3s ease-in-out'
-              }}
-            >
-              <Box
-                sx={{
-                  width: 8,
-                  height: 8,
-                  borderRadius: '50%',
-                  bgcolor: progress > (index + 1) * 25 ? 'success.main' : 'grey.300',
-                  transition: 'background-color 0.3s ease-in-out'
-                }}
-              />
-              <Typography variant="caption" color="text.secondary">
-                {step}
-              </Typography>
-            </Box>
           ))}
         </Box>
       </Paper>

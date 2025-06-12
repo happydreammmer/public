@@ -1,39 +1,36 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import { 
   Box, 
   Typography, 
   Button, 
   Paper,
-  Fade,
   Alert,
-  AlertTitle
+  AlertTitle,
+  Fade
 } from '@mui/material';
 import { 
-  ErrorOutline as ErrorIcon,
+  Warning as WarningIcon, 
   Refresh as RefreshIcon,
-  BugReport as BugIcon
+  BugReport as BugReportIcon 
 } from '@mui/icons-material';
 
 class ErrorBoundary extends React.Component {
   constructor(props) {
     super(props);
     this.state = { hasError: false, error: null, errorInfo: null };
-    this.errorRef = createRef();
   }
 
   static getDerivedStateFromError(error) {
-    // Update state so the next render will show the fallback UI
     return { hasError: true };
   }
 
   componentDidCatch(error, errorInfo) {
-    // Log the error to console for debugging
-    console.error('ErrorBoundary caught an error:', error, errorInfo);
-    
     this.setState({
       error: error,
       errorInfo: errorInfo
     });
+    
+    console.error('ErrorBoundary caught an error:', error, errorInfo);
   }
 
   handleReload = () => {
@@ -43,152 +40,179 @@ class ErrorBoundary extends React.Component {
   render() {
     if (this.state.hasError) {
       return (
-        <Fade in={true} timeout={500} nodeRef={this.errorRef}>
-          <Box ref={this.errorRef} 
+        <Fade in={true} timeout={600}>
+          <Paper 
+            elevation={0}
             sx={{ 
               p: 4, 
               textAlign: 'center',
-              minHeight: '400px',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.05) 0%, rgba(239, 68, 68, 0.05) 100%)',
-              borderRadius: 2
+              borderRadius: 2,
+              background: 'rgba(30, 41, 59, 0.6)',
+              backdropFilter: 'blur(20px)',
+              border: '1px solid rgba(220, 38, 38, 0.3)',
+              position: 'relative',
+              overflow: 'hidden'
             }}
           >
-            <Paper 
-              elevation={3} 
+            {/* Background decoration */}
+            <Box
+              sx={{
+                position: 'absolute',
+                top: -30,
+                right: -30,
+                width: 60,
+                height: 60,
+                borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(220, 38, 38, 0.2), transparent)',
+              }}
+            />
+
+            {/* Error Icon */}
+            <Box sx={{ mb: 3 }}>
+              <WarningIcon 
+                sx={{ 
+                  fontSize: 64, 
+                  color: '#f87171',
+                  filter: 'drop-shadow(0 4px 8px rgba(220, 38, 38, 0.3))'
+                }} 
+              />
+            </Box>
+
+            {/* Error Title */}
+            <Typography 
+              variant="h5" 
               sx={{ 
-                p: 4, 
-                maxWidth: 600,
-                borderRadius: 3,
-                background: 'rgba(255, 255, 255, 0.95)',
-                backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(220, 38, 38, 0.1)'
+                fontWeight: 700, 
+                color: '#f87171',
+                mb: 2,
+                textShadow: '0 2px 4px rgba(0,0,0,0.3)'
               }}
             >
-              {/* Error Icon */}
-              <Box sx={{ mb: 3 }}>
-                <ErrorIcon 
-                  sx={{ 
-                    fontSize: 64, 
-                    color: 'error.main',
-                    filter: 'drop-shadow(0 2px 8px rgba(220, 38, 38, 0.3))'
-                  }} 
-                />
-              </Box>
+              Oops! Something went wrong
+            </Typography>
 
-              <Typography 
-                variant="h4" 
+            {/* Error Description */}
+            <Typography 
+              variant="body1" 
+              sx={{ 
+                mb: 4,
+                lineHeight: 1.6,
+                fontSize: '1.1rem',
+                color: '#fecaca'
+              }}
+            >
+              We encountered an unexpected error while loading the visualization. 
+              This might be due to a data formatting issue or a temporary problem.
+              Don't worry, this can usually be fixed easily!
+            </Typography>
+            
+            <Box sx={{ mb: 3, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <Button 
+                variant="contained" 
+                onClick={this.handleReload}
+                startIcon={<RefreshIcon />}
                 sx={{ 
-                  fontWeight: 700,
-                  color: 'error.main',
-                  mb: 2,
-                  textShadow: '0 1px 2px rgba(0,0,0,0.1)'
+                  px: 3,
+                  py: 1.5,
+                  borderRadius: 50,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  '&:hover': {
+                    backgroundColor: '#b91c1c',
+                  }
                 }}
               >
-                Oops! Something went wrong
-              </Typography>
+                Reload Page
+              </Button>
               
-              <Typography 
-                variant="body1" 
-                color="text.secondary" 
+              <Button 
+                variant="outlined" 
+                onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
                 sx={{ 
-                  mb: 4,
-                  lineHeight: 1.6,
-                  fontSize: '1.1rem'
+                  px: 3,
+                  py: 1.5,
+                  borderRadius: 50,
+                  fontWeight: 600,
+                  textTransform: 'none',
+                  borderColor: 'rgba(248, 113, 113, 0.5)',
+                  color: '#f87171',
+                  '&:hover': {
+                    borderColor: '#f87171',
+                    backgroundColor: 'rgba(248, 113, 113, 0.1)',
+                  }
                 }}
               >
-                We encountered an unexpected error while loading the visualization. 
-                This might be due to a data formatting issue or a temporary problem.
-                Don't worry, this can usually be fixed easily!
+                Try Again
+              </Button>
+            </Box>
+
+            {/* Helpful suggestions */}
+            <Alert 
+              severity="info" 
+              sx={{ 
+                mt: 3,
+                textAlign: 'left',
+                backgroundColor: 'rgba(56, 189, 248, 0.1)',
+                border: '1px solid rgba(56, 189, 248, 0.2)',
+                color: '#93c5fd',
+                '& .MuiAlert-icon': {
+                  color: '#60a5fa'
+                }
+              }}
+            >
+              <AlertTitle sx={{ color: '#60a5fa', fontWeight: 600 }}>
+                Troubleshooting Tips
+              </AlertTitle>
+              <Typography variant="body2" sx={{ color: '#93c5fd', mb: 1 }}>
+                • Check your internet connection
               </Typography>
-              
-              <Box sx={{ mb: 3, display: 'flex', gap: 2, justifyContent: 'center', flexWrap: 'wrap' }}>
-                <Button 
-                  variant="contained" 
-                  color="primary" 
-                  onClick={this.handleReload}
-                  startIcon={<RefreshIcon />}
+              <Typography variant="body2" sx={{ color: '#93c5fd', mb: 1 }}>
+                • Clear your browser cache and reload
+              </Typography>
+              <Typography variant="body2" sx={{ color: '#93c5fd' }}>
+                • If the problem persists, try again in a few minutes
+              </Typography>
+            </Alert>
+
+            {/* Technical Error Details (for development) */}
+            {process.env.NODE_ENV === 'development' && this.state.error && (
+              <Box sx={{ mt: 3, textAlign: 'left' }}>
+                <Typography 
+                  variant="subtitle2" 
                   sx={{ 
-                    px: 3,
-                    py: 1.5,
-                    borderRadius: 2,
-                    fontWeight: 600,
-                    textTransform: 'none',
-                    boxShadow: '0 4px 12px rgba(25, 118, 210, 0.3)'
+                    fontWeight: 600, 
+                    color: '#94a3b8',
+                    mb: 1,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 1
                   }}
                 >
-                  Reload Page
-                </Button>
-                
-                <Button 
-                  variant="outlined" 
-                  color="secondary"
-                  onClick={() => this.setState({ hasError: false, error: null, errorInfo: null })}
-                  sx={{ 
-                    px: 3,
-                    py: 1.5,
-                    borderRadius: 2,
-                    fontWeight: 600,
-                    textTransform: 'none'
-                  }}
-                >
-                  Try Again
-                </Button>
-              </Box>
-
-              {/* Helpful suggestions */}
-              <Alert 
-                severity="info" 
-                sx={{ 
-                  mt: 3,
-                  borderRadius: 2,
-                  textAlign: 'left'
-                }}
-              >
-                <AlertTitle sx={{ fontWeight: 600 }}>Quick fixes to try:</AlertTitle>
-                <ul style={{ margin: '8px 0', paddingLeft: '20px' }}>
-                  <li>Check your internet connection</li>
-                  <li>Refresh the page</li>
-                  <li>Clear your browser cache</li>
-                  <li>Try a different browser</li>
-                </ul>
-              </Alert>
-              
-              {process.env.NODE_ENV === 'development' && this.state.error && (
-                <Box sx={{ mt: 3, textAlign: 'left' }}>
-                  <Alert severity="error" sx={{ borderRadius: 2 }}>
-                    <AlertTitle sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                      <BugIcon fontSize="small" />
-                      Error Details (Development Mode)
-                    </AlertTitle>
-                    <Paper 
-                      sx={{ 
-                        mt: 2,
-                        p: 2, 
-                        backgroundColor: 'rgba(0, 0, 0, 0.05)', 
-                        overflow: 'auto',
-                        maxHeight: 200,
-                        fontSize: '12px',
-                        fontFamily: 'Monaco, "Cascadia Code", "Roboto Mono", monospace',
-                        borderRadius: 1,
-                        border: '1px solid rgba(0, 0, 0, 0.1)'
-                      }}
-                    >
-                      <Typography component="pre" sx={{ fontSize: '12px', whiteSpace: 'pre-wrap' }}>
-                        {this.state.error.toString()}
-                      </Typography>
-                      <Typography component="pre" sx={{ fontSize: '11px', color: 'text.secondary', mt: 1, whiteSpace: 'pre-wrap' }}>
-                        {this.state.errorInfo.componentStack}
-                      </Typography>
-                    </Paper>
-                  </Alert>
+                  <BugReportIcon fontSize="small" />
+                  Technical Details (Development Mode)
+                </Typography>
+                <Box sx={{ 
+                  backgroundColor: 'rgba(15, 23, 42, 0.8)', 
+                  p: 2, 
+                  borderRadius: 1,
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  fontFamily: 'monospace',
+                  fontSize: '0.8rem',
+                  color: '#cbd5e1',
+                  maxHeight: 200,
+                  overflow: 'auto'
+                }}>
+                  <Typography component="pre" sx={{ whiteSpace: 'pre-wrap', fontSize: 'inherit' }}>
+                    {this.state.error.toString()}
+                    {this.state.errorInfo.componentStack}
+                  </Typography>
                 </Box>
-              )}
-            </Paper>
-          </Box>
+              </Box>
+            )}
+          </Paper>
         </Fade>
       );
     }

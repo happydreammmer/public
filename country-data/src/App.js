@@ -6,51 +6,56 @@ import {
   Box, 
   Typography, 
   Container, 
-  Paper, 
   ThemeProvider, 
   createTheme,
   CssBaseline,
-  AppBar,
-  Toolbar,
-  IconButton,
   Fade,
   Alert,
   AlertTitle
 } from '@mui/material';
-import { Refresh as RefreshIcon, Analytics as AnalyticsIcon } from '@mui/icons-material';
 import * as d3 from 'd3';
 
-// Create a custom theme for better UI
+// Create a theme matching event-hunter style
 const theme = createTheme({
   palette: {
     mode: 'light',
     primary: {
-      main: '#1976d2',
-      light: '#42a5f5',
-      dark: '#1565c0',
+      main: '#2563eb',
+      light: '#60a5fa',
+      dark: '#1d4ed8',
     },
     secondary: {
-      main: '#dc004e',
-      light: '#ff5983',
-      dark: '#9a0036',
+      main: '#7c3aed',
+      light: '#a78bfa',
+      dark: '#5b21b6',
     },
     background: {
-      default: 'transparent',
-      paper: '#ffffff',
+      default: '#0f172a',
+      paper: 'rgba(30, 41, 59, 0.8)',
     },
     text: {
-      primary: '#2c3e50',
-      secondary: '#7f8c8d',
+      primary: '#f8fafc',
+      secondary: '#cbd5e1',
+    },
+    success: {
+      main: '#16a34a',
+      light: '#22c55e',
+      dark: '#15803d',
+    },
+    warning: {
+      main: '#f59e0b',
+      light: '#fbbf24',
+      dark: '#d97706',
     },
   },
   typography: {
     fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     h4: {
-      fontWeight: 700,
+      fontWeight: 900,
       letterSpacing: '-0.02em',
     },
     h6: {
-      fontWeight: 600,
+      fontWeight: 700,
     },
     body1: {
       lineHeight: 1.6,
@@ -66,9 +71,10 @@ const theme = createTheme({
     MuiPaper: {
       styleOverrides: {
         root: {
-          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
-          backdropFilter: 'blur(10px)',
-          border: '1px solid rgba(255, 255, 255, 0.2)',
+          backgroundImage: 'none',
+          backgroundColor: 'rgba(30, 41, 59, 0.8)',
+          backdropFilter: 'blur(32px)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
         },
       },
     },
@@ -77,7 +83,7 @@ const theme = createTheme({
         root: {
           textTransform: 'none',
           fontWeight: 600,
-          borderRadius: 8,
+          borderRadius: 50,
         },
       },
     },
@@ -90,11 +96,9 @@ function App() {
   const [error, setError] = useState(null);
   const [loadingProgress, setLoadingProgress] = useState(0);
   
-  // Create refs for Fade transitions
   const mainContentRef = useRef(null);
   const errorContentRef = useRef(null);
   const visualizationRef = useRef(null);
-  const footerRef = useRef(null);
 
   const loadData = async () => {
     try {
@@ -112,11 +116,9 @@ function App() {
       const csvText = await response.text();
       setLoadingProgress(70);
 
-      // Use d3.csvParse for more robust CSV parsing
       const parsedData = d3.csvParse(csvText, d => {
-        // Validate required fields
         if (!d.country || !d.gdp_per_capita || !d.population || !d.economic_freedom) {
-          return null; // Skip invalid rows
+          return null;
         }
 
         return {
@@ -126,7 +128,7 @@ function App() {
           economic_freedom: +d.economic_freedom,
           political_system: d.political_system ? d.political_system.trim() : 'Unknown'
         };
-      }).filter(d => d !== null); // Remove invalid entries
+      }).filter(d => d !== null);
 
       setLoadingProgress(90);
 
@@ -138,7 +140,6 @@ function App() {
       setCountryData(parsedData);
       setLoadingProgress(100);
       
-      // Small delay to show completion
       setTimeout(() => setLoading(false), 300);
     } catch (err) {
       console.error('Error loading data:', err);
@@ -152,125 +153,91 @@ function App() {
     loadData();
   }, []);
 
-  const handleRefresh = () => {
-    loadData();
-  };
-
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{ minHeight: '100vh', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
-        {/* App Bar */}
-        <AppBar position="static" elevation={0} sx={{ background: 'rgba(255, 255, 255, 0.1)', backdropFilter: 'blur(10px)' }}>
-          <Toolbar sx={{ justifyContent: 'flex-end' }}>
-            <IconButton
-              color="inherit"
-              onClick={handleRefresh}
-              disabled={loading}
-              title="Refresh Data"
-              sx={{ color: 'white' }}
-            >
-              <RefreshIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
-
-        {/* Main Content */}
-        <Container maxWidth="xl" sx={{ py: 4 }}>
+      <Box 
+        sx={{ 
+          minHeight: '100vh', 
+          background: 'linear-gradient(135deg, #0f172a 0%, #1e293b 100%)',
+          position: 'relative',
+          '&::before': {
+            content: '""',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            background: `
+              radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.1) 0%, transparent 50%)
+            `,
+            zIndex: -1,
+          }
+        }}
+      >
+        <Container maxWidth="xl" sx={{ py: { xs: 2, md: 3 } }}>
           <Fade in={true} timeout={800} nodeRef={mainContentRef}>
             <Box ref={mainContentRef}>
-              {/* Header Section */}
-              <Box sx={{ textAlign: 'center', mb: 4 }}>
+              {/* Compact Header Section */}
+              <Box sx={{ textAlign: 'center', mb: { xs: 2, md: 3 } }}>
                 <Typography 
                   variant="h4" 
                   component="h1" 
-                  gutterBottom 
                   sx={{ 
-                    color: 'white',
-                    textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-                    mb: 2
+                    background: 'linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)',
+                    backgroundClip: 'text',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    textShadow: 'none',
+                    fontSize: { xs: '2rem', md: '3rem' },
+                    mb: 1
                   }}
                 >
                   Interactive Country Data Visualization
                 </Typography>
-
               </Box>
 
-              {/* Main Content Panel */}
-              <Paper 
-                elevation={6} 
-                sx={{ 
-                  p: { xs: 2, md: 4 }, 
-                  borderRadius: 3,
-                  background: 'rgba(255, 255, 255, 0.95)',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)'
-                }}
-              >
-                {loading ? (
-                  <LoadingSpinner 
-                    message="Loading country data..." 
-                    showProgress={true}
-                    progress={loadingProgress}
-                  />
-                ) : error ? (
-                  <Fade in={true} nodeRef={errorContentRef}>
-                    <Alert ref={errorContentRef} 
-                      severity="error" 
-                      sx={{ 
-                        borderRadius: 2,
-                        '& .MuiAlert-icon': { fontSize: 28 }
-                      }}
-                      action={
-                        <IconButton
-                          color="inherit"
-                          size="small"
-                          onClick={handleRefresh}
-                          title="Try Again"
-                        >
-                          <RefreshIcon />
-                        </IconButton>
+              {loading ? (
+                <LoadingSpinner 
+                  message="Loading country data..." 
+                  showProgress={true}
+                  progress={loadingProgress}
+                />
+              ) : error ? (
+                <Fade in={true} nodeRef={errorContentRef}>
+                  <Alert ref={errorContentRef} 
+                    severity="error" 
+                    sx={{ 
+                      borderRadius: 3,
+                      backgroundColor: 'rgba(220, 38, 38, 0.1)',
+                      border: '1px solid rgba(220, 38, 38, 0.2)',
+                      color: '#fecaca',
+                      '& .MuiAlert-icon': { 
+                        fontSize: 28,
+                        color: '#f87171'
                       }
-                    >
-                      <AlertTitle sx={{ fontWeight: 600 }}>Failed to load data</AlertTitle>
-                      <Typography variant="body2" sx={{ mt: 1 }}>
-                        {error}
-                      </Typography>
-                      <Typography variant="body2" sx={{ mt: 1, opacity: 0.8 }}>
-                        Please check your internet connection and try again.
-                      </Typography>
-                    </Alert>
-                  </Fade>
-                ) : (
-                  <Fade in={true} timeout={600} nodeRef={visualizationRef}>
-                    <div ref={visualizationRef}>
-                      <ErrorBoundary>
-                        <CountryVisualization data={countryData} />
-                      </ErrorBoundary>
-                    </div>
-                  </Fade>
-                )}
-              </Paper>
-
-              {/* Footer Info */}
-              {!loading && !error && (
-                <Fade in={true} timeout={1000} nodeRef={footerRef}>
-                  <Box ref={footerRef} sx={{ mt: 4, textAlign: 'center' }}>
-                    <Typography 
-                      variant="body2" 
-                      sx={{ 
-                        color: 'rgba(255, 255, 255, 0.8)',
-                        maxWidth: 800,
-                        mx: 'auto',
-                        lineHeight: 1.6
-                      }}
-                    >
-                      This visualization shows the top countries by GDP per capita. 
-                      Circle size represents population, X-axis shows Economic Freedom Index, 
-                      Y-axis shows GDP Per Capita, and colors represent different political systems. 
-                      Use the interactive filters to explore specific countries and trends.
+                    }}
+                  >
+                    <AlertTitle sx={{ fontWeight: 600, color: '#f87171' }}>
+                      Failed to load data
+                    </AlertTitle>
+                    <Typography variant="body2" sx={{ mt: 1, color: '#fecaca' }}>
+                      {error}
                     </Typography>
-                  </Box>
+                    <Typography variant="body2" sx={{ mt: 1, opacity: 0.8, color: '#fecaca' }}>
+                      Please check your internet connection and try refreshing the page.
+                    </Typography>
+                  </Alert>
+                </Fade>
+              ) : (
+                <Fade in={true} timeout={600} nodeRef={visualizationRef}>
+                  <div ref={visualizationRef}>
+                    <ErrorBoundary>
+                      <CountryVisualization data={countryData} />
+                    </ErrorBoundary>
+                  </div>
                 </Fade>
               )}
             </Box>

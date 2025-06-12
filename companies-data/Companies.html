@@ -1,107 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Strategic Companies (UAE & Oman) - AI Agent Opportunities</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Companies Data 2025">
+    <meta name="theme-color" content="#0f172a">
+    <title>Companies Data 2025 - UAE & Oman Strategic Companies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Strategic Companies (UAE & Oman)</h1>
-            <p>AI Agent Opportunities - B2B Sales Intelligence Platform</p>
+    <div class="header">
+        <div class="header-controls">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+            <select class="language-select" id="languageSelector" aria-label="Select language">
+                <option value="en">EN</option>
+                <option value="ar">AR</option>
+                <option value="fa">FA</option>
+            </select>
         </div>
-
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-number" id="totalCompanies">0</div>
-                <div class="stat-label">Total Companies</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="totalSectors">0</div>
-                <div class="stat-label">Sectors</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="highPriorityCount">0</div>
-                <div class="stat-label">High Priority</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number" id="largeEnterpriseCount">0</div>
-                <div class="stat-label">Large Enterprise</div>
-            </div>
-        </div>
-
-        <div class="controls">
-            <input type="text" id="searchBox" class="search-box" placeholder="Search companies, sectors, or locations...">
+        <div class="container">
+            <h1 data-translate-key="pageTitle">🏢 Companies Data 2025</h1>
             
-            <div class="filters">
-                <div class="filter-group">
-                    <label for="countryFilter">Country</label>
-                    <select id="countryFilter" class="filter-select">
-                        <option value="">All Countries</option>
-                        <option value="uae">UAE</option>
-                        <option value="oman">Oman</option>
-                    </select>
+            <div class="counters">
+                <div class="counter-card">
+                    <span class="counter-number" id="totalCompanies">0</span>
+                    <span class="counter-label" data-translate-key="totalCompanies">Total Companies</span>
                 </div>
-                <div class="filter-group">
-                    <label for="sectorFilter">Sector</label>
-                    <select id="sectorFilter" class="filter-select">
-                        <option value="">All Sectors</option>
-                    </select>
+                <div class="counter-card">
+                    <span class="counter-number" id="uaeCompanies">0</span>
+                    <span class="counter-label" data-translate-key="uaeCompanies">UAE Companies</span>
                 </div>
-                <div class="filter-group">
-                    <label for="locationFilter">Location</label>
-                    <select id="locationFilter" class="filter-select">
-                        <option value="">All Locations</option>
-                    </select>
+                <div class="counter-card">
+                    <span class="counter-number" id="omanCompanies">0</span>
+                    <span class="counter-label" data-translate-key="omanCompanies">Oman Companies</span>
                 </div>
-                <div class="filter-group">
-                    <label for="sizeFilter">Company Size</label>
-                    <select id="sizeFilter" class="filter-select">
-                        <option value="">All Sizes</option>
-                        <option value="large">Large Enterprise</option>
-                        <option value="medium">Medium Enterprise</option>
-                        <option value="small">Small/Medium Enterprise</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="priorityFilter">Priority</label>
-                    <select id="priorityFilter" class="filter-select">
-                        <option value="">All Priorities</option>
-                        <option value="high">High Priority</option>
-                        <option value="medium">Medium Priority</option>
-                        <option value="low">Low Priority</option>
-                    </select>
+                <div class="counter-card">
+                    <span class="counter-number" id="sectorsCount">0</span>
+                    <span class="counter-label" data-translate-key="sectors">Sectors</span>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="results-info">
-            <div class="results-count" id="resultsCount">Loading companies...</div>
-            <button class="clear-filters" id="clearFilters">Clear Filters</button>
+    <div class="container">
+        <div class="filter-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search companies, sectors..." id="searchInput" data-translate-key="searchPlaceholder" data-translate-type="placeholder">
+            </div>
+            <div class="select-wrapper">
+                <select id="countryFilter" class="filter-select">
+                    <option value="all" data-translate-key="allCountries">All Countries</option>
+                    <option value="uae" data-translate-key="uae">🇦🇪 UAE</option>
+                    <option value="oman" data-translate-key="oman">🇴🇲 Oman</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="sectorFilter" class="filter-select">
+                    <option value="all" data-translate-key="allSectors">All Sectors</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="sizeFilter" class="filter-select">
+                    <option value="all" data-translate-key="allSizes">All Sizes</option>
+                    <option value="large" data-translate-key="large">🏭 Large</option>
+                    <option value="medium" data-translate-key="medium">🏢 Medium</option>
+                    <option value="small" data-translate-key="small">🏪 Small</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="priorityFilter" class="filter-select">
+                    <option value="all" data-translate-key="allPriorities">All Priorities</option>
+                    <option value="high" data-translate-key="high">🔥 High Priority</option>
+                    <option value="medium" data-translate-key="medium">📊 Medium Priority</option>
+                    <option value="low" data-translate-key="low">📝 Low Priority</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="locationFilter" class="filter-select">
+                    <option value="all" data-translate-key="allLocations">All Locations</option>
+                </select>
+            </div>
         </div>
 
-        <div class="sectors" id="sectorsContainer">
+        <div class="companies-grid" id="companiesGrid">
             <!-- Companies will be populated by JavaScript -->
-        </div>
-
-        <div class="no-results hidden" id="noResults">
-            <h3>No companies found</h3>
-            <p>Try adjusting your search terms or filters to find more companies.</p>
-        </div>
-
-        <div class="ai-opportunity-banner">
-            <h3>🤖 Why These Companies Need AI Agents</h3>
-            <p>Driven by national visions like UAE Centennial 2071 and Oman Vision 2040, these companies are actively seeking solutions for operational efficiency, cost reduction, and competitive advantage. B2B AI agents can help them automate customer service, optimize complex operations, enhance decision-making with predictive analytics, and improve productivity across all business functions. Each company listed represents a strategic opportunity with specific, measurable AI implementation potential tailored to their industry needs.</p>
         </div>
     </div>
 
     <!-- Scripts -->
     <script src="data.js"></script>
+    <script src="translations.js"></script>
     <script src="utils.js"></script>
     <script src="script.js"></script>
 </body>

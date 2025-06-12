@@ -416,7 +416,7 @@ body::before {
 /* ===== EVENTS GRID ===== */
 .events-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Reduced from 400px for mobile */
+    grid-template-columns: repeat(3, 1fr); /* 3 columns on desktop */
     gap: 1.5rem;
     margin: 2rem 0;
     padding: 1rem 0;
@@ -650,6 +650,10 @@ body.light-theme .event-details {
         flex-grow: 1;
         flex-basis: 0;
         min-width: 150px;
+    }
+    
+    .events-grid {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on tablets */
     }
 }
 
