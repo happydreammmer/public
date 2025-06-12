@@ -2,7 +2,7 @@
 const translations = {
     en: {
         // Page title and main headings
-        pageTitle: "🏢 Companies Data 2025",
+        pageTitle: "Companies Data 2025",
         
         // Counter labels
         totalCompanies: "Total Companies",
@@ -59,7 +59,7 @@ const translations = {
     
     ar: {
         // Page title and main headings
-        pageTitle: "🏢 بيانات الشركات 2025",
+        pageTitle: "بيانات الشركات 2025",
         
         // Counter labels
         totalCompanies: "إجمالي الشركات",
@@ -116,7 +116,7 @@ const translations = {
     
     fa: {
         // Page title and main headings
-        pageTitle: "🏢 داده‌های شرکت‌ها 2025",
+        pageTitle: "داده‌های شرکت‌ها 2025",
         
         // Counter labels
         totalCompanies: "کل شرکت‌ها",

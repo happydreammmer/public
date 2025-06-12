@@ -688,14 +688,182 @@
             });
         }
 
+        // Language translations
+        const translations = {
+            en: {
+                title: '🚀 Public Projects 2025',
+                subtitle: 'Explore my collection of modern web applications built with cutting-edge technologies',
+                stat1: 'Active Projects',
+                stat2: 'Open Source',
+                stat3: 'Latest Updates',
+                eventHunterTitle: 'Event Hunter 2025',
+                eventHunterDesc: 'Discover and track global events with advanced filtering, multi-language support, and beautiful visualizations. Features real-time search, countdown timers, and comprehensive event details.',
+                eventHunterCta: 'Launch Event Hunter →',
+                companiesTitle: 'Companies Data',
+                companiesDesc: 'Strategic companies database for UAE & Oman with AI use cases, priority filtering, and comprehensive business intelligence. Perfect for B2B research and market analysis.',
+                companiesCta: 'Explore Companies →',
+                countryTitle: 'Country Data Viz',
+                countryDesc: 'Interactive dashboard for analyzing global economic and political data with dynamic visualizations, comparative analysis, and comprehensive country profiles.',
+                countryCta: 'View Dashboard →',
+                multiLang: '🌍 Multi-language',
+                darkLight: '🎨 Dark/Light Theme',
+                mobileReady: '📱 Mobile Ready',
+                realTimeSearch: '⚡ Real-time Search',
+                analytics: '📊 Analytics',
+                aiIntegration: '🤖 AI Integration',
+                priorityFilter: '🎯 Priority Filtering',
+                multiRegion: '🌐 Multi-region',
+                businessIntel: '📈 Business Intel',
+                advancedSearch: '🔍 Advanced Search',
+                dataViz: '📊 Data Visualization',
+                interactiveMaps: '🗺️ Interactive Maps',
+                economicAnalysis: '📈 Economic Analysis',
+                realTimeData: '🔄 Real-time Data',
+                responsive: '📱 Responsive'
+            },
+            ar: {
+                title: '🚀 المشاريع العامة 2025',
+                subtitle: 'استكشف مجموعة تطبيقات الويب الحديثة المبنية بأحدث التقنيات',
+                stat1: 'المشاريع النشطة',
+                stat2: 'مفتوح المصدر',
+                stat3: 'آخر التحديثات',
+                eventHunterTitle: 'مطارد الأحداث 2025',
+                eventHunterDesc: 'اكتشف وتتبع الأحداث العالمية مع فلترة متقدمة ودعم متعدد اللغات وتصورات جميلة. يتضمن البحث المباشر وعدادات العد التنازلي وتفاصيل شاملة للأحداث.',
+                eventHunterCta: 'تشغيل مطارد الأحداث ←',
+                companiesTitle: 'بيانات الشركات',
+                companiesDesc: 'قاعدة بيانات استراتيجية للشركات في الإمارات وعمان مع استخدامات الذكاء الاصطناعي وفلترة الأولوية وذكاء الأعمال الشامل. مثالي لبحوث B2B وتحليل السوق.',
+                companiesCta: 'استكشف الشركات ←',
+                countryTitle: 'تصور بيانات البلدان',
+                countryDesc: 'لوحة تحكم تفاعلية لتحليل البيانات الاقتصادية والسياسية العالمية مع تصورات ديناميكية وتحليل مقارن وملفات بلدان شاملة.',
+                countryCta: 'عرض اللوحة ←',
+                multiLang: '🌍 متعدد اللغات',
+                darkLight: '🎨 مظهر مظلم/فاتح',
+                mobileReady: '📱 جاهز للموبايل',
+                realTimeSearch: '⚡ بحث مباشر',
+                analytics: '📊 تحليلات',
+                aiIntegration: '🤖 تكامل الذكاء الاصطناعي',
+                priorityFilter: '🎯 فلترة الأولوية',
+                multiRegion: '🌐 متعدد المناطق',
+                businessIntel: '📈 ذكاء الأعمال',
+                advancedSearch: '🔍 بحث متقدم',
+                dataViz: '📊 تصور البيانات',
+                interactiveMaps: '🗺️ خرائط تفاعلية',
+                economicAnalysis: '📈 تحليل اقتصادي',
+                realTimeData: '🔄 بيانات مباشرة',
+                responsive: '📱 متجاوب'
+            },
+            fa: {
+                title: '🚀 پروژه‌های عمومی 2025',
+                subtitle: 'مجموعه‌ای از اپلیکیشن‌های وب مدرن ساخته شده با جدیدترین فناوری‌ها را کشف کنید',
+                stat1: 'پروژه‌های فعال',
+                stat2: 'متن باز',
+                stat3: 'آخرین به‌روزرسانی‌ها',
+                eventHunterTitle: 'شکارچی رویداد 2025',
+                eventHunterDesc: 'رویدادهای جهانی را با فیلترینگ پیشرفته، پشتیبانی چندزبانه و تجسم‌های زیبا کشف و پیگیری کنید. شامل جستجوی بلادرنگ، تایمرهای شمارش معکوس و جزئیات جامع رویدادها.',
+                eventHunterCta: 'راه‌اندازی شکارچی رویداد ←',
+                companiesTitle: 'داده‌های شرکت‌ها',
+                companiesDesc: 'پایگاه داده استراتژیک شرکت‌ها برای امارات و عمان با موارد استفاده هوش مصنوعی، فیلترینگ اولویت و هوش تجاری جامع. ایده‌آل برای تحقیقات B2B و تحلیل بازار.',
+                companiesCta: 'کاوش شرکت‌ها ←',
+                countryTitle: 'تجسم داده‌های کشور',
+                countryDesc: 'داشبورد تعاملی برای تحلیل داده‌های اقتصادی و سیاسی جهانی با تجسم‌های پویا، تحلیل مقایسه‌ای و پروفایل‌های جامع کشورها.',
+                countryCta: 'مشاهده داشبورد ←',
+                multiLang: '🌍 چندزبانه',
+                darkLight: '🎨 طرح تیره/روشن',
+                mobileReady: '📱 آماده موبایل',
+                realTimeSearch: '⚡ جستجوی بلادرنگ',
+                analytics: '📊 تحلیل‌ها',
+                aiIntegration: '🤖 تکامل هوش مصنوعی',
+                priorityFilter: '🎯 فیلترینگ اولویت',
+                multiRegion: '🌐 چندمنطقه‌ای',
+                businessIntel: '📈 هوش تجاری',
+                advancedSearch: '🔍 جستجوی پیشرفته',
+                dataViz: '📊 تجسم داده‌ها',
+                interactiveMaps: '🗺️ نقشه‌های تعاملی',
+                economicAnalysis: '📈 تحلیل اقتصادی',
+                realTimeData: '🔄 داده‌های بلادرنگ',
+                responsive: '📱 واکنش‌گرا'
+            }
+        };
+
         function setupLanguageSelector() {
             const languageSelector = document.getElementById('languageSelector');
             
+            // Load saved language or default to English
+            const savedLanguage = localStorage.getItem('language') || 'en';
+            languageSelector.value = savedLanguage;
+            
+            // Apply initial language
+            applyLanguage(savedLanguage);
+            
             languageSelector.addEventListener('change', (e) => {
                 const language = e.target.value;
-                document.documentElement.lang = language;
-                document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+                applyLanguage(language);
+                localStorage.setItem('language', language);
             });
+        }
+
+        function applyLanguage(language) {
+            // Set document attributes
+            document.documentElement.lang = language;
+            document.documentElement.dir = (language === 'ar' || language === 'fa') ? 'rtl' : 'ltr';
+            
+            // Get translations for selected language
+            const t = translations[language];
+            
+            // Update all text content
+            document.querySelector('.header h1').textContent = t.title;
+            document.querySelector('.header p').textContent = t.subtitle;
+            
+            // Update stats
+            const statLabels = document.querySelectorAll('.stat-label');
+            statLabels[0].textContent = t.stat1;
+            statLabels[1].textContent = t.stat2;
+            statLabels[2].textContent = t.stat3;
+            
+            // Update Event Hunter project
+            const eventHunterCard = document.querySelector('.project-card.event-hunter');
+            eventHunterCard.querySelector('.project-title').textContent = t.eventHunterTitle;
+            eventHunterCard.querySelector('.project-description').textContent = t.eventHunterDesc;
+            eventHunterCard.querySelector('.project-cta').textContent = t.eventHunterCta;
+            
+            // Update Companies Data project
+            const companiesCard = document.querySelector('.project-card.companies-data');
+            companiesCard.querySelector('.project-title').textContent = t.companiesTitle;
+            companiesCard.querySelector('.project-description').textContent = t.companiesDesc;
+            companiesCard.querySelector('.project-cta').textContent = t.companiesCta;
+            
+            // Update Country Data project
+            const countryCard = document.querySelector('.project-card.country-data');
+            countryCard.querySelector('.project-title').textContent = t.countryTitle;
+            countryCard.querySelector('.project-description').textContent = t.countryDesc;
+            countryCard.querySelector('.project-cta').textContent = t.countryCta;
+            
+            // Update feature tags
+            const featureTags = document.querySelectorAll('.feature-tag');
+            
+            // Event Hunter tags
+            const eventTags = eventHunterCard.querySelectorAll('.feature-tag');
+            eventTags[0].textContent = t.multiLang;
+            eventTags[1].textContent = t.darkLight;
+            eventTags[2].textContent = t.mobileReady;
+            eventTags[3].textContent = t.realTimeSearch;
+            eventTags[4].textContent = t.analytics;
+            
+            // Companies Data tags
+            const companyTags = companiesCard.querySelectorAll('.feature-tag');
+            companyTags[0].textContent = t.aiIntegration;
+            companyTags[1].textContent = t.priorityFilter;
+            companyTags[2].textContent = t.multiRegion;
+            companyTags[3].textContent = t.businessIntel;
+            companyTags[4].textContent = t.advancedSearch;
+            
+            // Country Data tags
+            const countryTags = countryCard.querySelectorAll('.feature-tag');
+            countryTags[0].textContent = t.dataViz;
+            countryTags[1].textContent = t.interactiveMaps;
+            countryTags[2].textContent = t.economicAnalysis;
+            countryTags[3].textContent = t.realTimeData;
+            countryTags[4].textContent = t.responsive;
         }
 
         function animateStats() {

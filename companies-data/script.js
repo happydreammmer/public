@@ -119,8 +119,8 @@ function renderCompanyCards() {
     if (filteredCompanies.length === 0) {
         companiesGrid.innerHTML = `
             <div class="no-results">
-                <h3>No companies found</h3>
-                <p>Try adjusting your filters or search terms.</p>
+                <h3 data-translate-key="noCompaniesFound">No companies found</h3>
+                <p data-translate-key="tryAdjustingFilters">Try adjusting your filters or search terms.</p>
             </div>
         `;
         return;

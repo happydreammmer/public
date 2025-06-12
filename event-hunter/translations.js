@@ -1,7 +1,7 @@
 // ===== TRANSLATION DATA =====
 const translations = {
     en: {
-        pageTitle: "🔎 Event Hunter 2025",
+        pageTitle: "Event Hunter 2025",
         totalEvents: "Total Events",
         upcomingEvents: "Upcoming Events",
         completedEvents: "Completed Events",
@@ -54,7 +54,7 @@ const translations = {
         countdownPrefix: "⏰ "
     },
     ar: {
-        pageTitle: "🔎 صياد الفعاليات ٢٠٢٥",
+        pageTitle: "صياد الفعاليات ٢٠٢٥",
         totalEvents: "إجمالي الفعاليات",
         upcomingEvents: "الفعاليات القادمة",
         completedEvents: "الفعاليات المكتملة",
@@ -107,7 +107,7 @@ const translations = {
         countdownPrefix: "⏰ "
     },
     fa: {
-        pageTitle: "🔎 شکارچی رویداد ۲۰۲۵",
+        pageTitle: "شکارچی رویداد ۲۰۲۵",
         totalEvents: "کل رویدادها",
         upcomingEvents: "رویدادهای پیش رو",
         completedEvents: "رویدادهای تکمیل شده",
