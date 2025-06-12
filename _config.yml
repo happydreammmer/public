@@ -1,0 +1,22 @@
+# Jekyll configuration for GitHub Pages
+exclude:
+  - node_modules/
+  - country-data/node_modules/
+  - companies-data/node_modules/
+  - event-hunter/node_modules/
+  - "*.json"
+  - package.json
+  - package-lock.json
+  - README.md
+
+# GitHub Pages specific settings
+plugins:
+  - jekyll-relative-links
+
+relative_links:
+  enabled: true
+  collections: true
+
+# Basic Jekyll settings
+markdown: kramdown
+highlighter: rouge 
