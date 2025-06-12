@@ -79,7 +79,7 @@ cd Eventhunter
 ```
 
 3. **Open** the application:
-   - Open `Events.html` in your web browser
+   - Open `events.html` in your web browser
    - Or serve it using a local web server:
 ```bash
 # Using Python
@@ -92,7 +92,7 @@ npx http-server
 php -S localhost:8000
 ```
 
-4. **Access** the application at `http://localhost:8000/Events.html` (if using a server)
+4. **Access** the application at `http://localhost:8000/events.html` (if using a server)
 
 ### Quick Test on iPhone
 1. Open Safari on your iPhone
@@ -104,7 +104,7 @@ php -S localhost:8000
 
 ```
 Eventhunter/
-├── Events.html      # Main HTML file with iOS optimizations
+├── events.html      # Main HTML file with iOS optimizations
 ├── styles.css       # CSS styles with mobile-first design
 ├── script.js        # Main application logic with mobile enhancements
 ├── data.js          # Event data and mappings
@@ -202,7 +202,7 @@ Edit `data.js` and add events to the `events` array:
 
 ### Adding New Languages
 1. Add translations to `translations.js`
-2. Update the language selector in `Events.html`
+2. Update the language selector in `events.html`
 3. Add font support in `styles.css` if needed
 4. Test RTL layout for right-to-left languages
 
@@ -306,7 +306,7 @@ cd Eventhunter
 python -m http.server 8080
 
 # Open browser to
-http://localhost:8080/Events.html
+http://localhost:8080/events.html
 ```
 
 ## 📄 License
