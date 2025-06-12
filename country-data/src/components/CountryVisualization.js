@@ -166,9 +166,9 @@ const CountryVisualization = ({ data }) => {
     const chartGroup = svg.append('g')
       .attr('transform', `translate(${margin.left}, ${margin.top})`);
     
-    // Enhanced scales with improved domain starting from 25
+    // Enhanced scales with domain starting from 0
     const xScale = d3.scaleLinear()
-      .domain([25, d3.max(processedData, d => d.economic_freedom) * 1.02])
+      .domain([0, d3.max(processedData, d => d.economic_freedom) * 1.02])
       .range([0, innerWidth]);
     
     const yScale = d3.scaleLinear()
