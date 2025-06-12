@@ -59,6 +59,27 @@ jobs:
           fi
         working-directory: ./country-data
         continue-on-error: true
+
+      - name: Create deployment directory
+        run: |
+          # Create a clean deployment directory
+          mkdir -p _site
+          
+          # Copy all root files
+          cp -r *.html _site/ 2>/dev/null || true
+          cp -r *.md _site/ 2>/dev/null || true
+          cp -r .nojekyll _site/ 2>/dev/null || true
+          
+          # Copy project directories
+          cp -r event-hunter _site/ 2>/dev/null || true
+          cp -r companies-data _site/ 2>/dev/null || true
+          
+          # Copy country-data (including build if it exists)
+          cp -r country-data _site/ 2>/dev/null || true
+          
+          # List contents for debugging
+          echo "Site contents:"
+          ls -la _site/
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -66,7 +87,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
       - name: Deploy to GitHub Pages
         id: deployment
