@@ -217,6 +217,21 @@
     .noscript-message li {
       margin-bottom: 0.5rem;
     }
+
+    /* Basic table styles for demo data */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1.5rem;
+    }
+    th, td {
+      padding: 0.5rem;
+      border: 1px solid rgba(0,0,0,0.1);
+      text-align: left;
+    }
+    th {
+      background: rgba(0,0,0,0.05);
+    }
   </style>
   
   <!-- Structured Data for SEO -->
@@ -252,6 +267,31 @@
   
   <!-- Main application container -->
   <div id="root" role="main" aria-live="polite"></div>
+
+  <script>
+    async function loadData() {
+      try {
+        const res = await fetch('data/final_country_data.csv');
+        const text = await res.text();
+        const lines = text.trim().split('\n').slice(1);
+        const table = document.createElement('table');
+        table.innerHTML = '<tr><th>Country</th><th>GDP Per Capita</th><th>Population</th><th>Economic Freedom</th><th>Political System</th></tr>';
+        lines.slice(0, 20).forEach(l => {
+          const values = l.split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/);
+          const row = document.createElement('tr');
+          row.innerHTML = `<td>${values[0].replace(/\"/g,'')}</td>` +
+            `<td>${values[1]}</td><td>${values[2]}</td>` +
+            `<td>${values[3]}</td><td>${values[4]}</td>`;
+          table.appendChild(row);
+        });
+        document.getElementById('root').appendChild(table);
+      } catch (err) {
+        document.getElementById('root').textContent = 'Failed to load data.';
+        console.error(err);
+      }
+    }
+    loadData();
+  </script>
   
   <!-- Service Worker Registration (commented out - uncomment if implementing PWA) -->
   <!--
