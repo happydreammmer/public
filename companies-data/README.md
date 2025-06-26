@@ -28,7 +28,7 @@ A comprehensive B2B sales intelligence platform showcasing strategic companies i
 
 ```
 companies-data/
-├── Companies.html      # Main application page
+├── companies-listing/index.html      # Main application page
 ├── styles.css         # All styling and themes
 ├── data.js           # Company data and filters
 ├── script.js         # Main application logic
@@ -82,7 +82,7 @@ companies-data/
 ## 🚀 Getting Started
 
 1. **Clone or Download** this repository
-2. **Open** `Companies.html` in your browser
+2. **Open** `companies-listing/index.html` in your browser
 3. **Deploy** to GitHub Pages for live hosting
 
 ### For GitHub Pages Deployment:
@@ -90,7 +90,7 @@ companies-data/
 1. Push to GitHub repository
 2. Go to repository Settings > Pages
 3. Select source branch (usually `main`)
-4. Your site will be available at `https://yourusername.github.io/repository-name/companies-data/Companies.html`
+4. Your site will be available at `https://yourusername.github.io/repository-name/companies-data/companies-listing/index.html`
 
 ## 📈 Usage
 
