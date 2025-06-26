@@ -39,7 +39,7 @@
   </noscript>
   
   <!-- Preload critical data -->
-  <link rel="preload" href="/data/final_country_data.csv" as="fetch" crossorigin>
+  <link rel="preload" href="../data/final_country_data.csv" as="fetch" crossorigin>
   
   <style>
     /* Critical CSS - Above the fold */
@@ -271,7 +271,7 @@
   <script>
     async function loadData() {
       try {
-        const res = await fetch('data/final_country_data.csv');
+        const res = await fetch('../data/final_country_data.csv');
         const text = await res.text();
         const lines = text.trim().split('\n').slice(1);
         const table = document.createElement('table');
