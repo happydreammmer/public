@@ -1,3 +1,8 @@
+<<<<<<< 5xwqgz-codex/fix-html-duplicates-for-war-page
+# Israel-Iran Crisis Dashboard
+
+Coming soon.
+=======
 # 🇮🇷🇮🇱 Iran-Israel Crisis Dashboard
 
 An interactive web dashboard that visualizes strategic scenarios in a potential conflict between Iran and Israel. The page provides dynamic risk assessments, scenario toggles, and explanatory charts to explore possible escalations.
@@ -13,3 +18,4 @@ An interactive web dashboard that visualizes strategic scenarios in a potential 
 
 Open [`prediction/index.html`](./prediction/index.html) directly in your browser or serve the directory via a local HTTP server.
 
+>>>>>>> main
