@@ -1,6 +1,6 @@
 # 🌐 Public Directory - Portfolio Showcase
 
-A comprehensive collection of interactive web applications showcasing data visualization, business intelligence, and event discovery platforms. Built with modern web technologies including React, D3.js, and responsive design principles.
+A comprehensive collection of interactive web applications showcasing data visualization, business intelligence, event discovery, and strategic analysis platforms. Built with modern web technologies including React, D3.js, and responsive design principles.
 
 ![Portfolio](https://img.shields.io/badge/Portfolio-2025-blue.svg)
 ![Technologies](https://img.shields.io/badge/Tech-React%20%7C%20D3.js%20%7C%20JavaScript-brightgreen.svg) 
@@ -17,129 +17,154 @@ Access all applications through the main portfolio dashboard with beautiful anim
 
 ### 🔎 [Event Hunter 2025](./event-hunter/)
 **Global Events Discovery Platform**
-
 - **200+ Events** across 6 continents for 2025
-- **Multi-Industry Coverage**: Technology, Healthcare, Finance, Energy, Tourism, and more
-- **Mobile-Optimized** with iPhone-specific enhancements
+- **Multi-Industry Coverage**: Technology, Healthcare, Finance, Energy, Tourism
 - **Multi-Language Support**: English, Arabic, Persian/Farsi with RTL support
 - **Advanced Filtering**: Search by industry, country, date, and status
-- **Real-time Analytics**: Live event counters and status tracking
-
-**Tech Stack**: Pure JavaScript, CSS3, HTML5, Glass Morphism Design
-**Features**: PWA-ready, offline support, touch-optimized
 
 ### 🏢 [Companies Data - UAE & Oman](./companies-data/)
 **B2B Sales Intelligence Platform**
-
 - **80+ Strategic Companies** across UAE & Oman
 - **15+ Key Sectors** including finance, energy, telecommunications
 - **AI Opportunities Mapping** for each company
 - **Interactive Search & Filtering** by sector, location, size, priority
-- **Contact Intelligence** including websites and social media
-- **GitHub Pages Ready** static deployment
-
-**Tech Stack**: JavaScript, CSS Variables, Modular Architecture
-**Features**: Responsive design, real-time statistics, SEO optimized
 
 ### 🌍 [Country Data Visualization](./country-data/)
 **Interactive Data Dashboard**
-
 - **Interactive Scatter Plot** with D3.js visualization
 - **Multi-dimensional Analysis**: GDP, population, economic freedom, political systems
 - **React-Powered** with Material-UI components
-- **Mobile-First Design** with touch interactions
 - **Real-time Filtering** and dynamic search capabilities
-- **Accessibility Features** with screen reader support
 
-**Tech Stack**: React 19.1.0, D3.js 7.9.0, Material-UI 6.4.12
-**Features**: PWA-ready, responsive charts, colorblind-friendly palette
+### 🎯 [Iran-Israel Crisis Dashboard](./is-ir-conflict/) **[NEW]**
+**Strategic Analysis & Game Theory Assessment**
+- **Interactive Poll System** with persistent data storage
+- **Multi-Language Support**: English, Arabic, Persian with strategic translations
+- **Game Theory Framework**: Chicken Game dynamics analysis
+- **Real-time Probability Calculator** with dynamic risk assessment
+- **Strategic Timeline** with critical decision points
 
-## 🛠️ Tech Stack
+## 🛠️ Implementation Action Plan
 
-### Frontend Technologies
-- **React 19.1.0** - Modern React with hooks and performance optimizations
-- **D3.js 7.9.0** - Powerful data visualization library
-- **Material-UI 6.4.12** - React component library
-- **Pure JavaScript** - Vanilla JS for lightweight applications
-- **CSS3** - Modern styling with Grid, Flexbox, and CSS Variables
-- **HTML5** - Semantic markup with accessibility features
+### Phase 1: Integration & Structure
+1. **Portfolio Integration**
+   - Add 4th project card to `public.html` with crisis-themed styling
+   - Update stats section (4 Active Projects)
+   - Add crisis dashboard project description and features
 
-### Build & Deployment
-- **GitHub Pages** - Static site hosting with Jekyll
-- **Webpack** - Module bundling and optimization
-- **Babel** - JavaScript compilation
-- **Progressive Web App** - PWA capabilities across applications
+2. **File Organization**
+   - Reorganize `is-ir-conflict/` directory structure
+   - Create dedicated CSS, JS, and data files
+   - Implement modular architecture
 
-### Design & UX
-- **Glass Morphism** - Modern design language
-- **Dark/Light Themes** - User preference support
-- **Mobile-First** - Responsive design approach
-- **Multi-Language** - RTL support for Arabic and Persian
-- **Accessibility** - WCAG compliant features
+### Phase 2: Persistent Poll Data System
+**Challenge**: Static GitHub Pages doesn't support server-side storage
+
+**Solution**: Hybrid Approach
+1. **localStorage**: Immediate persistence per browser
+2. **Export/Import**: JSON data backup functionality
+3. **GitHub Integration**: Optional community data aggregation
+
+**Implementation**:
+```javascript
+// Data persistence architecture
+const PollDataManager = {
+    save: (data) => localStorage.setItem('crisis-poll-data', JSON.stringify(data)),
+    load: () => JSON.parse(localStorage.getItem('crisis-poll-data') || '{}'),
+    export: () => downloadJSON(data),
+    import: (file) => loadJSONFile(file)
+}
+```
+
+### Phase 3: Multi-Language System
+**Languages**: English (EN), Arabic (AR), Persian/Farsi (FA)
+
+**Implementation Strategy**:
+1. **Language Selector**: Fixed dropdown in upper-left corner
+2. **Translation Object**: Centralized translations with simple language
+3. **RTL Support**: Arabic and Persian right-to-left layout
+4. **Cultural Adaptation**: Appropriate terminology for each language
+
+```javascript
+const translations = {
+    en: { /* English */ },
+    ar: { /* Arabic - Simple */ },
+    fa: { /* Persian - Simple */ }
+}
+```
+
+### Phase 4: Enhanced Features
+1. **Real-time Updates**: Dynamic probability recalculation
+2. **Data Visualization**: Enhanced charts with Chart.js
+3. **Mobile Optimization**: Touch-friendly interactions
+4. **Accessibility**: Screen reader support and keyboard navigation
 
 ## 🏗️ Project Structure
 
 ```
 public-directory/
-├── 📄 public.html                    # Main portfolio dashboard
-├── 📄 README.MD                      # This file
-├── ⚙️ _config.yml                    # Jekyll configuration
-├── 🔎 event-hunter/
-│   ├── 📄 events.html               # Event discovery app
-│   ├── 📊 data.js                   # 200+ global events
-│   ├── 🎨 styles.css                # Mobile-optimized styles
-│   ├── ⚙️ script.js                 # App logic & filters
-│   ├── 🌐 translations.js           # Multi-language support
-│   └── 📖 README.md                 # Event Hunter docs
-├── 🏢 companies-data/
-│   ├── 📄 Companies.html            # B2B intelligence app
-│   ├── 📊 data.js                   # UAE & Oman companies
-│   ├── 🎨 styles.css                # Professional styling
-│   ├── ⚙️ script.js                 # Search & filter logic
-│   ├── 🛠️ utils.js                  # Utility functions
-│   └── 📖 README.md                 # Companies Data docs
-└── 🌍 country-data/
-    ├── 📦 package.json              # React dependencies
-    ├── 🏗️ src/
-    │   ├── 📄 App.js                # Main React app
-    │   └── 🧩 components/
-    │       ├── CountryVisualization.js  # D3.js charts
-    │       ├── FilterPanel.js           # Interactive filters
-    │       └── LoadingSpinner.js        # Loading states
-    ├── 🌐 public/
-    │   ├── 📄 index.html            # React entry point
-    │   └── 📊 data/                 # Country datasets
-    ├── 🚀 build/                    # Production build
-    └── 📖 README.md                 # Country Data docs
+├── 📄 public.html                    # Main portfolio dashboard (UPDATE)
+├── 📄 README.MD                      # This file (UPDATED)
+├── 🎯 is-ir-conflict/               # Crisis analysis dashboard (NEW)
+│   ├── 📄 index.html                # Main dashboard page
+│   ├── 📊 data/
+│   │   ├── poll-data.json           # Persistent poll results
+│   │   └── translations.js          # Multi-language support
+│   ├── 🎨 assets/
+│   │   ├── styles.css               # Crisis-themed styling
+│   │   └── crisis-theme.css         # Strategic analysis theme
+│   ├── ⚙️ js/
+│   │   ├── poll-manager.js          # Poll data persistence
+│   │   ├── language-manager.js      # Multi-language system
+│   │   ├── chart-manager.js         # Dynamic probability charts
+│   │   └── game-theory.js           # Strategic analysis logic
+│   └── 📖 README.md                 # Crisis dashboard docs
+├── 🔎 event-hunter/                 # (Existing)
+├── 🏢 companies-data/               # (Existing)
+└── 🌍 country-data/                 # (Existing)
 ```
+
+## 🎯 Technical Implementation Plan
+
+### Data Persistence Strategy
+1. **Local Storage**: Browser-based persistence
+2. **Export Feature**: Download poll data as JSON
+3. **Import Feature**: Upload and restore poll data
+4. **Data Validation**: Ensure data integrity across sessions
+
+### Multi-Language Architecture
+1. **Language Detection**: Browser language preference
+2. **Dynamic Content**: Real-time language switching
+3. **RTL Layout**: CSS-based directional support
+4. **Font Loading**: Arabic (Cairo) and Persian (Vazirmatn) fonts
+
+### Deployment Considerations
+- **GitHub Actions**: Automated deployment pipeline
+- **Data Files**: Poll data committed to repository
+- **Version Control**: Track poll data changes over time
+- **Backup Strategy**: Multiple data persistence layers
 
 ## 🚀 Quick Start
 
-### Option 1: Direct Access (Recommended)
-1. **Open** `public.html` in your browser
-2. **Navigate** through the portfolio dashboard
-3. **Launch** any application with one click
-
-### Option 2: Individual Applications
-1. **Event Hunter**: Open `event-hunter/events.html`
-2. **Companies Data**: Open `companies-data/Companies.html`
-3. **Country Data**: Open `country-data/public/index.html`
-
-### Option 3: Development Setup
+### Development Setup
 ```bash
 # Clone repository
 git clone <repository-url>
 cd public-directory
 
-# For React app (Country Data)
-cd country-data
-npm install
-npm start
+# Install dependencies (for React apps)
+cd country-data && npm install && cd ..
 
-# For static apps, use any local server
+# Start local development server
 python -m http.server 8000
-# or
-npx http-server
+# Navigate to: http://localhost:8000/public.html
+```
+
+### Crisis Dashboard Standalone
+```bash
+# Direct access to crisis dashboard
+open is-ir-conflict/index.html
+# or via local server: http://localhost:8000/is-ir-conflict/
 ```
 
 ## 📱 Mobile Experience
