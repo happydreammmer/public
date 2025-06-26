@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>The Evolution of AI: Scaling Laws and the Future of Intelligence</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated background elements */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(64, 224, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape2 { width: 120px; height: 120px; top: 60%; right: 15%; animation-delay: 5s; }
+        .shape3 { width: 60px; height: 60px; bottom: 30%; left: 20%; animation-delay: 10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #40e0ff, #8a2be2, #ff6b35);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(64, 224, 255, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b8c3;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Main content sections */
+        .section {
+            margin: 80px 0;
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #40e0ff;
+        }
+
+        .scaling-laws {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .law-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(64, 224, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .law-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(64, 224, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .law-card:hover::before {
+            left: 100%;
+        }
+
+        .law-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(64, 224, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(64, 224, 255, 0.1);
+        }
+
+        @media (hover: none) and (pointer: coarse) {
+            .law-card:hover {
+                transform: none;
+            }
+            
+            .law-card:active {
+                transform: translateY(-5px);
+                border-color: rgba(64, 224, 255, 0.4);
+                box-shadow: 0 10px 20px rgba(64, 224, 255, 0.1);
+            }
+        }
+
+        .law-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .law-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .law-description {
+            color: #b0b8c3;
+            font-size: 1rem;
+        }
+
+        /* Chart container */
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(64, 224, 255, 0.1);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+            width: 100%;
+            min-height: 300px;
+        }
+
+        .chart-wrapper canvas {
+            max-width: 100%;
+            height: auto !important;
+        }
+
+        .chart-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 400px;
+            color: #b0b8c3;
+            font-size: 1.1rem;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                padding: 40px;
+                margin: 60px 0;
+            }
+            
+            .chart-wrapper {
+                height: 500px;
+                min-height: 400px;
+            }
+            
+            .chart-loading {
+                height: 500px;
+            }
+        }
+
+        /* Timeline section */
+        .timeline {
+            position: relative;
+            margin: 60px 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #40e0ff;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(10px);
+        }
+
+        .timeline-year {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #40e0ff;
+            min-width: 100px;
+        }
+
+        .timeline-content {
+            margin-left: 30px;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-desc {
+            color: #b0b8c3;
+        }
+
+        /* Future predictions */
+        .predictions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .prediction-card {
+            background: linear-gradient(135deg, rgba(64, 224, 255, 0.1), rgba(138, 43, 226, 0.1));
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(64, 224, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .prediction-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 40px rgba(64, 224, 255, 0.2);
+        }
+
+        .prediction-year {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #8a2be2;
+            margin-bottom: 20px;
+        }
+
+        .prediction-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .prediction-desc {
+            color: #b0b8c3;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .section {
+                margin: 30px 0;
+                padding: 20px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .scaling-laws {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 40px 0;
+            }
+            
+            .law-card {
+                padding: 20px;
+            }
+            
+            .law-icon {
+                font-size: 2.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .law-title {
+                font-size: 1.3rem;
+                margin-bottom: 10px;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
+                margin: 20px 0;
+            }
+            
+            .timeline-content {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .timeline-year {
+                font-size: 1.5rem;
+                min-width: auto;
+            }
+            
+            .timeline-title {
+                font-size: 1.1rem;
+                margin-bottom: 8px;
+            }
+            
+            .metrics {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin: 30px 0;
+            }
+            
+            .metric-card {
+                padding: 20px 15px;
+            }
+            
+            .metric-value {
+                font-size: 2rem;
+            }
+            
+            .metric-label {
+                font-size: 0.9rem;
+                margin-top: 8px;
+            }
+            
+            .predictions {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 40px 0;
+            }
+            
+            .prediction-card {
+                padding: 20px;
+            }
+            
+            .prediction-year {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+            
+            .prediction-title {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+                padding: 0 10px;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+            
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .law-icon {
+                font-size: 2rem;
+            }
+            
+            .chart-container h3 {
+                font-size: 1.2rem;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* Key metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(64, 224, 255, 0.1);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40e0ff;
+            display: block;
+        }
+
+        .metric-label {
+            color: #b0b8c3;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-elements">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>The Evolution of AI: Scaling Laws and the Future of Intelligence</h1>
+            <p class="subtitle">Since 2020, artificial intelligence has experienced unprecedented growth through scaling laws - predictable relationships between compute, data, model size, and performance. 2024 marked the first time AI achieved above-human average IQ (Claude 3 with 101 IQ), while 2025 saw the emergence of genius-level AI with o3's 133 IQ score and test-time compute scaling that enables models to "think" before responding.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Performance Chart -->
+        <section class="section">
+            <h2 class="section-title">AI Model Performance Over Time</h2>
+            <div class="chart-container">
+                <h3 style="text-align: center; margin-bottom: 30px; color: #40e0ff;">Model Capabilities: 2020-2028</h3>
+                <div class="chart-wrapper">
+                    <canvas id="performanceChart"></canvas>
+                </div>
+                <p style="text-align: center; color: #b0b8c3; margin-top: 20px;">
+                    Based on MMLU (knowledge), ARC-AGI (reasoning), HumanEval (coding), and MATH benchmarks
+                </p>
+            </div>
+        </section>
+
+        <!-- IQ Timeline Chart -->
+        <section class="section">
+            <h2 class="section-title">AI Intelligence Evolution</h2>
+            <div class="chart-container">
+                <h3 style="text-align: center; margin-bottom: 30px; color: #8a2be2;">Estimated IQ Scores: 2020-2028</h3>
+                <div class="chart-wrapper">
+                    <canvas id="iqChart"></canvas>
+                </div>
+                <p style="text-align: center; color: #b0b8c3; margin-top: 20px;">
+                    Based on standardized IQ tests and reasoning benchmarks. Human average IQ = 100.
+                </p>
+            </div>
+        </section>
+
+        <!-- Scaling Laws -->
+        <section class="section">
+            <h2 class="section-title">The Five Scaling Laws</h2>
+            <div class="scaling-laws">
+                <div class="law-card">
+                    <span class="law-icon">🧠</span>
+                    <h3 class="law-title">Pre-training Scaling</h3>
+                    <p class="law-description">More compute, data, and parameters during training leads to better performance. The original scaling law that powered GPT-3 to GPT-4.</p>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">⚡</span>
+                    <h3 class="law-title">Test-time Compute</h3>
+                    <p class="law-description">Giving models more time to "think" at inference dramatically improves reasoning. Powers OpenAI's o1 and o3 models.</p>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">🎯</span>
+                    <h3 class="law-title">Post-training Scaling</h3>
+                    <p class="law-description">Fine-tuning, RLHF, and specialized training after pre-training to optimize for specific tasks and human preferences.</p>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">📊</span>
+                    <h3 class="law-title">Data Scaling</h3>
+                    <p class="law-description">Higher quality and more diverse training data, including synthetic data generation, improves model capabilities.</p>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">🔄</span>
+                    <h3 class="law-title">Reinforcement Learning</h3>
+                    <p class="law-description">RL scaling through increased compute during training, as seen in o3's breakthrough performance on reasoning tasks.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Impact of AI Intelligence -->
+        <section class="section">
+            <h2 class="section-title">The Impact of Superhuman AI Intelligence</h2>
+            <p style="font-size: 1.1rem; color: #b0b8c3; text-align: center; max-width: 800px; margin: 0 auto 40px;">
+                As AI intelligence rapidly approaches and surpasses human levels, we're entering an unprecedented era where machines with IQs of 150+ will transform every aspect of human civilization.
+            </p>
+            
+            <div class="impact-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; margin: 60px 0;">
+                <div class="impact-card" style="background: linear-gradient(135deg, rgba(64, 224, 255, 0.1), rgba(138, 43, 226, 0.1)); border-radius: 15px; padding: 30px; border: 1px solid rgba(64, 224, 255, 0.2);">
+                    <h3 style="color: #40e0ff; font-size: 1.4rem; margin-bottom: 20px;">🔬 Scientific Discovery</h3>
+                    <ul style="color: #b0b8c3; margin-left: 0; list-style: none;">
+                        <li style="margin-bottom: 10px;">• <strong>Drug Discovery:</strong> AI with 150+ IQ could design novel pharmaceuticals in days instead of decades</li>
+                        <li style="margin-bottom: 10px;">• <strong>Climate Solutions:</strong> Revolutionary breakthrough technologies for carbon capture and clean energy</li>
+                        <li style="margin-bottom: 10px;">• <strong>Physics & Materials:</strong> Discovering new laws of physics and engineering impossible materials</li>
+                        <li style="margin-bottom: 10px;">• <strong>Space Exploration:</strong> Solving propulsion and life support challenges for interstellar travel</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(0, 255, 135, 0.1)); border-radius: 15px; padding: 30px; border: 1px solid rgba(255, 107, 53, 0.2);">
+                    <h3 style="color: #ff6b35; font-size: 1.4rem; margin-bottom: 20px;">💼 Economic Transformation</h3>
+                    <ul style="color: #b0b8c3; margin-left: 0; list-style: none;">
+                        <li style="margin-bottom: 10px;">• <strong>Automation:</strong> Most cognitive work automated, requiring universal basic income</li>
+                        <li style="margin-bottom: 10px;">• <strong>Productivity Explosion:</strong> 10-100x increases in economic output per person</li>
+                        <li style="margin-bottom: 10px;">• <strong>New Industries:</strong> Entirely new sectors we can't yet imagine emerging</li>
+                        <li style="margin-bottom: 10px;">• <strong>Resource Optimization:</strong> Perfect allocation and minimal waste across all systems</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card" style="background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(64, 224, 255, 0.1)); border-radius: 15px; padding: 30px; border: 1px solid rgba(138, 43, 226, 0.2);">
+                    <h3 style="color: #8a2be2; font-size: 1.4rem; margin-bottom: 20px;">🎓 Education & Learning</h3>
+                    <ul style="color: #b0b8c3; margin-left: 0; list-style: none;">
+                        <li style="margin-bottom: 10px;">• <strong>Personalized AI Tutors:</strong> Every person gets a genius-level teacher tailored to their learning style</li>
+                        <li style="margin-bottom: 10px;">• <strong>Accelerated Learning:</strong> Master complex subjects in weeks instead of years</li>
+                        <li style="margin-bottom: 10px;">• <strong>Universal Access:</strong> World-class education available to every person on Earth</li>
+                        <li style="margin-bottom: 10px;">• <strong>Skill Translation:</strong> Instant expertise transfer through AI-mediated learning</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card" style="background: linear-gradient(135deg, rgba(0, 255, 135, 0.1), rgba(255, 107, 53, 0.1)); border-radius: 15px; padding: 30px; border: 1px solid rgba(0, 255, 135, 0.2);">
+                    <h3 style="color: #00ff87; font-size: 1.4rem; margin-bottom: 20px;">🏥 Healthcare Revolution</h3>
+                    <ul style="color: #b0b8c3; margin-left: 0; list-style: none;">
+                        <li style="margin-bottom: 10px;">• <strong>Precision Medicine:</strong> Treatments designed for individual genetic profiles</li>
+                        <li style="margin-bottom: 10px;">• <strong>Early Detection:</strong> Diseases caught years before symptoms appear</li>
+                        <li style="margin-bottom: 10px;">• <strong>Longevity Extension:</strong> Potential for significant life extension and healthspan increases</li>
+                        <li style="margin-bottom: 10px;">• <strong>Mental Health:</strong> Advanced therapy and cognitive enhancement</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card" style="background: linear-gradient(135deg, rgba(64, 224, 255, 0.1), rgba(0, 255, 135, 0.1)); border-radius: 15px; padding: 30px; border: 1px solid rgba(64, 224, 255, 0.2);">
+                    <h3 style="color: #40e0ff; font-size: 1.4rem; margin-bottom: 20px;">🤖 Governance & Society</h3>
+                    <ul style="color: #b0b8c3; margin-left: 0; list-style: none;">
+                        <li style="margin-bottom: 10px;">• <strong>Policy Optimization:</strong> Evidence-based governance with predicted outcomes</li>
+                        <li style="margin-bottom: 10px;">• <strong>Conflict Resolution:</strong> AI mediators finding win-win solutions to complex disputes</li>
+                        <li style="margin-bottom: 10px;">• <strong>Resource Management:</strong> Global coordination for climate, food, and energy systems</li>
+                        <li style="margin-bottom: 10px;">• <strong>Decision Support:</strong> Superhuman analysis for complex societal challenges</li>
+                    </ul>
+                </div>
+
+                <div class="impact-card" style="background: linear-gradient(135deg, rgba(255, 107, 53, 0.1), rgba(138, 43, 226, 0.1)); border-radius: 15px; padding: 30px; border: 1px solid rgba(255, 107, 53, 0.2);">
+                    <h3 style="color: #ff6b35; font-size: 1.4rem; margin-bottom: 20px;">⚠️ Challenges & Risks</h3>
+                    <ul style="color: #b0b8c3; margin-left: 0; list-style: none;">
+                        <li style="margin-bottom: 10px;">• <strong>Alignment:</strong> Ensuring superhuman AI systems remain beneficial to humanity</li>
+                        <li style="margin-bottom: 10px;">• <strong>Inequality:</strong> Preventing concentration of AI capabilities in few entities</li>
+                        <li style="margin-bottom: 10px;">• <strong>Human Purpose:</strong> Redefining meaning and purpose in an automated world</li>
+                        <li style="margin-bottom: 10px;">• <strong>Control:</strong> Maintaining meaningful human agency and oversight</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 40px; margin: 40px 0; border: 1px solid rgba(64, 224, 255, 0.1);">
+                <h3 style="color: #40e0ff; margin-bottom: 20px; text-align: center;">The Intelligence Explosion Timeline</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 2rem; color: #8a2be2; font-weight: 700;">2025-2026</div>
+                        <div style="color: #ffffff; font-weight: 600; margin: 10px 0;">Expert Level (130-140 IQ)</div>
+                        <div style="color: #b0b8c3; font-size: 0.9rem;">Advanced problem-solving, professional-level expertise across domains</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 2rem; color: #ff6b35; font-weight: 700;">2027-2028</div>
+                        <div style="color: #ffffff; font-weight: 600; margin: 10px 0;">Genius Level (150-170 IQ)</div>
+                        <div style="color: #b0b8c3; font-size: 0.9rem;">Breakthrough discoveries, novel solution creation, cross-domain innovation</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px;">
+                        <div style="font-size: 2rem; color: #00ff87; font-weight: 700;">2029+</div>
+                        <div style="color: #ffffff; font-weight: 600; margin: 10px 0;">Superhuman (180+ IQ)</div>
+                        <div style="color: #b0b8c3; font-size: 0.9rem;">Capabilities beyond human comprehension, potential AGI and beyond</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Key Metrics -->
+        <section class="section">
+            <h2 class="section-title">Current AI Capabilities</h2>
+            <div class="metrics">
+                <div class="metric-card">
+                    <span class="metric-value">133</span>
+                    <div class="metric-label">o3 IQ Score<br>(Genius level)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">87.5%</span>
+                    <div class="metric-label">o3 on ARC-AGI<br>(vs 5% GPT-4o)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">25.2%</span>
+                    <div class="metric-label">o3 on FrontierMath<br>(vs <2% previous SOTA)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">93.7%</span>
+                    <div class="metric-label">Claude 3.5 HumanEval<br>(Coding benchmark)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">90.2%</span>
+                    <div class="metric-label">GPT-4.1 MMLU<br>(General knowledge)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">127</span>
+                    <div class="metric-label">Claude 4 IQ Score<br>(Very superior)</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Timeline -->
+        <section class="section">
+            <h2 class="section-title">The Evolution Timeline</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">2020</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">GPT-3 Era Begins</h3>
+                        <p class="timeline-desc">175B parameters, 44% MMLU. First transformer to show emergent abilities. Scaling laws established: bigger models perform significantly better.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2022</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">ChatGPT & RLHF Revolution</h3>
+                        <p class="timeline-desc">GPT-3.5 with 70% MMLU and Reinforcement Learning from Human Feedback. Post-training techniques become crucial for alignment.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2023</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">GPT-4 & Multimodal AI</h3>
+                        <p class="timeline-desc">86.4% MMLU, vision capabilities. Claude 1-2, early Gemini models join competition. AI becomes mainstream technology.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Claude 3 Breaks 100 IQ</h3>
+                        <p class="timeline-desc">First AI to achieve 101 IQ score. Claude 3.5 Sonnet leads coding (93.7% HumanEval). Competition intensifies between OpenAI, Anthropic, Google.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2024</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Test-time Compute Revolution</h3>
+                        <p class="timeline-desc">OpenAI o1 introduces reasoning at inference with 120 IQ. Models learn to "think" before answering. New paradigm shift begins.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2025</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">o3 Genius-Level Breakthrough</h3>
+                        <p class="timeline-desc">133 IQ, 87.5% ARC-AGI approaching human-level reasoning. Claude 4 (127 IQ), GPT-4.1 (90.2% MMLU), Gemini 2.5 compete fiercely.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Predictions -->
+        <section class="section">
+            <h2 class="section-title">The Next 3 Years: 2025-2028</h2>
+            <div class="predictions">
+                <div class="prediction-card">
+                    <div class="prediction-year">2026</div>
+                    <h3 class="prediction-title">Efficiency Revolution</h3>
+                    <p class="prediction-desc">Test-time compute becomes 100x more efficient. Reasoning models reach GPT-4 level performance at 1/10th the cost. Edge deployment of reasoning AI.</p>
+                </div>
+                <div class="prediction-card">
+                    <div class="prediction-year">2027</div>
+                    <h3 class="prediction-title">Agentic Breakthrough</h3>
+                    <p class="prediction-desc">AI agents with persistent memory and planning capabilities. Automated software development, research, and complex problem-solving at scale.</p>
+                </div>
+                <div class="prediction-card">
+                    <div class="prediction-year">2028</div>
+                    <h3 class="prediction-title">Scientific AI</h3>
+                    <p class="prediction-desc">AI systems make independent scientific discoveries. Novel drug discovery, theorem proving, and technological innovations. AGI capabilities in specialized domains.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Technical Deep Dive -->
+        <section class="section">
+            <h2 class="section-title">How Test-time Compute Works</h2>
+            <div style="background: rgba(255, 255, 255, 0.05); border-radius: 15px; padding: 40px; border: 1px solid rgba(64, 224, 255, 0.1);">
+                <h3 style="color: #40e0ff; margin-bottom: 20px;">The Breakthrough Paradigm</h3>
+                <p style="color: #b0b8c3; margin-bottom: 20px;">
+                    Traditional models generate answers immediately. But reasoning models like o1 and o3 use a fundamentally different approach that's driving genius-level performance:
+                </p>
+                <ul style="color: #b0b8c3; margin-left: 20px; margin-bottom: 20px;">
+                    <li><strong>Chain-of-Thought Generation:</strong> Models generate extensive internal reasoning steps before answering</li>
+                    <li><strong>Self-Verification:</strong> Check their own work and refine answers through multiple iterations</li>
+                    <li><strong>Compute Scaling:</strong> More thinking time = logarithmically better performance (o3 uses 172x compute for top performance)</li>
+                    <li><strong>Reinforcement Learning:</strong> Trained to maximize reward for correct reasoning, not just next-token prediction</li>
+                    <li><strong>Search Over Solutions:</strong> Generate multiple solution paths and select the best one</li>
+                </ul>
+                <p style="color: #b0b8c3;">
+                    This approach enables AI to tackle novel problems it has never seen before, achieving genius-level reasoning (133 IQ) and approaching human-level abstract reasoning on benchmarks like ARC-AGI (87.5%).
+                </p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Ensure proper initialization
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCharts();
+        });
+
+        function initializeCharts() {
+            try {
+                // Chart.js configuration for performance over time
+                const ctx = document.getElementById('performanceChart').getContext('2d');
+                
+                const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'],
+                datasets: [
+                    {
+                        label: 'General Knowledge (MMLU)',
+                        data: [44, 50, 70, 86, 89, 90, 94, 97, 99],
+                        borderColor: '#40e0ff',
+                        backgroundColor: 'rgba(64, 224, 255, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Reasoning (ARC-AGI)',
+                        data: [0, 1, 3, 5, 32, 88, 95, 98, 99],
+                        borderColor: '#8a2be2',
+                        backgroundColor: 'rgba(138, 43, 226, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Coding (HumanEval)',
+                        data: [0, 5, 20, 67, 90, 94, 96, 98, 99],
+                        borderColor: '#ff6b35',
+                        backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Mathematics (MATH)',
+                        data: [5, 8, 15, 50, 71, 85, 92, 96, 98],
+                        borderColor: '#00ff87',
+                        backgroundColor: 'rgba(0, 255, 135, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#b0b8c3',
+                            font: {
+                                size: window.innerWidth < 768 ? 10 : 12
+                            },
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#b0b8c3',
+                            font: {
+                                size: window.innerWidth < 768 ? 10 : 12
+                            },
+                            maxRotation: window.innerWidth < 768 ? 45 : 0
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff',
+                            font: {
+                                size: window.innerWidth < 768 ? 10 : 12
+                            },
+                            usePointStyle: true,
+                            padding: window.innerWidth < 768 ? 10 : 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#40e0ff',
+                        borderWidth: 1,
+                        titleFont: {
+                            size: window.innerWidth < 768 ? 12 : 14
+                        },
+                        bodyFont: {
+                            size: window.innerWidth < 768 ? 11 : 13
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: window.innerWidth < 768 ? 3 : 4,
+                        hoverRadius: window.innerWidth < 768 ? 6 : 8
+                    }
+                }
+            }
+        });
+
+        // Add vertical line to separate historical data from predictions
+        const originalDraw = chart.draw;
+        chart.draw = function() {
+            originalDraw.apply(this, arguments);
+            
+            const ctx = this.ctx;
+            const xAxis = this.scales.x;
+            const yAxis = this.scales.y;
+            
+            // Draw vertical line at 2025
+            const x = xAxis.getPixelForValue('2025');
+            ctx.save();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = window.innerWidth < 768 ? 1 : 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(x, yAxis.top);
+            ctx.lineTo(x, yAxis.bottom);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Add label
+            ctx.save();
+            ctx.fillStyle = '#b0b8c3';
+            ctx.font = (window.innerWidth < 768 ? '10px' : '12px') + ' Inter';
+            ctx.textAlign = 'center';
+            const labelText = window.innerWidth < 768 ? '← Hist | Proj →' : '← Historical | Projected →';
+            ctx.fillText(labelText, x, yAxis.bottom + (window.innerWidth < 768 ? 20 : 30));
+            ctx.restore();
+        };
+
+        // IQ Chart Configuration
+        const iqCtx = document.getElementById('iqChart').getContext('2d');
+        
+        const iqChart = new Chart(iqCtx, {
+            type: 'line',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028'],
+                datasets: [
+                    {
+                        label: 'Leading AI Models',
+                        data: [null, 50, 85, 85, 101, 133, 150, 170, 190],
+                        borderColor: '#ff6b35',
+                        backgroundColor: 'rgba(255, 107, 53, 0.1)',
+                        tension: 0.4,
+                        fill: false,
+                        pointStyle: 'circle',
+                        pointRadius: 6
+                    },
+                    {
+                        label: 'Average Human IQ',
+                        data: [100, 100, 100, 100, 100, 100, 100, 100, 100],
+                        borderColor: '#40e0ff',
+                        backgroundColor: 'rgba(64, 224, 255, 0.1)',
+                        borderDash: [5, 5],
+                        tension: 0,
+                        fill: false,
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'Genius Level (140+)',
+                        data: [140, 140, 140, 140, 140, 140, 140, 140, 140],
+                        borderColor: '#8a2be2',
+                        backgroundColor: 'rgba(138, 43, 226, 0.1)',
+                        borderDash: [3, 3],
+                        tension: 0,
+                        fill: false,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false,
+                    mode: 'index'
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        min: 40,
+                        max: 200,
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#b0b8c3',
+                            font: {
+                                size: window.innerWidth < 768 ? 10 : 12
+                            },
+                            callback: function(value) {
+                                if (value === 100) return window.innerWidth < 768 ? '100 (Avg)' : value + ' (Human Avg)';
+                                if (value === 140) return window.innerWidth < 768 ? '140 (Gen)' : value + ' (Genius)';
+                                return value;
+                            }
+                        }
+                    },
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: '#b0b8c3',
+                            font: {
+                                size: window.innerWidth < 768 ? 10 : 12
+                            },
+                            maxRotation: window.innerWidth < 768 ? 45 : 0
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: '#ffffff',
+                            font: {
+                                size: window.innerWidth < 768 ? 10 : 12
+                            },
+                            usePointStyle: true,
+                            padding: window.innerWidth < 768 ? 10 : 20
+                        }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        titleColor: '#ffffff',
+                        bodyColor: '#ffffff',
+                        borderColor: '#8a2be2',
+                        borderWidth: 1,
+                        titleFont: {
+                            size: window.innerWidth < 768 ? 12 : 14
+                        },
+                        bodyFont: {
+                            size: window.innerWidth < 768 ? 11 : 13
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                if (context.datasetIndex === 0 && context.parsed.y) {
+                                    let model = '';
+                                    switch(context.dataIndex) {
+                                        case 1: model = ' (GPT-3)'; break;
+                                        case 2: model = ' (GPT-3.5/Claude 2)'; break;
+                                        case 3: model = ' (GPT-4)'; break;
+                                        case 4: model = ' (Claude 3)'; break;
+                                        case 5: model = ' (o3)'; break;
+                                        case 6: model = ' (Projected)'; break;
+                                        case 7: model = ' (Projected)'; break;
+                                        case 8: model = ' (Projected)'; break;
+                                    }
+                                    return context.dataset.label + ': ' + context.parsed.y + model;
+                                }
+                                return context.dataset.label + ': ' + context.parsed.y;
+                            }
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: function(context) {
+                            return context.datasetIndex === 0 ? (window.innerWidth < 768 ? 4 : 6) : 0;
+                        },
+                        hoverRadius: function(context) {
+                            return context.datasetIndex === 0 ? (window.innerWidth < 768 ? 6 : 10) : 0;
+                        }
+                    }
+                }
+            }
+        });
+
+        // Add vertical line to IQ chart
+        const originalIqDraw = iqChart.draw;
+        iqChart.draw = function() {
+            originalIqDraw.apply(this, arguments);
+            
+            const ctx = this.ctx;
+            const xAxis = this.scales.x;
+            const yAxis = this.scales.y;
+            
+            // Draw vertical line at 2025
+            const x = xAxis.getPixelForValue('2025');
+            ctx.save();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+            ctx.lineWidth = window.innerWidth < 768 ? 1 : 2;
+            ctx.setLineDash([10, 5]);
+            ctx.beginPath();
+            ctx.moveTo(x, yAxis.top);
+            ctx.lineTo(x, yAxis.bottom);
+            ctx.stroke();
+            ctx.restore();
+            
+            // Add label
+            ctx.save();
+            ctx.fillStyle = '#b0b8c3';
+            ctx.font = (window.innerWidth < 768 ? '10px' : '12px') + ' Inter';
+            ctx.textAlign = 'center';
+            const labelText = window.innerWidth < 768 ? '← Hist | Proj →' : '← Historical | Projected →';
+            ctx.fillText(labelText, x, yAxis.bottom + (window.innerWidth < 768 ? 20 : 30));
+            ctx.restore();
+        };
+
+        // Handle window resize
+        function handleResize() {
+            chart.resize();
+            iqChart.resize();
+            
+            // Update chart options based on screen size
+            const isMobile = window.innerWidth < 768;
+            
+            // Update performance chart
+            chart.options.scales.y.ticks.font.size = isMobile ? 10 : 12;
+            chart.options.scales.x.ticks.font.size = isMobile ? 10 : 12;
+            chart.options.scales.x.ticks.maxRotation = isMobile ? 45 : 0;
+            chart.options.plugins.legend.labels.font.size = isMobile ? 10 : 12;
+            chart.options.plugins.legend.labels.padding = isMobile ? 10 : 20;
+            chart.options.elements.point.radius = isMobile ? 3 : 4;
+            chart.options.elements.point.hoverRadius = isMobile ? 6 : 8;
+            
+            // Update IQ chart
+            iqChart.options.scales.y.ticks.font.size = isMobile ? 10 : 12;
+            iqChart.options.scales.x.ticks.font.size = isMobile ? 10 : 12;
+            iqChart.options.scales.x.ticks.maxRotation = isMobile ? 45 : 0;
+            iqChart.options.plugins.legend.labels.font.size = isMobile ? 10 : 12;
+            iqChart.options.plugins.legend.labels.padding = isMobile ? 10 : 20;
+            
+            chart.update('none');
+            iqChart.update('none');
+        }
+
+        // Add resize event listener
+        window.addEventListener('resize', handleResize);
+
+        // Animate charts on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    if (entry.target.id === 'performanceChart') {
+                        chart.update('active');
+                    } else if (entry.target.id === 'iqChart') {
+                        iqChart.update('active');
+                    }
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        observer.observe(document.getElementById('performanceChart'));
+        observer.observe(document.getElementById('iqChart'));
+        
+        } catch (error) {
+            console.error('Error initializing charts:', error);
+            // Show fallback content if charts fail to load
+            document.querySelectorAll('.chart-wrapper').forEach(wrapper => {
+                wrapper.innerHTML = '<div class="chart-loading">Chart visualization unavailable</div>';
+            });
+        }
+    }
+    </script>
+</body>
+</html>
