@@ -9,34 +9,34 @@ A comprehensive collection of interactive web applications showcasing data visua
 
 ## 🚀 Live Demo
 
-**🔗 Main Portfolio**: [View Portfolio](./public.html)
+**🔗 Main Portfolio**: [View Portfolio](./index/)
 
 Access all applications through the main portfolio dashboard with beautiful animations, theme switching, and mobile-optimized navigation.
 
 ## 📱 Applications Overview
 
-### 🔎 [Event Hunter 2025](./event-hunter/)
+### 🔎 [Event Hunter 2025](./event-hunter/events-listing/)
 **Global Events Discovery Platform**
 - **200+ Events** across 6 continents for 2025
 - **Multi-Industry Coverage**: Technology, Healthcare, Finance, Energy, Tourism
 - **Multi-Language Support**: English, Arabic, Persian/Farsi with RTL support
 - **Advanced Filtering**: Search by industry, country, date, and status
 
-### 🏢 [Companies Data - UAE & Oman](./companies-data/)
+### 🏢 [Companies Data - UAE & Oman](./companies-data/companies-listing/)
 **B2B Sales Intelligence Platform**
 - **80+ Strategic Companies** across UAE & Oman
 - **15+ Key Sectors** including finance, energy, telecommunications
 - **AI Opportunities Mapping** for each company
 - **Interactive Search & Filtering** by sector, location, size, priority
 
-### 🌍 [Country Data Visualization](./country-data/)
+### 🌍 [Country Data Visualization](./country-data/political-system/)
 **Interactive Data Dashboard**
 - **Interactive Scatter Plot** with D3.js visualization
 - **Multi-dimensional Analysis**: GDP, population, economic freedom, political systems
 - **React-Powered** with Material-UI components
 - **Real-time Filtering** and dynamic search capabilities
 
-### 🎯 [Iran-Israel Crisis Dashboard](./is-ir-conflict/) **[NEW]**
+### 🎯 [Iran-Israel Crisis Dashboard](./israel-iran-war/prediction/) **[NEW]**
 **Strategic Analysis & Game Theory Assessment**
 - **Interactive Poll System** with persistent data storage
 - **Multi-Language Support**: English, Arabic, Persian with strategic translations
@@ -48,12 +48,12 @@ Access all applications through the main portfolio dashboard with beautiful anim
 
 ### Phase 1: Integration & Structure
 1. **Portfolio Integration**
-   - Add 4th project card to `public.html` with crisis-themed styling
+   - Add 4th project card to `index/index.html` with crisis-themed styling
    - Update stats section (4 Active Projects)
    - Add crisis dashboard project description and features
 
 2. **File Organization**
-   - Reorganize `is-ir-conflict/` directory structure
+   - Reorganize `israel-iran-war/` directory structure
    - Create dedicated CSS, JS, and data files
    - Implement modular architecture
 
@@ -103,9 +103,9 @@ const translations = {
 
 ```
 public-directory/
-├── 📄 public.html                    # Main portfolio dashboard (UPDATE)
+├── 📄 index/index.html                    # Main portfolio dashboard (UPDATE)
 ├── 📄 README.MD                      # This file (UPDATED)
-├── 🎯 is-ir-conflict/               # Crisis analysis dashboard (NEW)
+├── 🎯 israel-iran-war/               # Crisis analysis dashboard (NEW)
 │   ├── 📄 index.html                # Main dashboard page
 │   ├── 📊 data/
 │   │   ├── poll-data.json           # Persistent poll results
@@ -157,14 +157,14 @@ cd country-data && npm install && cd ..
 
 # Start local development server
 python -m http.server 8000
-# Navigate to: http://localhost:8000/public.html
+# Navigate to: http://localhost:8000/index/index.html
 ```
 
 ### Crisis Dashboard Standalone
 ```bash
 # Direct access to crisis dashboard
-open is-ir-conflict/index.html
-# or via local server: http://localhost:8000/is-ir-conflict/
+open israel-iran-war/prediction/index.html
+# or via local server: http://localhost:8000/israel-iran-war/prediction/
 ```
 
 ## 📱 Mobile Experience
@@ -249,7 +249,7 @@ server {
     listen 80;
     server_name your-domain.com;
     root /path/to/public-directory;
-    index public.html;
+    index index/index.html;
 }
 ```
 

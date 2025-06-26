@@ -96,7 +96,7 @@ public-directory/
 
 ### Direct Access  
 - **Development**: `country-data/public/index.html`
-- **Production**: `country-data/build/index.html`
+- **Production**: `country-data/political-system/index.html`
 
 ## 📱 Browser Compatibility
 
