@@ -1,10 +1,10 @@
 # GitHub Pages Portfolio
 
-A modern, responsive portfolio website built for GitHub Pages with proper 404 error handling and project showcasing.
+A modern, responsive portfolio website built for GitHub Pages showcasing various data visualization and analysis projects.
 
 ## 🚀 Live Site
 
-Visit the live site at: `https://YOUR_USERNAME.github.io/`
+Visit the live site at: `https://happydreammmer.github.io/public/`
 
 ## 📁 Repository Structure
 
@@ -13,20 +13,21 @@ repository-root/
 ├── index.html                 # Main portfolio landing page
 ├── 404.html                  # Custom 404 error page with redirects
 ├── README.md                 # This file
+├── .nojekyll                 # Disable Jekyll processing
 ├── .github/
 │   └── workflows/
 │       └── pages.yml         # GitHub Actions deployment workflow
-├── public/
-│   └── index/
-│       └── index.html        # Projects index with search & filtering
-├── projects/
-│   ├── project1/
-│   │   └── index.html        # Individual project pages
-│   ├── project2/
-│   │   └── index.html
-│   └── project3/
-│       └── index.html
-└── github-pages-404-analysis.md  # Detailed troubleshooting guide
+├── country-data/             # React-based country data visualization
+│   ├── src/                  # React source files
+│   ├── public/               # Built React application
+│   ├── data/                 # CSV data files
+│   └── package.json          # Node.js dependencies
+├── israel-iran-war/          # Geopolitical analysis dashboard
+├── event-hunter/             # Event tracking system
+├── companies-data/           # Business intelligence dashboard
+├── business-data/            # Business analytics and AI scaling analysis
+├── projects/                 # Individual project demonstrations
+└── index/                    # Alternative index (if needed)
 ```
 
 ## ✨ Features
@@ -35,17 +36,41 @@ repository-root/
 - **Modern Design**: Gradient backgrounds with glassmorphism effects
 - **Responsive Layout**: Works perfectly on all devices
 - **Interactive Elements**: Smooth animations and hover effects
-- **Project Cards**: Showcases featured projects with descriptions
+- **Featured Projects**: Showcases 6 main projects with descriptions
 - **Statistics Section**: Dynamic counters and metrics
-- **Navigation**: Easy access to all sections
+- **Clean Navigation**: Streamlined navigation without redundant links
 
-### Projects Index (`public/index/index.html`)
-- **Advanced Search**: Real-time project filtering
-- **Tag-based Filtering**: Filter by technology or project type
-- **Project Statistics**: Overview of all projects
-- **Detailed Project Info**: Comprehensive project metadata
-- **Keyboard Shortcuts**: Enhanced accessibility
-- **Responsive Design**: Optimized for all screen sizes
+### Project Highlights
+
+#### 1. Israel-Iran War Analysis
+- Strategic crisis prediction dashboard
+- Interactive charts and real-time data visualization
+- Geopolitical trend analysis with predictive modeling
+
+#### 2. Country Data Visualization
+- React-based interactive dashboard
+- Explores relationships between GDP, population, economic freedom, and political systems
+- Covers 194 countries worldwide with advanced data visualization
+
+#### 3. Event Hunter 2025
+- Comprehensive event tracking and management system
+- Multi-language support and real-time filtering
+- Advanced search capabilities for global events
+
+#### 4. Companies Data 2025
+- Strategic companies database for UAE & Oman
+- Advanced filtering and sector analysis
+- Multi-language support for business intelligence
+
+#### 5. AI Scaling Analysis
+- Comprehensive analysis of AI evolution and scaling laws (2020-2028)
+- Interactive charts and IQ progression metrics
+- Future technology performance predictions
+
+#### 6. Business Listings Impact
+- Analysis of business listing effectiveness across platforms
+- ROI metrics and optimization strategies
+- Focus on Google, Apple Maps, and other platforms
 
 ### Custom 404 Page (`404.html`)
 - **Smart Redirects**: Automatically handles common URL patterns
@@ -54,18 +79,12 @@ repository-root/
 - **Debug Information**: Helpful for troubleshooting
 - **Suggested Pages**: Quick links to popular sections
 
-### Individual Project Pages
-- **Interactive Demos**: Working examples and features
-- **Technical Details**: Implementation information
-- **Navigation**: Easy movement between projects
-- **Responsive Design**: Mobile-friendly layouts
-
 ## 🛠️ Setup Instructions
 
 ### 1. Repository Setup
-1. Create a new repository named `YOUR_USERNAME.github.io`
-2. Clone this repository structure to your local machine
-3. Copy all files to your repository
+1. Fork or clone this repository
+2. Update the repository name if needed
+3. Ensure all files are properly committed
 
 ### 2. GitHub Pages Configuration
 1. Go to your repository **Settings** → **Pages**
@@ -74,27 +93,33 @@ repository-root/
 4. Select **Folder**: `/ (root)`
 5. Click **Save**
 
-### 3. Customize Your Content
+### 3. Country Data Project Setup
+The country-data project requires building the React application:
+
+```bash
+cd country-data
+npm install
+npm run build
+cp -r build/* public/
+```
+
+This ensures the React-based data visualization works properly.
+
+### 4. Customize Your Content
 1. **Update `index.html`**: 
    - Change the portfolio title and description
-   - Update project information
-   - Modify contact links
+   - Update project information and links
+   - Modify contact information
 
-2. **Update `public/index/index.html`**:
-   - Add your actual projects
-   - Update project descriptions and links
-   - Modify filter tags as needed
+2. **Update Project Data**:
+   - Modify CSV files in `country-data/data/`
+   - Update analysis parameters in various projects
+   - Customize styling and branding
 
-3. **Add Your Projects**:
-   - Create directories under `projects/` for each project
-   - Add `index.html` files for each project
-   - Update navigation links
-
-### 4. GitHub Actions (Optional)
-The included workflow file (`.github/workflows/pages.yml`) provides:
-- Automated deployment on every push
-- Better build process
-- Faster deployment times
+3. **Add New Projects**:
+   - Create new directories for additional projects
+   - Follow the established structure and naming conventions
+   - Update the main index.html to include new projects
 
 ## 🔧 Customization Guide
 
@@ -105,33 +130,41 @@ The site uses CSS custom properties for easy theming. Main colors:
 - Background effects: Semi-transparent overlays with backdrop blur
 
 ### Adding New Projects
-1. Create a new directory: `projects/your-project-name/`
-2. Add an `index.html` file (use `projects/project1/index.html` as template)
-3. Update the main `index.html` to include your project
-4. Update `public/index/index.html` with project details
+1. Create a new directory: `your-project-name/`
+2. Add an `index.html` file with proper navigation
+3. Update the main `index.html` to include your project card
+4. Ensure all links are properly formatted
 
-### Modifying Navigation
-- Main navigation is in the header of `index.html`
-- Breadcrumb navigation is in `public/index/index.html`
-- Project navigation is in individual project pages
+### Technology Stack
+- **Frontend**: HTML5, CSS3, JavaScript (ES6+)
+- **Data Visualization**: D3.js, Chart.js
+- **UI Framework**: React (for country-data project)
+- **Build Tools**: npm, react-scripts
+- **Hosting**: GitHub Pages
 
 ## 🐛 Troubleshooting
 
-### Common 404 Issues
-1. **Check file paths**: Ensure all links use correct relative paths
-2. **Verify GitHub Pages settings**: Make sure the source is set correctly
-3. **Case sensitivity**: GitHub Pages is case-sensitive
-4. **Missing index.html**: Every directory needs an index file
+### Common Issues
+1. **Country Data not loading**: 
+   - Ensure the React app is built (`npm run build`)
+   - Check that files are copied to the `public/` directory
+   - Verify data files are in the correct location
 
-### Build Issues
-1. Check the **Actions** tab for deployment logs
-2. Ensure all files are properly committed and pushed
-3. Verify the workflow file syntax
+2. **404 Errors**: 
+   - Check file paths and ensure proper case sensitivity
+   - Verify GitHub Pages settings
+   - Ensure all directories have proper index files
 
-### Performance Issues
-1. Optimize images and assets
-2. Use browser caching
-3. Minimize CSS and JavaScript if needed
+3. **Build Issues**:
+   - Check the **Actions** tab for deployment logs
+   - Verify all dependencies are installed
+   - Ensure package.json files are properly configured
+
+### Performance Optimization
+1. **React App**: Already optimized with production builds
+2. **Images**: Optimize images and use appropriate formats
+3. **CSS**: Minimize unused styles
+4. **JavaScript**: Use efficient algorithms for data processing
 
 ## 📱 Browser Support
 
@@ -148,6 +181,14 @@ The site uses CSS custom properties for easy theming. Main colors:
 - **Responsive Grid**: CSS Grid and Flexbox for layouts
 - **Modern Typography**: System font stack for performance
 - **Accessibility**: Keyboard navigation and screen reader support
+- **Single-button Actions**: Streamlined UX with one primary action per card
+
+## 📊 Project Statistics
+
+- **Total Projects**: 12+ completed projects
+- **Technologies**: 25+ different technologies used
+- **Data Sources**: Multiple CSV files and APIs
+- **Languages**: Multi-language support in several projects
 
 ## 📄 License
 
@@ -160,11 +201,17 @@ Feel free to fork this repository and customize it for your own portfolio! If yo
 ## 📞 Support
 
 If you encounter issues:
-1. Check the troubleshooting guide: `github-pages-404-analysis.md`
-2. Review GitHub Pages documentation
-3. Check browser console for JavaScript errors
-4. Verify all file paths and links
+1. Check GitHub Pages documentation
+2. Review browser console for JavaScript errors
+3. Verify all file paths and links
+4. For React-related issues, check the build process
+
+## 🔗 Links
+
+- **Live Site**: https://happydreammmer.github.io/public/
+- **Repository**: https://github.com/happydreammmer/public
+- **GitHub Pages**: Built and deployed automatically
 
 ---
 
-**Happy coding!** 🎉
+**Updated January 2025** 🎉
