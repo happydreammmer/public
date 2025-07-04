@@ -4,33 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Not Found - 404</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             text-align: center;
             padding: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #f8fafc;
             min-height: 100vh;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
         .error-container {
             max-width: 600px;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.8);
             padding: 40px;
             border-radius: 20px;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(32px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .error-code {
             font-size: 120px;
-            font-weight: bold;
+            font-weight: 900;
             margin-bottom: 20px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
         }
         .error-title {
             font-size: 32px;
@@ -40,7 +61,7 @@
         .error-message {
             font-size: 18px;
             margin-bottom: 30px;
-            opacity: 0.9;
+            color: #cbd5e1;
             line-height: 1.6;
         }
         .action-buttons {
@@ -48,19 +69,19 @@
         }
         .home-link, .projects-link {
             display: inline-block;
-            background: rgba(255, 255, 255, 0.2);
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
             text-decoration: none;
             margin: 0 10px;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-weight: 500;
+            border: none;
         }
         .home-link:hover, .projects-link:hover {
-            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
         .search-container {
             margin-top: 30px;
@@ -69,29 +90,36 @@
         }
         .search-input {
             padding: 12px 20px;
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 25px;
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            background: rgba(30, 41, 59, 0.8);
+            color: #f8fafc;
             width: 250px;
             max-width: 80%;
             outline: none;
             margin-right: 10px;
+            transition: all 0.3s ease;
         }
         .search-input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
+            color: #94a3b8;
+        }
+        .search-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.1);
         }
         .search-button {
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
-            background: rgba(255, 255, 255, 0.3);
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
             color: white;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 500;
         }
         .search-button:hover {
-            background: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
         .suggestions {
             margin-top: 30px;
@@ -99,26 +127,29 @@
         }
         .suggestion-item {
             display: block;
-            color: rgba(255, 255, 255, 0.8);
+            color: #cbd5e1;
             text-decoration: none;
             padding: 8px 16px;
             margin: 5px 0;
             border-radius: 10px;
             transition: all 0.3s ease;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         .suggestion-item:hover {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
+            background: rgba(30, 41, 59, 0.8);
+            color: #f8fafc;
             transform: translateX(5px);
+            border-color: #38bdf8;
         }
         .debug-info {
             margin-top: 30px;
             padding: 15px;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(30, 41, 59, 0.6);
             border-radius: 10px;
             font-size: 14px;
-            opacity: 0.7;
+            color: #94a3b8;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
@@ -133,7 +164,7 @@
         
         <div class="action-buttons">
             <a href="/" class="home-link">🏠 Go Home</a>
-            <a href="/public/index/" class="projects-link">📁 View Projects</a>
+            <a href="/#projects" class="projects-link">📁 View Projects</a>
         </div>
         
         <div class="search-container">
@@ -145,13 +176,12 @@
         <div class="suggestions">
             <h4>Popular pages:</h4>
             <a href="/" class="suggestion-item">🏠 Portfolio Home</a>
-            <a href="/public/index/" class="suggestion-item">📋 Projects Index</a>
-            <a href="/projects/project1/" class="suggestion-item">🚀 Interactive Web App</a>
             <a href="/israel-iran-war/" class="suggestion-item">🎯 Crisis Analysis</a>
             <a href="/country-data/public/" class="suggestion-item">🌍 Country Data</a>
             <a href="/event-hunter/events-listing/" class="suggestion-item">📅 Event Hunter</a>
             <a href="/companies-data/companies-listing/" class="suggestion-item">🏢 Companies Data</a>
             <a href="/business-data/ai_scaling_webpage.html" class="suggestion-item">🤖 AI Analysis</a>
+            <a href="/business-data/business-listings-impact.html" class="suggestion-item">📈 Business Impact</a>
         </div>
         
         <div class="debug-info" id="debugInfo">
@@ -169,13 +199,13 @@
             console.log('404 Page - Current path:', path);
             
             // Handle common redirect patterns
-            if (path.includes('/public/index/') && path !== '/public/index/') {
-                console.log('Redirecting to projects index');
+            if (path.includes('/public/index/')) {
+                console.log('Redirecting to homepage projects section');
                 setTimeout(() => {
-                    window.location.href = '/public/index/';
+                    window.location.href = '/#projects';
                 }, 2000);
                 document.querySelector('.error-message').innerHTML = 
-                    'Redirecting you to the projects page in 2 seconds...';
+                    'Redirecting you to the projects section in 2 seconds...';
                 return;
             }
             
@@ -209,13 +239,20 @@
             
             // Simple search logic - in a real app, this would be more sophisticated
             const projectMap = {
-                'project1': '/projects/project1/',
-                'web': '/projects/project1/',
-                'interactive': '/projects/project1/',
+                'israel': '/israel-iran-war/',
+                'iran': '/israel-iran-war/',
+                'crisis': '/israel-iran-war/',
+                'country': '/country-data/public/',
+                'data': '/country-data/public/',
+                'event': '/event-hunter/events-listing/',
+                'hunter': '/event-hunter/events-listing/',
+                'company': '/companies-data/companies-listing/',
+                'companies': '/companies-data/companies-listing/',
+                'business': '/business-data/ai_scaling_webpage.html',
+                'ai': '/business-data/ai_scaling_webpage.html',
                 'portfolio': '/',
                 'home': '/',
-                'index': '/public/index/',
-                'projects': '/public/index/'
+                'projects': '/#projects'
             };
             
             for (const [key, url] of Object.entries(projectMap)) {

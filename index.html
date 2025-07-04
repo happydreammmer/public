@@ -6,6 +6,7 @@
     <title>My Projects Portfolio</title>
     <meta name="description" content="A showcase of my web development projects and experiments">
     <meta name="keywords" content="portfolio, web development, projects, HTML, CSS, JavaScript">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,11 +15,27 @@
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #f8fafc;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(129, 140, 248, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            z-index: -1;
         }
         
         .container {
@@ -34,16 +51,20 @@
         }
         
         .header h1 {
-            font-size: 3.5rem;
-            color: white;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
             animation: fadeInUp 1s ease-out;
         }
         
         .header p {
             font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.9);
+            color: #cbd5e1;
             margin-bottom: 30px;
             animation: fadeInUp 1s ease-out 0.2s both;
         }
@@ -80,9 +101,9 @@
         .section-title {
             text-align: center;
             font-size: 2.5rem;
-            color: white;
+            color: #f8fafc;
             margin-bottom: 40px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-weight: 700;
         }
         
         .projects-grid {
@@ -93,13 +114,13 @@
         }
         
         .project-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
             padding: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -111,7 +132,7 @@
             left: 0;
             right: 0;
             height: 4px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
         }
         
         .project-card:hover {
@@ -123,7 +144,7 @@
             position: absolute;
             top: 15px;
             right: 20px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
             color: white;
             width: 30px;
             height: 30px;
@@ -136,14 +157,14 @@
         }
         
         .project-title {
-            color: #333;
+            color: #f8fafc;
             margin-bottom: 15px;
             font-size: 1.5rem;
             font-weight: 600;
         }
         
         .project-description {
-            color: #666;
+            color: #cbd5e1;
             margin-bottom: 20px;
             line-height: 1.7;
         }
@@ -156,12 +177,13 @@
         }
         
         .tag {
-            background: #f0f0f0;
-            color: #555;
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
             padding: 4px 12px;
             border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 500;
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
         
         .project-links {
@@ -171,7 +193,7 @@
         
         .project-link {
             display: inline-block;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
             color: white;
             padding: 12px 24px;
             border-radius: 25px;
@@ -184,7 +206,7 @@
         
         .project-link:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
         }
         
         .project-link.secondary {
@@ -206,13 +228,19 @@
         }
         
         .stat-card {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(30, 41, 59, 0.8);
             padding: 20px;
-            border-radius: 15px;
+            border-radius: 20px;
             text-align: center;
-            color: white;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #f8fafc;
+            backdrop-filter: blur(32px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
         
         .stat-number {
@@ -229,7 +257,7 @@
         .footer {
             text-align: center;
             padding: 40px 0;
-            color: rgba(255, 255, 255, 0.8);
+            color: #cbd5e1;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -278,10 +306,25 @@
         <header class="header">
             <h1>My Projects Portfolio</h1>
             <p>Welcome to my collection of projects and experiments</p>
-            <nav class="nav-links">
-                <a href="#projects" class="nav-link">View Projects</a>
-                <a href="#stats" class="nav-link">Statistics</a>
-            </nav>
+            
+            <section class="stats-section" id="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="projectCount">6</div>
+                    <div class="stat-label">Projects Completed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="techCount">25+</div>
+                    <div class="stat-label">Technologies Used</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="visitCount">---</div>
+                    <div class="stat-label">Site Visits</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="updateCount">Recent</div>
+                    <div class="stat-label">Last Updated</div>
+                </div>
+            </section>
         </header>
 
         <section class="projects-section" id="projects">
@@ -397,24 +440,7 @@
             </div>
         </section>
 
-        <section class="stats-section" id="stats">
-            <div class="stat-card">
-                <div class="stat-number" id="projectCount">12</div>
-                <div class="stat-label">Projects Completed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="techCount">25+</div>
-                <div class="stat-label">Technologies Used</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="visitCount">---</div>
-                <div class="stat-label">Site Visits</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="updateCount">Recent</div>
-                <div class="stat-label">Last Updated</div>
-            </div>
-        </section>
+
 
         <footer class="footer">
             <p>&copy; 2025 My Portfolio. Built with ❤️ and hosted on GitHub Pages.</p>

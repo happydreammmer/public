@@ -1,190 +1,1338 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Israel-Iran War Analysis | Strategic Analysis Dashboard</title>
-    <meta name="description" content="Strategic analysis and prediction dashboard for the Israel-Iran crisis with comprehensive data visualization and risk assessment.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Iran-Israel Crisis Dashboard">
+    <meta name="theme-color" content="#1e3c72">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Iran-Israel Crisis: Strategic Analysis Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
+            padding-bottom: 80px;
+            transition: all 0.3s ease;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            margin-top: 20px;
+        }
+
+        .header h1 {
+            color: #1e3c72;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .header .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+        }
+
+        .breaking-news {
+            background: linear-gradient(45deg, #dc3545, #e74c3c);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            font-size: 0.95em;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.8; }
+            100% { opacity: 1; }
+        }
+
+        .meta-info {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .game-theory-note {
+            background: linear-gradient(135deg, #e8f5e8, #d4edda);
+            border: 2px solid #28a745;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            font-size: 0.9em;
+        }
+
+        .game-theory-note h4 {
+            color: #155724;
+            margin-bottom: 8px;
+            font-size: 1em;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            margin-bottom: 20px;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .section h2 {
+            color: #1e3c72;
+            border-bottom: 3px solid #2a5298;
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            font-size: 1.6em;
+        }
+
+        .poll-container {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .poll-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .poll-option {
+            background: white;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 130px;
+            justify-content: space-between;
+        }
+
+        .poll-option:hover {
+            border-color: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(42, 82, 152, 0.2);
+        }
+
+        .poll-option.selected {
+            border-color: #2a5298;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        .poll-option input[type="radio"] {
+            margin-bottom: 8px;
+            transform: scale(1.1);
+            align-self: flex-start;
+        }
+
+        .poll-content {
+            flex: 1;
+        }
+
+        .poll-title {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 6px;
+            font-size: 0.9em;
+            line-height: 1.3;
+        }
+
+        .poll-probability {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .poll-description {
+            font-size: 0.8em;
+            color: #666;
+            line-height: 1.4;
+        }
+
+        .vote-section {
+            text-align: center;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+        }
+
+        .vote-button {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .vote-button:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(42, 82, 152, 0.3);
+        }
+
+        .vote-button:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .vote-results {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .scenario-analysis {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .scenario-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .scenario-description-text {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #2a5298;
+            margin-bottom: 25px;
+        }
+
+        .chart-container {
+            position: relative;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e9ecef;
+            overflow: hidden;
+        }
+
+        .chart-wrapper {
+            height: 300px;
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .chart-title {
+            text-align: center;
+            color: #1e3c72;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .chart-legend {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+        }
+
+        .scenario-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 16px;
+            border-left: 5px solid;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .scenario-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .scenario-card.scenario-1 { border-left-color: #28a745; }
+        .scenario-card.scenario-2 { border-left-color: #ffc107; }
+        .scenario-card.scenario-3 { border-left-color: #dc3545; }
+        .scenario-card.scenario-4 { border-left-color: #6f42c1; }
+        .scenario-card.scenario-5 { border-left-color: #fd7e14; }
+
+        .scenario-title {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .scenario-probability {
+            font-size: 1.6em;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .scenario-description {
+            color: #666;
+            font-size: 0.85em;
+            line-height: 1.4;
+        }
+
+        .calculator-container {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .calculator-intro {
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .risk-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .risk-category {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #2a5298;
+        }
+
+        .risk-category h4 {
+            color: #1e3c72;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .risk-item {
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
         }
-        
-        .container {
-            max-width: 800px;
-            padding: 40px;
-            text-align: center;
+
+        .risk-item:last-child {
+            border-bottom: none;
         }
-        
-        .header {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            margin-bottom: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
-            color: #40e0ff;
-        }
-        
-        .header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            margin-bottom: 30px;
-        }
-        
-        .nav-links {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-        
-        .nav-link {
-            display: inline-block;
-            background: linear-gradient(135deg, #40e0ff, #1e3c72);
-            color: white;
-            padding: 15px 30px;
+
+        .risk-toggle {
+            position: relative;
+            width: 50px;
+            height: 25px;
+            background: #ccc;
             border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
+            cursor: pointer;
             transition: all 0.3s ease;
-            min-width: 200px;
+            flex-shrink: 0;
         }
-        
-        .nav-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(64, 224, 255, 0.3);
+
+        .risk-toggle.active {
+            background: #2a5298;
         }
-        
-        .nav-link.primary {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-        }
-        
-        .nav-link.primary:hover {
-            box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
-        }
-        
-        .back-link {
+
+        .risk-toggle::after {
+            content: '';
             position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 15px;
-            text-decoration: none;
-            backdrop-filter: blur(10px);
+            top: 2px;
+            left: 2px;
+            width: 21px;
+            height: 21px;
+            background: white;
+            border-radius: 50%;
             transition: all 0.3s ease;
         }
-        
-        .back-link:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
+
+        .risk-toggle.active::after {
+            transform: translateX(25px);
         }
-        
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
+
+        .risk-label {
+            flex: 1;
+            margin-right: 15px;
         }
-        
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+
+        .risk-impact {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 3px;
         }
-        
-        .feature-icon {
-            font-size: 2rem;
+
+        .dynamic-chart {
+            position: relative;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .dynamic-chart-wrapper {
+            height: 280px;
             margin-bottom: 15px;
+            position: relative;
         }
-        
-        .feature-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 10px;
+
+        .escalation-analysis {
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border: 2px solid #856404;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
         }
-        
-        .feature-desc {
-            opacity: 0.8;
-            font-size: 0.9rem;
+
+        .escalation-analysis h5 {
+            color: #856404;
+            font-weight: bold;
+            margin-bottom: 8px;
+            font-size: 0.95em;
         }
-        
+
+        .escalation-analysis p {
+            font-size: 0.8em;
+            color: #856404;
+            margin: 0;
+            line-height: 1.4;
+        }
+
+        .timeline-container {
+            position: relative;
+            padding: 20px 0;
+        }
+
+        .timeline-item {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 60px;
+            top: 50px;
+            width: 2px;
+            height: calc(100% + 10px);
+            background: linear-gradient(to bottom, #2a5298, #e9ecef);
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        .timeline-date {
+            background: linear-gradient(135deg, #2a5298, #1e3c72);
+            color: white;
+            padding: 12px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-align: center;
+            font-size: 0.9em;
+            position: relative;
+            z-index: 2;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid #2a5298;
+        }
+
+        .timeline-title {
+            font-weight: bold;
+            color: #1e3c72;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .timeline-description {
+            color: #666;
+            font-size: 0.95em;
+        }
+
+        .sticky-bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            height: 60px;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .headline-ticker {
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            animation: scroll-left 120s linear infinite;
+            font-size: 14px;
+            font-weight: 500;
+            height: 100%;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .headline-item {
+            margin-right: 50px;
+            padding-right: 50px;
+            border-right: 2px solid rgba(255, 255, 255, 0.3);
+            flex-shrink: 0;
+            display: inline-block;
+            line-height: 1.4;
+            padding: 5px 0;
+        }
+
+        .headline-item:last-child {
+            border-right: none;
+        }
+
+        .close-ticker {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 1001;
+        }
+
+        .close-ticker:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 1024px) {
+            .poll-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
         @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header {
+                padding: 15px;
+                margin-top: 15px;
+            }
+
             .header h1 {
-                font-size: 2rem;
+                font-size: 1.8em;
             }
-            
-            .nav-links {
-                flex-direction: column;
-                align-items: center;
+
+            .section {
+                padding: 20px;
             }
-            
-            .nav-link {
-                min-width: 250px;
+
+            .scenario-analysis,
+            .calculator-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .chart-container,
+            .dynamic-chart {
+                order: -1;
+            }
+
+            .poll-grid {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .poll-option {
+                min-height: 110px;
+                padding: 10px;
+            }
+
+            .timeline-item {
+                grid-template-columns: 100px 1fr;
+                gap: 15px;
+            }
+
+            .timeline-item::before {
+                left: 50px;
+                height: calc(100% + 5px);
+            }
+
+            .timeline-date {
+                padding: 10px 12px;
+                font-size: 0.8em;
+            }
+
+            .risk-factors {
+                grid-template-columns: 1fr;
+            }
+
+            .headline-ticker {
+                font-size: 13px;
+            }
+
+            .headline-item {
+                margin-right: 30px;
+                padding-right: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.6em;
+            }
+
+            .breaking-news {
+                font-size: 0.9em;
+                padding: 10px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+
+            .poll-option {
+                min-height: 100px;
+                padding: 8px;
+            }
+
+            .poll-title {
+                font-size: 0.85em;
+            }
+
+            .poll-probability {
+                font-size: 0.8em;
+            }
+
+            .poll-description {
+                font-size: 0.75em;
+            }
+
+            .timeline-item {
+                grid-template-columns: 80px 1fr;
+                gap: 10px;
+            }
+
+            .timeline-date {
+                padding: 8px 10px;
+                font-size: 0.75em;
+            }
+
+            .timeline-item::before {
+                left: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <a href="../" class="back-link">← Back to Portfolio</a>
-    
     <div class="container">
+        <!-- Header -->
         <div class="header">
-            <h1>Israel-Iran War Analysis</h1>
-            <p>Strategic Analysis Dashboard with Comprehensive Crisis Prediction and Risk Assessment</p>
+            <h1>Iran-Israel Crisis Dashboard</h1>
+            <p class="subtitle">Strategic Analysis & Game Theory Assessment</p>
+            <div class="breaking-news">
+                🚨 BREAKING: Israel launches "Operation Rising Lion" - Major strike on Iranian nuclear facilities
+            </div>
+            <p class="meta-info"><strong>Last Updated:</strong> June 13, 2025 | <strong>Status:</strong> Active Crisis</p>
             
-            <div class="nav-links">
-                <a href="./prediction/" class="nav-link primary">📊 View Crisis Dashboard</a>
-                <a href="../" class="nav-link">🏠 Back to Portfolio</a>
+            <div class="game-theory-note">
+                <h4>🎯 Game Theory Framework: "Chicken Game" Dynamics</h4>
+                <p><strong>Strategic Assessment:</strong> This conflict represents a classic "Chicken Game" where both players race toward each other, neither wanting to retreat first, but both knowing collision would be devastating. Israel cannot allow Iran to reach the nuclear threshold, while Iran cannot afford to appear to be folding for fear of losing prestige and regional leadership.</p>
             </div>
         </div>
-        
-        <div class="features">
-            <div class="feature-card">
-                <div class="feature-icon">🎯</div>
-                <div class="feature-title">Strategic Analysis</div>
-                <div class="feature-desc">Comprehensive geopolitical risk assessment with real-time data visualization</div>
+
+        <!-- Poll Section -->
+        <div class="section">
+            <h2>🗳️ Community Assessment Poll</h2>
+            <p>Which scenario do you think is most likely over the next 6 months? (Probabilities based on game theory analysis)</p>
+            
+            <div class="poll-container">
+                <div class="poll-grid">
+                    <div class="poll-option" onclick="selectOption(1)">
+                        <input type="radio" name="scenario" value="1" id="option1">
+                        <div class="poll-content">
+                            <div class="poll-title">Limited Escalation & Diplomacy</div>
+                            <div class="poll-probability">Strategic: 25%</div>
+                            <div class="poll-description">Face-saving proportional response → Gulf mediation</div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-option" onclick="selectOption(2)">
+                        <input type="radio" name="scenario" value="2" id="option2">
+                        <div class="poll-content">
+                            <div class="poll-title">Sustained Military Campaign</div>
+                            <div class="poll-probability">Strategic: 40%</div>
+                            <div class="poll-description">Controlled escalation - India-Pakistan model</div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-option" onclick="selectOption(3)">
+                        <input type="radio" name="scenario" value="3" id="option3">
+                        <div class="poll-content">
+                            <div class="poll-title">Regional War Escalation</div>
+                            <div class="poll-probability">Strategic: 10%</div>
+                            <div class="poll-description">Miscalculation leads to uncontrolled conflict</div>
+                        </div>
+                    </div>
+                    
+                    <div class="poll-option" onclick="selectOption(4)">
+                        <input type="radio" name="scenario" value="4" id="option4">
+                        <div class="poll-content">
+                            <div class="poll-title">Iranian Nuclear Breakout</div>
+                            <div class="poll-probability">Strategic: 10%</div>
+                            <div class="poll-description">Iran's "slow path" strategy accelerates</div>
+                        </div>
+                    </div>
+
+                    <div class="poll-option" onclick="selectOption(5)">
+                        <input type="radio" name="scenario" value="5" id="option5">
+                        <div class="poll-content">
+                            <div class="poll-title">US Military Intervention</div>
+                            <div class="poll-probability">Strategic: 25%</div>
+                            <div class="poll-description">B-2 strikes after Trump ultimatum failure</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="vote-section">
+                    <button class="vote-button" onclick="submitVote()">Submit Your Assessment</button>
+                </div>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <div class="feature-title">Predictive Modeling</div>
-                <div class="feature-desc">Advanced prediction algorithms analyzing multiple conflict scenarios</div>
+            <div id="voteResults" class="vote-results">
+                <h3>Community Poll Results</h3>
+                <div id="pollResults"></div>
+            </div>
+        </div>
+
+        <!-- Dynamic Probability Calculator -->
+        <div class="section">
+            <h2>🎯 Strategic Scenario Calculator</h2>
+            <div class="calculator-intro">
+                <p><strong>Game Theory Analysis:</strong> Large conflicts become large because they escalate - fighting is equally likely to escalate as deescalate in any given year. Adjust factors below to model escalation dynamics and commitment problems.</p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">🌍</div>
-                <div class="feature-title">Interactive Maps</div>
-                <div class="feature-desc">Dynamic geographical visualization of regional tensions and developments</div>
+            <div class="calculator-container">
+                <div class="risk-factors">
+                    <div class="risk-category">
+                        <h4>🏛️ Commitment & Resolve Factors</h4>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Iranian Regime Prestige at Stake</div>
+                                <div class="risk-impact">+15% Sustained Campaign (cannot appear weak)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="iran-prestige" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Israeli Existential Threat Perception</div>
+                                <div class="risk-impact">+12% US Intervention (forces US hand)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="israeli-existential" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Trump Commitment Trap</div>
+                                <div class="risk-impact">+20% US Intervention (credibility stakes)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="trump-commitment" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Rally-Around-Flag Effect</div>
+                                <div class="risk-impact">+8% Sustained Campaign (domestic support)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="rally-flag" onclick="toggleRisk(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="risk-category">
+                        <h4>⚡ Escalation Dominance Factors</h4>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>B-2 Bunker-Buster Deployment</div>
+                                <div class="risk-impact">+25% US Intervention (escalation dominance)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="b2-dominance" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Iranian Asymmetric Retaliation</div>
+                                <div class="risk-impact">+18% Regional War (proxy activation)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="asymmetric-retaliation" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Israeli Intelligence Superiority</div>
+                                <div class="risk-impact">+10% Sustained Campaign (tactical advantage)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="israeli-intel" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Iran Nuclear Threshold Crossing</div>
+                                <div class="risk-impact">+30% Nuclear Breakout (point of no return)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="nuclear-threshold" onclick="toggleRisk(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="risk-category">
+                        <h4>🌍 Strategic Stability Factors</h4>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Oil Market Shock ($120+/barrel)</div>
+                                <div class="risk-impact">+20% Limited Escalation (global pressure)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="oil-shock" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Chinese Energy Security Concerns</div>
+                                <div class="risk-impact">+15% Limited Escalation (mediation pressure)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="chinese-energy" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Gulf States Fear Spillover</div>
+                                <div class="risk-impact">+12% Limited Escalation (mediation efforts)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="gulf-fear" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Alliance Burden-Sharing Pressure</div>
+                                <div class="risk-impact">-8% US Intervention (restraint from allies)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="alliance-pressure" onclick="toggleRisk(this)"></div>
+                        </div>
+                    </div>
+
+                    <div class="risk-category">
+                        <h4>📅 Critical Decision Points</h4>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Iran Attacks US Military Assets</div>
+                                <div class="risk-impact">+35% US Intervention (direct provocation)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="iran-attacks-us" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Massive Civilian Casualties</div>
+                                <div class="risk-impact">+25% Regional War (escalation spiral)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="civilian-casualties" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Iranian Leadership Decapitation</div>
+                                <div class="risk-impact">+20% Regional War (regime survival)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="leadership-strike" onclick="toggleRisk(this)"></div>
+                        </div>
+                        <div class="risk-item">
+                            <div class="risk-label">
+                                <div>Popular Uprising in Iran</div>
+                                <div class="risk-impact">+25% Limited Escalation (regime weakness)</div>
+                            </div>
+                            <div class="risk-toggle" data-factor="uprising" onclick="toggleRisk(this)"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dynamic-chart">
+                    <div class="chart-title">Dynamic Probability Assessment</div>
+                    <div class="dynamic-chart-wrapper">
+                        <canvas id="dynamicChart"></canvas>
+                    </div>
+                    <div class="escalation-analysis">
+                        <h5>⚠️ Escalation Dynamics Analysis</h5>
+                        <p><strong>Current Risk Level:</strong> Large wars become large because they escalate. Stability-instability paradox: Nuclear threats reduce major war probability but increase minor conflicts. Both sides in "competition in risk-taking" where resolve matters as much as capabilities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scenario Analysis -->
+        <div class="section">
+            <h2>📊 Strategic Scenario Analysis</h2>
+            
+            <div class="scenario-description-text">
+                <p><strong>Game Theory Assessment:</strong> Iran's nuclear strategy follows a "slow path" to avoid triggering US/Israeli intervention until the last moment possible. Current dynamics represent strategic restraint, not weakness, but understanding that the next stage may be uncontrollable. Analysis incorporates escalation dominance theory, commitment problems, and asymmetric stakes.</p>
             </div>
             
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <div class="feature-title">Real-time Updates</div>
-                <div class="feature-desc">Live data feeds and continuous situation monitoring capabilities</div>
+            <div class="scenario-analysis">
+                <div class="scenario-content">
+                    <div class="scenario-grid">
+                        <div class="scenario-card scenario-1" onclick="toggleScenario(1)">
+                            <div class="scenario-title">Limited Escalation & Face-Saving</div>
+                            <div class="scenario-probability" style="color: #28a745;">25%</div>
+                            <div class="scenario-description">
+                                <strong>Strategic Logic:</strong> Both sides seek controlled de-escalation to avoid catastrophic costs while maintaining credibility. Gulf mediation provides face-saving exit ramp. <strong>Risk:</strong> Chicken game dynamics make retreat signal weakness.
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-card scenario-2" onclick="toggleScenario(2)">
+                            <div class="scenario-title">Controlled Escalation Campaign</div>
+                            <div class="scenario-probability" style="color: #ffc107;">40%</div>
+                            <div class="scenario-description">
+                                <strong>Most Probable:</strong> "India-Pakistan model" - exchange of blows with mutual restraint to avoid all-out war. Both sides test limits while maintaining escalation control. Duration: 3-6 months of measured responses.
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-card scenario-3" onclick="toggleScenario(3)">
+                            <div class="scenario-title">Escalation to Regional War</div>
+                            <div class="scenario-probability" style="color: #dc3545;">10%</div>
+                            <div class="scenario-description">
+                                <strong>Miscalculation Risk:</strong> Nuclear escalation can occur rapidly once conventional deterrence fails. Triggers: Massive civilian casualties, leadership strikes, or proxy escalation beyond control thresholds.
+                            </div>
+                        </div>
+                        
+                        <div class="scenario-card scenario-4" onclick="toggleScenario(4)">
+                            <div class="scenario-title">Iranian Nuclear Sprint</div>
+                            <div class="scenario-probability" style="color: #6f42c1;">10%</div>
+                            <div class="scenario-description">
+                                <strong>Desperation Strategy:</strong> Iran's "slow path" strategy accelerates to weapons capability if conventional deterrence fails. Currently at 60% enrichment - can produce weapons-grade in weeks.
+                            </div>
+                        </div>
+
+                        <div class="scenario-card scenario-5" onclick="toggleScenario(5)">
+                            <div class="scenario-title">US Military Intervention</div>
+                            <div class="scenario-probability" style="color: #fd7e14;">25%</div>
+                            <div class="scenario-description">
+                                <strong>Escalation Dominance:</strong> B-2 bombers with MOPs represent only capability to destroy deep underground facilities. Trump's commitment trap and Israeli pressure create intervention pathway.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Strategic Probability Assessment</div>
+                    <div class="chart-wrapper">
+                        <canvas id="probabilityChart"></canvas>
+                    </div>
+                    <div class="chart-legend">
+                        <strong>Methodology:</strong> Game theory analysis incorporating chicken game dynamics, escalation dominance theory, commitment problems, asymmetric stakes, and historical escalation patterns from similar conflicts.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Strategic Timeline -->
+        <div class="section">
+            <h2>⏰ Strategic Decision Timeline</h2>
+            <p>Critical decision points where game theory dynamics will determine conflict trajectory</p>
+            
+            <div class="timeline-container">
+                <div class="timeline-item">
+                    <div class="timeline-date">72hrs</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🎯 Iranian Strategic Response Choice</div>
+                        <div class="timeline-description">
+                            <strong>Game Theory Moment:</strong> Iran must choose between proportional response (maintains chicken game) or massive retaliation (risks escalation dominance by US/Israel). Neither side wants to be first to retreat, but both know collision would be devastating.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">July 2025</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🇺🇸 Trump Ultimatum Expiry</div>
+                        <div class="timeline-description">
+                            <strong>Commitment Trap:</strong> Trump's public ultimatum creates domestic credibility stakes. Credible deterrence requires both capability and perceived resolve. B-2 deployment signals escalation dominance preparation.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Aug-Sept 2025</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">⚖️ Escalation Control Assessment</div>
+                        <div class="timeline-description">
+                            <strong>Strategic Calculation:</strong> Escalation dynamics determine whether conflicts grow in severity. Both sides assess whether controlled escalation remains viable or risks spiraling beyond control mechanisms.
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-date">Oct 2025</div>
+                    <div class="timeline-content">
+                        <div class="timeline-title">🔄 Resolution or Entrenchment</div>
+                        <div class="timeline-description">
+                            <strong>End Game:</strong> Either successful face-saving de-escalation through third-party mediation, or acceptance of new "cold war" equilibrium with periodic controlled escalation cycles. Real victory is to prevent the crash, not lead to it.
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Bottom Ticker -->
+    <div class="sticky-bottom-bar" id="stickyTicker">
+        <div class="headline-ticker">
+            <span class="headline-item">Game Theory Alert: Iran-Israel locked in "Chicken Game" - neither side can afford to retreat first</span>
+            <span class="headline-item">Strategic Analysis: Israeli strikes demonstrate escalation dominance but risk triggering Iranian desperation moves</span>
+            <span class="headline-item">US B-2 deployment creates commitment trap for Trump - credibility stakes force intervention decision</span>
+            <span class="headline-item">Iranian "slow path" nuclear strategy may accelerate to breakout if conventional deterrence fails</span>
+            <span class="headline-item">Oil shock to $120+ would create global pressure for immediate de-escalation - economic trump card</span>
+            <span class="headline-item">Strategic Assessment: 40% probability of sustained "India-Pakistan model" controlled escalation</span>
+            <span class="headline-item">Escalation Dynamics: Large conflicts grow because fighting is equally likely to escalate as de-escalate</span>
+            <span class="headline-item">Gulf states positioning as mediators - only face-saving exit ramp for both sides in chicken game</span>
+        </div>
+        <button class="close-ticker" onclick="closeTicker()">✕</button>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedScenario = null;
+        let pollResults = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0};
+        let totalVotes = 0;
+        let probabilityChart = null;
+        let dynamicChart = null;
+        
+        // Refined base probabilities based on game theory analysis
+        let baseProbabilities = {
+            limited: 25,
+            sustained: 40,
+            regional: 10,
+            nuclear: 10,
+            usIntervention: 25
+        };
+        
+        let dynamicProbabilities = {...baseProbabilities};
+        
+        // Refined risk factors based on game theory and escalation dynamics
+        const riskFactors = {
+            'iran-prestige': { limited: -10, sustained: 15, regional: 8, nuclear: 0, usIntervention: -3 },
+            'israeli-existential': { limited: -8, sustained: 5, regional: 10, nuclear: 5, usIntervention: 12 },
+            'trump-commitment': { limited: -15, sustained: -5, regional: 0, nuclear: -5, usIntervention: 20 },
+            'rally-flag': { limited: -5, sustained: 8, regional: 2, nuclear: 0, usIntervention: -2 },
+            'b2-dominance': { limited: -10, sustained: -8, regional: 3, nuclear: -10, usIntervention: 25 },
+            'asymmetric-retaliation': { limited: -15, sustained: 10, regional: 18, nuclear: 2, usIntervention: 5 },
+            'israeli-intel': { limited: 0, sustained: 10, regional: -5, nuclear: -3, usIntervention: 0 },
+            'nuclear-threshold': { limited: -20, sustained: -10, regional: 5, nuclear: 30, usIntervention: 15 },
+            'oil-shock': { limited: 20, sustained: -10, regional: -8, nuclear: -5, usIntervention: -10 },
+            'chinese-energy': { limited: 15, sustained: -8, regional: -5, nuclear: -3, usIntervention: -8 },
+            'gulf-fear': { limited: 12, sustained: -8, regional: -5, nuclear: -2, usIntervention: -5 },
+            'alliance-pressure': { limited: 5, sustained: 3, regional: -3, nuclear: 0, usIntervention: -8 },
+            'iran-attacks-us': { limited: -25, sustained: -10, regional: 15, nuclear: 0, usIntervention: 35 },
+            'civilian-casualties': { limited: -15, sustained: 0, regional: 25, nuclear: 5, usIntervention: 10 },
+            'leadership-strike': { limited: -10, sustained: 5, regional: 20, nuclear: 8, usIntervention: 5 },
+            'uprising': { limited: 25, sustained: -15, regional: -8, nuclear: -12, usIntervention: -5 }
+        };
+        
+        let activeRisks = new Set();
+
+        function selectOption(scenario) {
+            selectedScenario = scenario;
+            
+            const pollOptions = document.querySelectorAll('.poll-option');
+            pollOptions.forEach(option => option.classList.remove('selected'));
+            
+            if (pollOptions[scenario - 1]) {
+                pollOptions[scenario - 1].classList.add('selected');
+                const radioInput = pollOptions[scenario - 1].querySelector('input[type="radio"]');
+                if (radioInput) {
+                    radioInput.checked = true;
+                }
+            }
+        }
+
+        function submitVote() {
+            if (!selectedScenario) {
+                alert('Please select a scenario before voting.');
+                return;
+            }
+            
+            pollResults[selectedScenario]++;
+            totalVotes++;
+            
+            updatePollResults();
+            
+            const resultsDiv = document.getElementById('voteResults');
+            if (resultsDiv) {
+                resultsDiv.style.display = 'block';
+            }
+            
+            const voteButton = document.querySelector('.vote-button');
+            if (voteButton) {
+                voteButton.textContent = 'Vote Submitted!';
+                voteButton.disabled = true;
+            }
+        }
+
+        function updatePollResults() {
+            const scenarios = [
+                'Limited Escalation & Face-Saving',
+                'Controlled Escalation Campaign',
+                'Escalation to Regional War',
+                'Iranian Nuclear Sprint',
+                'US Military Intervention'
+            ];
+            
+            const resultsDiv = document.getElementById('pollResults');
+            if (!resultsDiv) return;
+            
+            let html = '<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">';
+            
+            for (let i = 1; i <= 5; i++) {
+                const percentage = totalVotes > 0 ? Math.round((pollResults[i] / totalVotes) * 100) : 0;
+                html += `
+                    <div style="text-align: center; padding: 15px; background: white; border-radius: 8px;">
+                        <div style="font-weight: bold; margin-bottom: 10px; font-size: 0.9em;">${scenarios[i-1]}</div>
+                        <div style="font-size: 1.5em; color: #2a5298;">${percentage}%</div>
+                        <div style="color: #666;">${pollResults[i]} votes</div>
+                    </div>
+                `;
+            }
+            html += '</div>';
+            html += `<p style="text-align: center; margin-top: 15px;"><strong>Total Votes: ${totalVotes}</strong></p>`;
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        function toggleRisk(element) {
+            try {
+                const factor = element.getAttribute('data-factor');
+                
+                if (element.classList.contains('active')) {
+                    element.classList.remove('active');
+                    activeRisks.delete(factor);
+                } else {
+                    element.classList.add('active');
+                    activeRisks.add(factor);
+                }
+                
+                updateDynamicProbabilities();
+            } catch (error) {
+                console.error('Error toggling risk:', error);
+            }
+        }
+
+        function updateDynamicProbabilities() {
+            try {
+                dynamicProbabilities = {...baseProbabilities};
+                
+                activeRisks.forEach(factor => {
+                    const impacts = riskFactors[factor];
+                    if (impacts) {
+                        dynamicProbabilities.limited += impacts.limited;
+                        dynamicProbabilities.sustained += impacts.sustained;
+                        dynamicProbabilities.regional += impacts.regional;
+                        dynamicProbabilities.nuclear += impacts.nuclear;
+                        dynamicProbabilities.usIntervention += impacts.usIntervention;
+                    }
+                });
+                
+                const total = Object.values(dynamicProbabilities).reduce((sum, val) => sum + Math.max(0, val), 0);
+                if (total > 0) {
+                    Object.keys(dynamicProbabilities).forEach(key => {
+                        dynamicProbabilities[key] = Math.max(0, dynamicProbabilities[key]);
+                        dynamicProbabilities[key] = Math.round((dynamicProbabilities[key] / total) * 100);
+                    });
+                }
+                
+                updateDynamicChart();
+            } catch (error) {
+                console.error('Error updating dynamic probabilities:', error);
+            }
+        }
+
+        function updateDynamicChart() {
+            try {
+                const labels = [
+                    `Limited Escalation (${dynamicProbabilities.limited}%)`,
+                    `Sustained Campaign (${dynamicProbabilities.sustained}%)`,
+                    `Regional War (${dynamicProbabilities.regional}%)`,
+                    `Nuclear Breakout (${dynamicProbabilities.nuclear}%)`,
+                    `US Intervention (${dynamicProbabilities.usIntervention}%)`
+                ];
+
+                if (dynamicChart) {
+                    dynamicChart.data.datasets[0].data = [
+                        dynamicProbabilities.limited,
+                        dynamicProbabilities.sustained,
+                        dynamicProbabilities.regional,
+                        dynamicProbabilities.nuclear,
+                        dynamicProbabilities.usIntervention
+                    ];
+                    dynamicChart.data.labels = labels;
+                    dynamicChart.update('none');
+                }
+            } catch (error) {
+                console.error('Error updating dynamic chart:', error);
+            }
+        }
+
+        function toggleScenario(scenarioNum) {
+            if (event && event.currentTarget) {
+                event.currentTarget.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    event.currentTarget.style.transform = '';
+                }, 150);
+            }
+        }
+
+        function closeTicker() {
+            const ticker = document.getElementById('stickyTicker');
+            if (ticker) {
+                ticker.style.display = 'none';
+            }
+        }
+
+        function initCharts() {
+            try {
+                const ctx1 = document.getElementById('probabilityChart');
+                if (ctx1) {
+                    probabilityChart = new Chart(ctx1.getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Limited Escalation (25%)', 'Sustained Campaign (40%)', 'Regional War (10%)', 'Nuclear Breakout (10%)', 'US Intervention (25%)'],
+                            datasets: [{
+                                data: [25, 40, 10, 10, 25],
+                                backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6f42c1', '#fd7e14'],
+                                borderWidth: 3,
+                                borderColor: '#fff'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        usePointStyle: true,
+                                        padding: 15,
+                                        font: { size: 10 }
+                                    }
+                                }
+                            }
+                        }
+                    });
+                }
+
+                const ctx2 = document.getElementById('dynamicChart');
+                if (ctx2) {
+                    dynamicChart = new Chart(ctx2.getContext('2d'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: ['Limited Escalation (25%)', 'Sustained Campaign (40%)', 'Regional War (10%)', 'Nuclear Breakout (10%)', 'US Intervention (25%)'],
+                            datasets: [{
+                                data: [25, 40, 10, 10, 25],
+                                backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6f42c1', '#fd7e14'],
+                                borderWidth: 3,
+                                borderColor: '#fff'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    labels: {
+                                        usePointStyle: true,
+                                        padding: 15,
+                                        font: { size: 10 }
+                                    }
+                                }
+                            },
+                            animation: {
+                                animateRotate: true,
+                                animateScale: true
+                            }
+                        }
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error initializing charts:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            try {
+                initCharts();
+                updatePollResults();
+                
+                const ticker = document.getElementById('stickyTicker');
+                if (ticker) {
+                    ticker.style.display = 'flex';
+                }
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
+        });
+    </script>
 </body>
 </html>
