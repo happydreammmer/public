@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Companies Data 2025">
+    <meta name="theme-color" content="#0f172a">
+    <title>Companies Data 2025 - UAE & Oman Strategic Companies</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-controls">
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button>
+            <select class="language-select" id="languageSelector" aria-label="Select language">
+                <option value="en">EN</option>
+                <option value="ar">AR</option>
+                <option value="fa">FA</option>
+            </select>
+        </div>
+        <div class="container">
+            <h1 data-translate-key="pageTitle">Companies Data 2025</h1>
+            
+            <div class="counters">
+                <div class="counter-card">
+                    <span class="counter-number" id="totalCompanies">0</span>
+                    <span class="counter-label" data-translate-key="totalCompanies">Total Companies</span>
+                </div>
+                <div class="counter-card">
+                    <span class="counter-number" id="uaeCompanies">0</span>
+                    <span class="counter-label" data-translate-key="uaeCompanies">UAE Companies</span>
+                </div>
+                <div class="counter-card">
+                    <span class="counter-number" id="omanCompanies">0</span>
+                    <span class="counter-label" data-translate-key="omanCompanies">Oman Companies</span>
+                </div>
+                <div class="counter-card">
+                    <span class="counter-number" id="sectorsCount">0</span>
+                    <span class="counter-label" data-translate-key="sectors">Sectors</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="filter-controls">
+            <div class="search-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Search companies, sectors..." id="searchInput" data-translate-key="searchPlaceholder" data-translate-type="placeholder">
+            </div>
+            <div class="select-wrapper">
+                <select id="countryFilter" class="filter-select">
+                    <option value="all" data-translate-key="allCountries">All Countries</option>
+                    <option value="uae" data-translate-key="uae">🇦🇪 UAE</option>
+                    <option value="oman" data-translate-key="oman">🇴🇲 Oman</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="sectorFilter" class="filter-select">
+                    <option value="all" data-translate-key="allSectors">All Sectors</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="sizeFilter" class="filter-select">
+                    <option value="all" data-translate-key="allSizes">All Sizes</option>
+                    <option value="large" data-translate-key="large">🏭 Large</option>
+                    <option value="medium" data-translate-key="medium">🏢 Medium</option>
+                    <option value="small" data-translate-key="small">🏪 Small</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="priorityFilter" class="filter-select">
+                    <option value="all" data-translate-key="allPriorities">All Priorities</option>
+                    <option value="high" data-translate-key="high">🔥 High Priority</option>
+                    <option value="medium" data-translate-key="medium">📊 Medium Priority</option>
+                    <option value="low" data-translate-key="low">📝 Low Priority</option>
+                </select>
+            </div>
+            <div class="select-wrapper">
+                <select id="locationFilter" class="filter-select">
+                    <option value="all" data-translate-key="allLocations">All Locations</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="companies-grid" id="companiesGrid">
+            <!-- Companies will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="./data.js"></script>
+    <script src="./translations.js"></script>
+    <script src="./utils.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html> 
