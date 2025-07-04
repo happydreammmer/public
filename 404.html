@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found - 404</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .error-container {
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .error-code {
+            font-size: 120px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .error-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+        .error-message {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .action-buttons {
+            margin: 30px 0;
+        }
+        .home-link, .projects-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .home-link:hover, .projects-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .search-container {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .search-input {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            width: 250px;
+            max-width: 80%;
+            outline: none;
+            margin-right: 10px;
+        }
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .search-button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.3);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .search-button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        .suggestions {
+            margin-top: 30px;
+            text-align: left;
+        }
+        .suggestion-item {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            padding: 8px 16px;
+            margin: 5px 0;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        .suggestion-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateX(5px);
+        }
+        .debug-info {
+            margin-top: 30px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            font-size: 14px;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-code">404</div>
+        <div class="error-title">Oops! Page Not Found</div>
+        <div class="error-message">
+            The page you're looking for seems to have wandered off into the digital void. 
+            Don't worry, it happens to the best of us!
+        </div>
+        
+        <div class="action-buttons">
+            <a href="/" class="home-link">🏠 Go Home</a>
+            <a href="/public/index/" class="projects-link">📁 View Projects</a>
+        </div>
+        
+        <div class="search-container">
+            <h3>Looking for something specific?</h3>
+            <input type="text" class="search-input" placeholder="Search for projects..." id="searchInput">
+            <button class="search-button" onclick="searchProjects()">Search</button>
+        </div>
+        
+        <div class="suggestions">
+            <h4>Popular pages:</h4>
+            <a href="/" class="suggestion-item">🏠 Portfolio Home</a>
+            <a href="/public/index/" class="suggestion-item">📋 Projects Index</a>
+            <a href="/projects/project1/" class="suggestion-item">🚀 Project 1</a>
+            <a href="/projects/project2/" class="suggestion-item">💡 Project 2</a>
+        </div>
+        
+        <div class="debug-info" id="debugInfo">
+            <strong>Debug Information:</strong><br>
+            <span id="currentPath"></span><br>
+            <span id="referrer"></span><br>
+            <span id="userAgent"></span>
+        </div>
+    </div>
+    
+    <script>
+        // Auto-redirect logic for common URL patterns
+        function handleAutoRedirect() {
+            const path = window.location.pathname;
+            console.log('404 Page - Current path:', path);
+            
+            // Handle common redirect patterns
+            if (path.includes('/public/index/') && path !== '/public/index/') {
+                console.log('Redirecting to projects index');
+                setTimeout(() => {
+                    window.location.href = '/public/index/';
+                }, 2000);
+                document.querySelector('.error-message').innerHTML = 
+                    'Redirecting you to the projects page in 2 seconds...';
+                return;
+            }
+            
+            // Handle project redirects
+            if (path.includes('/projects/') && !path.endsWith('/')) {
+                console.log('Adding trailing slash to project URL');
+                setTimeout(() => {
+                    window.location.href = path + '/';
+                }, 1000);
+                document.querySelector('.error-message').innerHTML = 
+                    'Fixing URL format... redirecting in 1 second.';
+                return;
+            }
+            
+            // Handle root-level page access
+            if (path.match(/^\/[^\/]+\/?$/) && !path.includes('.')) {
+                const pageName = path.replace(/\//g, '');
+                if (['projects', 'about', 'contact'].includes(pageName)) {
+                    setTimeout(() => {
+                        window.location.href = `/${pageName}/`;
+                    }, 1500);
+                    document.querySelector('.error-message').innerHTML = 
+                        `Looking for ${pageName}? Redirecting you there...`;
+                    return;
+                }
+            }
+        }
+        
+        function searchProjects() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            // Simple search logic - in a real app, this would be more sophisticated
+            const projectMap = {
+                'project1': '/projects/project1/',
+                'web': '/projects/project1/',
+                'interactive': '/projects/project1/',
+                'portfolio': '/',
+                'home': '/',
+                'index': '/public/index/',
+                'projects': '/public/index/'
+            };
+            
+            for (const [key, url] of Object.entries(projectMap)) {
+                if (searchTerm.includes(key)) {
+                    window.location.href = url;
+                    return;
+                }
+            }
+            
+            // If no match found
+            alert('No matching projects found. Try browsing from the home page.');
+        }
+        
+        // Enter key search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchProjects();
+            }
+        });
+        
+        // Display debug information
+        function showDebugInfo() {
+            document.getElementById('currentPath').textContent = 
+                `Current Path: ${window.location.pathname}`;
+            document.getElementById('referrer').textContent = 
+                `Referrer: ${document.referrer || 'Direct access'}`;
+            document.getElementById('userAgent').textContent = 
+                `Browser: ${navigator.userAgent.split(' ')[0]}`;
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            handleAutoRedirect();
+            showDebugInfo();
+            
+            // Add some visual flair
+            setTimeout(() => {
+                document.querySelector('.error-container').style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    document.querySelector('.error-container').style.transform = 'scale(1)';
+                }, 200);
+            }, 500);
+        });
+        
+        // Log for debugging
+        console.log('404 Error Page Loaded');
+        console.log('Current URL:', window.location.href);
+        console.log('Pathname:', window.location.pathname);
+    </script>
+</body>
+</html>
