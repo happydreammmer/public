@@ -198,6 +198,18 @@
             const path = window.location.pathname;
             console.log('404 Page - Current path:', path);
             
+            // Handle /public/ URL redirects - primary fix for 404 errors
+            if (path.startsWith('/public/')) {
+                const newPath = path.replace('/public', '');
+                console.log('Redirecting from /public/ URL to:', newPath);
+                document.querySelector('.error-message').innerHTML = 
+                    `Redirecting from <code>/public${newPath}</code> to <code>${newPath}</code>...`;
+                setTimeout(() => {
+                    window.location.replace(newPath);
+                }, 1500);
+                return;
+            }
+            
             // Handle common redirect patterns
             if (path.includes('/public/index/')) {
                 console.log('Redirecting to homepage projects section');
