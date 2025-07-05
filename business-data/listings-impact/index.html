@@ -4,12 +4,444 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>Business Listings Impact Analysis</title>
-    <script>
-        // Redirect to the main business data file for now
-        window.location.href = '../business-listings-impact.html';
-    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+        }
+
+        .hero-content h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #fff, #e0e7ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 2rem 1.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: transform 0.3s ease, background 0.3s ease;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fbbf24;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 0.5rem;
+            line-height: 1.3;
+        }
+
+        /* Platform Sections */
+        .platform-section {
+            padding: 5rem 0;
+            position: relative;
+        }
+
+        .platform-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .platform-logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: white;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .platform-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .platform-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.8;
+        }
+
+        /* Impact Cards */
+        .impact-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .impact-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            text-align: center;
+            transition: all 0.3s ease;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .impact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .impact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .impact-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #fbbf24;
+            margin-bottom: 0.5rem;
+        }
+
+        .impact-description {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Call to Action */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 0;
+            background: linear-gradient(135deg, rgba(251,191,36,0.2), rgba(251,191,36,0.1));
+            border-radius: 30px;
+            margin: 3rem 0;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .cta-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(251,191,36,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(251,191,36,0.4);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats-preview {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .impact-cards {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+            
+            .platform-section {
+                padding: 3rem 0;
+            }
+            
+            .nav {
+                position: static;
+                text-align: center;
+                margin: 20px 0;
+            }
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to Business Listings Impact Analysis...</p>
+    <nav class="nav">
+        <a href="/" class="nav-link">← Back to Portfolio</a>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>The Power of Better Business Listings</h1>
+                <p>Discover how optimized business listings drive measurable results across Google, Apple Maps, TripAdvisor, and other major platforms. Data-driven insights from 2024-2025.</p>
+                
+                <div class="stats-preview">
+                    <div class="stat-item">
+                        <span class="stat-number">2.7x</span>
+                        <div class="stat-label">More Trust from Complete Profiles</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">520%</span>
+                        <div class="stat-label">Increase in User Actions</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">270%</span>
+                        <div class="stat-label">Higher Conversion Rates</div>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">87%</span>
+                        <div class="stat-label">Use Google for Local Search</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Google Business Profile -->
+        <section class="platform-section">
+            <div class="platform-header">
+                <div class="platform-logo">G</div>
+                <h2 class="platform-title">Google Business Profile</h2>
+                <p class="platform-subtitle">The foundation of local search visibility</p>
+            </div>
+
+            <div class="impact-cards">
+                <div class="impact-card">
+                    <div class="impact-icon">📊</div>
+                    <div class="impact-value">2.7x</div>
+                    <div class="impact-description">More Trust<br>Complete vs Basic Profile</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">📸</div>
+                    <div class="impact-value">520%</div>
+                    <div class="impact-description">Increase in Actions<br>With Photos & Videos</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">📈</div>
+                    <div class="impact-value">270%</div>
+                    <div class="impact-description">Higher Conversion<br>5+ Reviews vs 0 Reviews</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">💰</div>
+                    <div class="impact-value">5-9%</div>
+                    <div class="impact-description">Revenue Increase<br>Per Star Rating Improvement</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TripAdvisor -->
+        <section class="platform-section">
+            <div class="platform-header">
+                <div class="platform-logo">T</div>
+                <h2 class="platform-title">TripAdvisor</h2>
+                <p class="platform-subtitle">Hospitality industry powerhouse</p>
+            </div>
+
+            <div class="impact-cards">
+                <div class="impact-card">
+                    <div class="impact-icon">🏨</div>
+                    <div class="impact-value">79%</div>
+                    <div class="impact-description">Book Higher Rated Hotels<br>User Behavior Study</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">💵</div>
+                    <div class="impact-value">11.2%</div>
+                    <div class="impact-description">Rate Premium<br>Per Rating Point Increase</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🌟</div>
+                    <div class="impact-value">463M</div>
+                    <div class="impact-description">Monthly Visitors<br>Global Reach</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🎯</div>
+                    <div class="impact-value">87%</div>
+                    <div class="impact-description">Read Reviews<br>Before Booking</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Apple Maps -->
+        <section class="platform-section">
+            <div class="platform-header">
+                <div class="platform-logo">🍎</div>
+                <h2 class="platform-title">Apple Maps</h2>
+                <p class="platform-subtitle">Growing iOS dominance</p>
+            </div>
+
+            <div class="impact-cards">
+                <div class="impact-card">
+                    <div class="impact-icon">📱</div>
+                    <div class="impact-value">500M+</div>
+                    <div class="impact-description">Monthly Users<br>Apple Maps Global</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🗺️</div>
+                    <div class="impact-value">60%</div>
+                    <div class="impact-description">iOS Market Share<br>Premium Demographics</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">🔍</div>
+                    <div class="impact-value">3x</div>
+                    <div class="impact-description">Local Search Growth<br>Year-over-Year</div>
+                </div>
+                <div class="impact-card">
+                    <div class="impact-icon">💳</div>
+                    <div class="impact-value">40%</div>
+                    <div class="impact-description">Higher Spending<br>iOS Users vs Android</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action -->
+        <section class="cta-section">
+            <h2 class="cta-title">Ready to Transform Your Listings?</h2>
+            <p class="cta-subtitle">Join thousands of businesses maximizing their online presence</p>
+            <a href="/" class="cta-button">View More Projects</a>
+        </section>
+    </div>
+
+    <script>
+        // Simple analytics tracking
+        console.log('Business Listings Impact page loaded');
+        
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.stat-item, .impact-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+
+            // Animate stats on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.impact-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
 </html> 

@@ -4,12 +4,380 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>The Evolution of AI: Scaling Laws and the Future of Intelligence</title>
-    <script>
-        // Redirect to the main business data file for now
-        window.location.href = '../ai_scaling_webpage.html';
-    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ffffff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Animated background elements */
+        .bg-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            background: rgba(64, 224, 255, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape1 { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape2 { width: 120px; height: 120px; top: 60%; right: 15%; animation-delay: 5s; }
+        .shape3 { width: 60px; height: 60px; bottom: 30%; left: 20%; animation-delay: 10s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translateY(-30px) rotate(180deg); opacity: 0.6; }
+        }
+
+        /* Header */
+        header {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.1));
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #40e0ff, #8a2be2, #ff6b35);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { filter: drop-shadow(0 0 10px rgba(64, 224, 255, 0.3)); }
+            to { filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.5)); }
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #b0b8c3;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 500;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Main content sections */
+        .section {
+            margin: 80px 0;
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            text-align: center;
+            color: #40e0ff;
+        }
+
+        .scaling-laws {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .law-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(64, 224, 255, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .law-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(64, 224, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .law-card:hover::before {
+            left: 100%;
+        }
+
+        .law-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(64, 224, 255, 0.4);
+            box-shadow: 0 20px 40px rgba(64, 224, 255, 0.1);
+        }
+
+        .law-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .law-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #ffffff;
+        }
+
+        .law-description {
+            color: #b0b8c3;
+            font-size: 1rem;
+        }
+
+        /* Chart container */
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(64, 224, 255, 0.1);
+        }
+
+        .chart-wrapper {
+            position: relative;
+            height: 400px;
+            margin: 20px 0;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 10px;
+            }
+            
+            .section {
+                margin: 30px 0;
+                padding: 20px 0;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            
+            .scaling-laws {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin: 40px 0;
+            }
+            
+            .law-card {
+                padding: 20px;
+            }
+            
+            .nav {
+                position: static;
+                text-align: center;
+                margin: 20px 0;
+            }
+        }
+
+        /* Key metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .metric-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(64, 224, 255, 0.1);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #40e0ff;
+            display: block;
+        }
+
+        .metric-label {
+            color: #b0b8c3;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <p>Redirecting to AI Scaling Analysis...</p>
+    <nav class="nav">
+        <a href="/" class="nav-link">← Back to Portfolio</a>
+    </nav>
+
+    <div class="bg-elements">
+        <div class="floating-shape shape1"></div>
+        <div class="floating-shape shape2"></div>
+        <div class="floating-shape shape3"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>The Evolution of AI: Scaling Laws and the Future of Intelligence</h1>
+            <p class="subtitle">Since 2020, artificial intelligence has experienced unprecedented growth through scaling laws - predictable relationships between compute, data, model size, and performance. 2024 marked the first time AI achieved above-human average IQ (Claude 3 with 101 IQ), while 2025 saw the emergence of genius-level AI with o3's 133 IQ score.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Key Metrics -->
+        <section class="section">
+            <h2 class="section-title">Key Milestones</h2>
+            <div class="metrics">
+                <div class="metric-card">
+                    <span class="metric-value">101</span>
+                    <div class="metric-label">Claude 3 IQ Score (2024)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">133</span>
+                    <div class="metric-label">o3 IQ Score (2025)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">10X</span>
+                    <div class="metric-label">Compute Scaling (2020-2025)</div>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-value">1000X</span>
+                    <div class="metric-label">Training Data Growth</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scaling Laws -->
+        <section class="section">
+            <h2 class="section-title">The Five Scaling Laws</h2>
+            <div class="scaling-laws">
+                <div class="law-card">
+                    <span class="law-icon">🔢</span>
+                    <div class="law-title">Compute Scaling Law</div>
+                    <div class="law-description">Performance scales predictably with compute power (FLOPs). Doubling compute typically improves performance by a predictable margin.</div>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">📊</span>
+                    <div class="law-title">Data Scaling Law</div>
+                    <div class="law-description">More training data leads to better performance, following power-law relationships with diminishing returns.</div>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">🧠</span>
+                    <div class="law-title">Model Size Scaling</div>
+                    <div class="law-description">Larger models (more parameters) consistently outperform smaller ones when properly trained.</div>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">⚡</span>
+                    <div class="law-title">Inference Scaling</div>
+                    <div class="law-description">Test-time compute scaling allows models to "think" longer for better performance on complex tasks.</div>
+                </div>
+                <div class="law-card">
+                    <span class="law-icon">🎯</span>
+                    <div class="law-title">Emergent Abilities</div>
+                    <div class="law-description">New capabilities emerge unpredictably at certain scale thresholds, leading to breakthrough performances.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Summary -->
+        <section class="section">
+            <h2 class="section-title">The Path Forward</h2>
+            <div class="chart-container">
+                <p style="font-size: 1.1rem; color: #b0b8c3; text-align: center; margin-bottom: 30px;">
+                    The AI revolution is accelerating through predictable scaling laws. As we approach 2025-2030, we can expect:
+                </p>
+                <div class="scaling-laws">
+                    <div class="law-card">
+                        <span class="law-icon">🎓</span>
+                        <div class="law-title">Superhuman Intelligence</div>
+                        <div class="law-description">AI systems exceeding human experts in specialized domains</div>
+                    </div>
+                    <div class="law-card">
+                        <span class="law-icon">🌍</span>
+                        <div class="law-title">Global Impact</div>
+                        <div class="law-description">Transformative effects on science, technology, and society</div>
+                    </div>
+                    <div class="law-card">
+                        <span class="law-icon">🔄</span>
+                        <div class="law-title">Continuous Evolution</div>
+                        <div class="law-description">Rapid iteration and improvement in AI capabilities</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Simple analytics tracking
+        console.log('AI Scaling Analysis page loaded');
+        
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.law-card, .metric-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    this.style.transform = 'scale(1.05)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                });
+            });
+        });
+    </script>
 </body>
 </html> 
