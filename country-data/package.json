@@ -1,7 +1,7 @@
 {
   "name": "country_data_visualization",
   "version": "1.0.0",
-  "homepage": ".",
+  "homepage": "https://happydreammmer.github.io/public/country-data/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

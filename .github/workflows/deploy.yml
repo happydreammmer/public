@@ -47,13 +47,24 @@ jobs:
 
       - name: Build Country Data project
         run: |
-          # Try multiple approaches to build
+          # Ensure we have a package.json
+          if [ ! -f package.json ]; then
+            echo "No package.json found, skipping build"
+            exit 0
+          fi
+          
+          # Try building the React app
+          echo "Building React app..."
           if npm run build; then
-            echo "Build successful with npm run build"
+            echo "✅ Build successful with npm run build"
+            echo "Build output:"
+            ls -la build/
           elif npx react-scripts build; then
-            echo "Build successful with npx react-scripts build"
+            echo "✅ Build successful with npx react-scripts build"
+            echo "Build output:"
+            ls -la build/
           else
-            echo "Build failed, but continuing deployment for other projects"
+            echo "❌ Build failed, creating fallback page"
             mkdir -p build
             echo "<h1>Country Data - Build Failed</h1><p>Please check the build configuration.</p>" > build/index.html
           fi
@@ -76,12 +87,21 @@ jobs:
           cp -r israel-iran-war _site/ 2>/dev/null || true
           cp -r business-data _site/ 2>/dev/null || true
           
-          # Copy country-data (including build if it exists)
-          cp -r country-data _site/ 2>/dev/null || true
+          # Copy country-data build output to the correct location
+          mkdir -p _site/country-data
+          if [ -d "country-data/build" ]; then
+            echo "Copying React build output to country-data directory"
+            cp -r country-data/build/* _site/country-data/
+          else
+            echo "No build directory found, copying source files"
+            cp -r country-data _site/
+          fi
           
           # List contents for debugging
           echo "Site contents:"
           ls -la _site/
+          echo "Country-data contents:"
+          ls -la _site/country-data/ 2>/dev/null || echo "No country-data directory"
         
       - name: Setup Pages
         uses: actions/configure-pages@v5
