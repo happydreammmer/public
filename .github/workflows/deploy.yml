@@ -86,6 +86,7 @@ jobs:
           cp -r companies-data _site/ 2>/dev/null || true
           cp -r israel-iran-war _site/ 2>/dev/null || true
           cp -r business-data _site/ 2>/dev/null || true
+          cp -r cv _site/ 2>/dev/null || true
           
           # Copy country-data build output to the correct location
           mkdir -p _site/country-data
