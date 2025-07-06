@@ -63,7 +63,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow: auto;
         }
         
         #dataflow-canvas {
@@ -80,17 +80,17 @@
         .resume-container {
             width: 100%;
             max-width: 1200px;
-            height: 90vh;
-            max-height: 800px;
+            min-height: 90vh;
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            overflow: hidden;
+            overflow: visible;
             box-shadow: 0 25px 80px rgba(0,0,0,0.15);
             display: grid;
             grid-template-columns: 320px 1fr;
             position: relative;
             z-index: 2;
+            margin: 20px 0;
         }
         
         .sidebar {
@@ -101,8 +101,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: visible;
             animation: slideInLeft 0.6s ease;
         }
         
@@ -245,8 +244,7 @@
             padding: 30px 35px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: visible;
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(10px);
         }
@@ -276,13 +274,12 @@
             gap: 30px;
             flex: 1;
             align-items: start;
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: visible;
             padding-right: 10px;
         }
         
         .left-column, .right-column {
-            /* Remove individual scrolling */
+            /* Remove individual scrolling - columns scroll together with page */
         }
         
         .section {
@@ -442,10 +439,9 @@
         }
         
         .download-section {
-            position: absolute;
-            bottom: 15px;
-            right: 15px;
-            z-index: 10;
+            margin-top: 30px;
+            text-align: right;
+            padding-right: 15px;
         }
         
         .download-btn {
@@ -520,36 +516,24 @@
             font-weight: 500;
         }
         
-        /* Custom scrollbar for webkit browsers */
-        .sidebar::-webkit-scrollbar,
-        .main-content::-webkit-scrollbar,
-        .left-column::-webkit-scrollbar,
-        .right-column::-webkit-scrollbar {
-            width: 6px;
+        /* Individual component scrollbars removed - using unified page scroll */
+        
+        body::-webkit-scrollbar {
+            width: 10px;
         }
         
-        .sidebar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-        
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-        }
-        
-        .main-content::-webkit-scrollbar-track,
-        .left-column::-webkit-scrollbar-track,
-        .right-column::-webkit-scrollbar-track {
+        body::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.1);
-            border-radius: 3px;
+            border-radius: 5px;
         }
         
-        .main-content::-webkit-scrollbar-thumb,
-        .left-column::-webkit-scrollbar-thumb,
-        .right-column::-webkit-scrollbar-thumb {
+        body::-webkit-scrollbar-thumb {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 3px;
+            border-radius: 5px;
+        }
+        
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
         }
         
         @media (max-width: 1024px) {
@@ -903,12 +887,12 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="download-section">
-            <button class="download-btn" onclick="downloadPDF()" title="Click to open print dialog, then save as PDF">
-                📄 Download PDF
-            </button>
+            
+            <div class="download-section">
+                <button class="download-btn" onclick="downloadPDF()" title="Click to open print dialog, then save as PDF">
+                    📄 Download PDF
+                </button>
+            </div>
         </div>
     </div>
 
