@@ -85,7 +85,8 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             border-radius: 20px;
-            overflow: hidden;
+            overflow-y: auto;
+            overflow-x: hidden;
             box-shadow: 0 25px 80px rgba(0,0,0,0.15);
             display: grid;
             grid-template-columns: 320px 1fr;
@@ -101,8 +102,6 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow-y: auto;
-            overflow-x: hidden;
             animation: slideInLeft 0.6s ease;
         }
         
@@ -235,12 +234,6 @@
             font-size: 0.75em;
         }
         
-        .cert-item {
-            margin-bottom: 10px;
-            font-size: 0.8em;
-            opacity: 0.9;
-        }
-        
         .main-content {
             padding: 30px 35px;
             display: flex;
@@ -273,11 +266,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 30px;
-            flex: 1;
             align-items: start;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding-right: 10px;
         }
         
         .left-column, .right-column {
@@ -520,35 +509,22 @@
         }
         
         /* Custom scrollbar for webkit browsers */
-        .sidebar::-webkit-scrollbar,
-        .main-content::-webkit-scrollbar,
-        .left-column::-webkit-scrollbar,
-        .right-column::-webkit-scrollbar {
-            width: 6px;
+        .resume-container::-webkit-scrollbar {
+            width: 8px;
         }
         
-        .sidebar::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-        
-        .sidebar::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 3px;
-        }
-        
-        .main-content::-webkit-scrollbar-track,
-        .left-column::-webkit-scrollbar-track,
-        .right-column::-webkit-scrollbar-track {
+        .resume-container::-webkit-scrollbar-track {
             background: rgba(0, 0, 0, 0.1);
-            border-radius: 3px;
+            border-radius: 4px;
         }
         
-        .main-content::-webkit-scrollbar-thumb,
-        .left-column::-webkit-scrollbar-thumb,
-        .right-column::-webkit-scrollbar-thumb {
+        .resume-container::-webkit-scrollbar-thumb {
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 3px;
+            border-radius: 4px;
+        }
+        
+        .resume-container::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
         }
         
         @media (max-width: 1024px) {
@@ -645,6 +621,10 @@
             }
             
             .content-grid {
+                overflow: visible !important;
+            }
+            
+            .sidebar {
                 overflow: visible !important;
             }
             
@@ -762,14 +742,6 @@
                     <span>Arabic</span>
                     <span class="language-level">Basic</span>
                 </div>
-            </div>
-
-            <div class="sidebar-section">
-                <h3 class="sidebar-title">Certifications</h3>
-                <div class="cert-item">🎯 Google Analytics Certified</div>
-                <div class="cert-item">📊 Digital Marketing Strategy</div>
-                <div class="cert-item">🤖 AI Application Development</div>
-                <div class="cert-item">☁️ Google Cloud Platform</div>
             </div>
         </div>
 
