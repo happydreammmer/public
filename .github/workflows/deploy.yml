@@ -42,7 +42,7 @@ jobs:
 
       - name: Create deployment directory
         run: |
-          mkdir -p public
+          mkdir -p public/deeptube public/dictator public/meeting-agent public/osee public/country-data
           cp -r deeptube/build/* public/deeptube/
           cp -r dictator/build/* public/dictator/
           cp -r meeting-agent/build/* public/meeting-agent/
@@ -55,7 +55,7 @@ jobs:
           cp -r israel-iran-war public/
           cp index.html public/
           cp 404.html public/
-          
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
