@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy Website
 
 on:
   push:
@@ -6,13 +6,11 @@ on:
       - main
   workflow_dispatch:
 
-# Sets permissions for GitHub Pages deployment
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
@@ -32,85 +30,33 @@ jobs:
         with:
           node-version: "18"
           cache: 'npm'
-          cache-dependency-path: './country-data/package-lock.json'
 
-      - name: Install dependencies for Country Data
-        run: |
-          if [ -f package-lock.json ]; then
-            npm ci
-          else
-            npm install
-          fi
-          # Fix permissions for all binaries
-          find node_modules/.bin -type f -exec chmod +x {} \; 2>/dev/null || true
-        working-directory: ./country-data
+      - name: Install dependencies
+        run: npm install
 
-      - name: Build Country Data project
-        run: |
-          # Ensure we have a package.json
-          if [ ! -f package.json ]; then
-            echo "No package.json found, skipping build"
-            exit 0
-          fi
-          
-          # Try building the React app
-          echo "Building React app..."
-          if npm run build; then
-            echo "✅ Build successful with npm run build"
-            echo "Build output:"
-            ls -la build/
-          elif npx react-scripts build; then
-            echo "✅ Build successful with npx react-scripts build"
-            echo "Build output:"
-            ls -la build/
-          else
-            echo "❌ Build failed, creating fallback page"
-            mkdir -p build
-            echo "<h1>Country Data - Build Failed</h1><p>Please check the build configuration.</p>" > build/index.html
-          fi
-        working-directory: ./country-data
-        continue-on-error: true
+      - name: Build all projects
+        run: npm run build
 
       - name: Create deployment directory
         run: |
-          # Create a clean deployment directory
-          mkdir -p _site
+          mkdir -p public
+          cp -r dist/* public/
+          cp -r cv public/
+          cp -r business-data public/
+          cp -r companies-data public/
+          cp -r country-data public/
+          cp -r event-hunter public/
+          cp -r israel-iran-war public/
+          cp index.html public/
+          cp 404.html public/
           
-          # Copy all root files
-          cp -r *.html _site/ 2>/dev/null || true
-          cp -r *.md _site/ 2>/dev/null || true
-          cp -r .nojekyll _site/ 2>/dev/null || true
-          
-          # Copy all project directories
-          cp -r event-hunter _site/ 2>/dev/null || true
-          cp -r companies-data _site/ 2>/dev/null || true
-          cp -r israel-iran-war _site/ 2>/dev/null || true
-          cp -r business-data _site/ 2>/dev/null || true
-          cp -r cv _site/ 2>/dev/null || true
-          
-          # Copy country-data build output to the correct location
-          mkdir -p _site/country-data
-          if [ -d "country-data/build" ]; then
-            echo "Copying React build output to country-data directory"
-            cp -r country-data/build/* _site/country-data/
-          else
-            echo "No build directory found, copying source files"
-            cp -r country-data _site/
-          fi
-          
-          # List contents for debugging
-          echo "Site contents:"
-          ls -la _site/
-          echo "Country-data contents:"
-          ls -la _site/country-data/ 2>/dev/null || echo "No country-data directory"
-        
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: ./public
 
       - name: Deploy to GitHub Pages
         id: deployment
