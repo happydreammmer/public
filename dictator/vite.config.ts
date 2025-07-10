@@ -5,9 +5,9 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       root: 'src',
-      base: '/public/dictator/',
+      base: '/dictator/',
       build: {
-        outDir: '../../../dist/dictator',
+        outDir: '../build',
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

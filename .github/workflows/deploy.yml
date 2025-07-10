@@ -42,8 +42,10 @@ jobs:
       - name: Create deployment directory
         run: |
           mkdir -p public
-          cp -r ../dist/* public/
-          mkdir -p public/country-data
+          cp -r deeptube/build/* public/deeptube/
+          cp -r dictator/build/* public/dictator/
+          cp -r meeting-agent/build/* public/meeting-agent/
+          cp -r osee/build/* public/osee/
           cp -r country-data/build/* public/country-data/
           cp -r cv public/
           cp -r business-data public/

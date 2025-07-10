@@ -1,12 +1,12 @@
 {
   "name": "country_data_visualization",
   "version": "1.0.0",
-  "homepage": "https://happydreammmer.github.io/public/country-data/",
+  "homepage": "/country-data/",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "npx --yes react-scripts build"
   },
   "keywords": [],
   "author": "",
