@@ -1,3 +1,19 @@
+/* ===== Global Box-Sizing Reset ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* ===== Timeline Layout Fixes ===== */
+.timeline-container {
+    overflow-x: hidden; /* Prevent horizontal scroll caused by wide items */
+}
+
+.timeline-item {
+    box-sizing: border-box; /* Ensure padding is included in the 50% width calc */
+}
+
 /* General Body & Typography */
 body {
     font-family: 'Inter', sans-serif;
