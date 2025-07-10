@@ -1,0 +1,261 @@
+{
+  "meta": {
+    "title": "Iran-Israel Crisis Dashboard",
+    "subtitle": "Strategic Analysis & Game Theory Assessment",
+    "lastUpdated": "June 13, 2025",
+    "status": "Active Crisis"
+  },
+  "breakingNews": {
+    "text": "🚨 BREAKING: Israel launches \"Operation Rising Lion\" - Major strike on Iranian nuclear facilities",
+    "isActive": true
+  },
+  "gameTheoryNote": {
+    "title": "🎯 Game Theory Framework: \"Chicken Game\" Dynamics",
+    "description": "Strategic Assessment: This conflict represents a classic \"Chicken Game\" where both players race toward each other, neither wanting to retreat first, but both knowing collision would be devastating. Israel cannot allow Iran to reach the nuclear threshold, while Iran cannot afford to appear to be folding for fear of losing prestige and regional leadership."
+  },
+  "poll": {
+    "question": "Which scenario do you think is most likely over the next 6 months? (Probabilities based on game theory analysis)",
+    "options": [
+      {
+        "id": 1,
+        "title": "Limited Escalation & Diplomacy",
+        "probability": "Strategic: 25%",
+        "description": "Face-saving proportional response → Gulf mediation"
+      },
+      {
+        "id": 2,
+        "title": "Sustained Military Campaign",
+        "probability": "Strategic: 40%",
+        "description": "Controlled escalation - India-Pakistan model"
+      },
+      {
+        "id": 3,
+        "title": "Regional War Escalation",
+        "probability": "Strategic: 10%",
+        "description": "Miscalculation leads to uncontrolled conflict"
+      },
+      {
+        "id": 4,
+        "title": "Iranian Nuclear Breakout",
+        "probability": "Strategic: 10%",
+        "description": "Iran's \"slow path\" strategy accelerates"
+      },
+      {
+        "id": 5,
+        "title": "US Military Intervention",
+        "probability": "Strategic: 25%",
+        "description": "B-2 strikes after Trump ultimatum failure"
+      }
+    ]
+  },
+  "scenarios": {
+    "description": "Game Theory Assessment: Iran's nuclear strategy follows a \"slow path\" to avoid triggering US/Israeli intervention until the last moment possible. Current dynamics represent strategic restraint, not weakness, but understanding that the next stage may be uncontrollable. Analysis incorporates escalation dominance theory, commitment problems, and asymmetric stakes.",
+    "chartLegend": "Methodology: Game theory analysis incorporating chicken game dynamics, escalation dominance theory, commitment problems, asymmetric stakes, and historical escalation patterns from similar conflicts.",
+    "items": [
+      {
+        "id": 1,
+        "title": "Limited Escalation & Face-Saving",
+        "probability": 25,
+        "color": "#28a745",
+        "description": "Strategic Logic: Both sides seek controlled de-escalation to avoid catastrophic costs while maintaining credibility. Gulf mediation provides face-saving exit ramp. Risk: Chicken game dynamics make retreat signal weakness."
+      },
+      {
+        "id": 2,
+        "title": "Controlled Escalation Campaign",
+        "probability": 40,
+        "color": "#ffc107",
+        "description": "Most Probable: \"India-Pakistan model\" - exchange of blows with mutual restraint to avoid all-out war. Both sides test limits while maintaining escalation control. Duration: 3-6 months of measured responses."
+      },
+      {
+        "id": 3,
+        "title": "Escalation to Regional War",
+        "probability": 10,
+        "color": "#dc3545",
+        "description": "Miscalculation Risk: Nuclear escalation can occur rapidly once conventional deterrence fails. Triggers: Massive civilian casualties, leadership strikes, or proxy escalation beyond control thresholds."
+      },
+      {
+        "id": 4,
+        "title": "Iranian Nuclear Sprint",
+        "probability": 10,
+        "color": "#6f42c1",
+        "description": "Desperation Strategy: Iran's \"slow path\" strategy accelerates to weapons capability if conventional deterrence fails. Currently at 60% enrichment - can produce weapons-grade in weeks."
+      },
+      {
+        "id": 5,
+        "title": "US Military Intervention",
+        "probability": 25,
+        "color": "#fd7e14",
+        "description": "Escalation Dominance: B-2 bombers with MOPs represent only capability to destroy deep underground facilities. Trump's commitment trap and Israeli pressure create intervention pathway."
+      }
+    ]
+  },
+  "riskCalculator": {
+    "intro": "Game Theory Analysis: Large conflicts become large because they escalate - fighting is equally likely to escalate as deescalate in any given year. Adjust factors below to model escalation dynamics and commitment problems.",
+    "escalationAnalysis": {
+      "title": "⚠️ Escalation Dynamics Analysis",
+      "description": "Current Risk Level: Large wars become large because they escalate. Stability-instability paradox: Nuclear threats reduce major war probability but increase minor conflicts. Both sides in \"competition in risk-taking\" where resolve matters as much as capabilities."
+    },
+    "categories": [
+      {
+        "title": "🏛️ Commitment & Resolve Factors",
+        "factors": [
+          {
+            "id": "iran-prestige",
+            "label": "Iranian Regime Prestige at Stake",
+            "impact": "+15% Sustained Campaign (cannot appear weak)"
+          },
+          {
+            "id": "israeli-existential",
+            "label": "Israeli Existential Threat Perception",
+            "impact": "+12% US Intervention (forces US hand)"
+          },
+          {
+            "id": "trump-commitment",
+            "label": "Trump Commitment Trap",
+            "impact": "+20% US Intervention (credibility stakes)"
+          },
+          {
+            "id": "rally-flag",
+            "label": "Rally-Around-Flag Effect",
+            "impact": "+8% Sustained Campaign (domestic support)"
+          }
+        ]
+      },
+      {
+        "title": "⚡ Escalation Dominance Factors",
+        "factors": [
+          {
+            "id": "b2-dominance",
+            "label": "B-2 Bunker-Buster Deployment",
+            "impact": "+25% US Intervention (escalation dominance)"
+          },
+          {
+            "id": "asymmetric-retaliation",
+            "label": "Iranian Asymmetric Retaliation",
+            "impact": "+18% Regional War (proxy activation)"
+          },
+          {
+            "id": "israeli-intel",
+            "label": "Israeli Intelligence Superiority",
+            "impact": "+10% Sustained Campaign (tactical advantage)"
+          },
+          {
+            "id": "nuclear-threshold",
+            "label": "Iran Nuclear Threshold Crossing",
+            "impact": "+30% Nuclear Breakout (point of no return)"
+          }
+        ]
+      },
+      {
+        "title": "🌍 Strategic Stability Factors",
+        "factors": [
+          {
+            "id": "oil-shock",
+            "label": "Oil Market Shock ($120+/barrel)",
+            "impact": "+20% Limited Escalation (global pressure)"
+          },
+          {
+            "id": "chinese-energy",
+            "label": "Chinese Energy Security Concerns",
+            "impact": "+15% Limited Escalation (mediation pressure)"
+          },
+          {
+            "id": "gulf-fear",
+            "label": "Gulf States Fear Spillover",
+            "impact": "+12% Limited Escalation (mediation efforts)"
+          },
+          {
+            "id": "alliance-pressure",
+            "label": "Alliance Burden-Sharing Pressure",
+            "impact": "-8% US Intervention (restraint from allies)"
+          }
+        ]
+      },
+      {
+        "title": "📅 Critical Decision Points",
+        "factors": [
+          {
+            "id": "iran-attacks-us",
+            "label": "Iran Attacks US Military Assets",
+            "impact": "+35% US Intervention (direct provocation)"
+          },
+          {
+            "id": "civilian-casualties",
+            "label": "Massive Civilian Casualties",
+            "impact": "+25% Regional War (escalation spiral)"
+          },
+          {
+            "id": "leadership-strike",
+            "label": "Iranian Leadership Decapitation",
+            "impact": "+20% Regional War (regime survival)"
+          },
+          {
+            "id": "uprising",
+            "label": "Popular Uprising in Iran",
+            "impact": "+25% Limited Escalation (regime weakness)"
+          }
+        ]
+      }
+    ]
+  },
+  "timeline": {
+    "description": "Critical decision points where game theory dynamics will determine conflict trajectory",
+    "events": [
+      {
+        "date": "72hrs",
+        "title": "🎯 Iranian Strategic Response Choice",
+        "description": "Game Theory Moment: Iran must choose between proportional response (maintains chicken game) or massive retaliation (risks escalation dominance by US/Israel). Neither side wants to be first to retreat, but both know collision would be devastating."
+      },
+      {
+        "date": "July 2025",
+        "title": "🇺🇸 Trump Ultimatum Expiry",
+        "description": "Commitment Trap: Trump's public ultimatum creates domestic credibility stakes. Credible deterrence requires both capability and perceived resolve. B-2 deployment signals escalation dominance preparation."
+      },
+      {
+        "date": "Aug-Sept 2025",
+        "title": "⚖️ Escalation Control Assessment",
+        "description": "Strategic Calculation: Escalation dynamics determine whether conflicts grow in severity. Both sides assess whether controlled escalation remains viable or risks spiraling beyond control mechanisms."
+      },
+      {
+        "date": "Oct 2025",
+        "title": "🔄 Resolution or Entrenchment",
+        "description": "End Game: Either successful face-saving de-escalation through third-party mediation, or acceptance of new \"cold war\" equilibrium with periodic controlled escalation cycles. Real victory is to prevent the crash, not lead to it."
+      }
+    ]
+  },
+  "tickerHeadlines": [
+    "Game Theory Alert: Iran-Israel locked in \"Chicken Game\" - neither side can afford to retreat first",
+    "Strategic Analysis: Israeli strikes demonstrate escalation dominance but risk triggering Iranian desperation moves",
+    "US B-2 deployment creates commitment trap for Trump - credibility stakes force intervention decision",
+    "Iranian \"slow path\" nuclear strategy may accelerate to breakout if conventional deterrence fails",
+    "Oil shock to $120+ would create global pressure for immediate de-escalation - economic trump card",
+    "Strategic Assessment: 40% probability of sustained \"India-Pakistan model\" controlled escalation",
+    "Escalation Dynamics: Large conflicts grow because fighting is equally likely to escalate as de-escalate",
+    "Gulf states positioning as mediators - only face-saving exit ramp for both sides in chicken game"
+  ],
+  "baseProbabilities": {
+    "limited": 25,
+    "sustained": 40,
+    "regional": 10,
+    "nuclear": 10,
+    "usIntervention": 25
+  },
+  "riskFactors": {
+    "iran-prestige": { "limited": -10, "sustained": 15, "regional": 8, "nuclear": 0, "usIntervention": -3 },
+    "israeli-existential": { "limited": -8, "sustained": 5, "regional": 10, "nuclear": 5, "usIntervention": 12 },
+    "trump-commitment": { "limited": -15, "sustained": -5, "regional": 0, "nuclear": -5, "usIntervention": 20 },
+    "rally-flag": { "limited": -5, "sustained": 8, "regional": 2, "nuclear": 0, "usIntervention": -2 },
+    "b2-dominance": { "limited": -10, "sustained": -8, "regional": 3, "nuclear": -10, "usIntervention": 25 },
+    "asymmetric-retaliation": { "limited": -15, "sustained": 10, "regional": 18, "nuclear": 2, "usIntervention": 5 },
+    "israeli-intel": { "limited": 0, "sustained": 10, "regional": -5, "nuclear": -3, "usIntervention": 0 },
+    "nuclear-threshold": { "limited": -20, "sustained": -10, "regional": 5, "nuclear": 30, "usIntervention": 15 },
+    "oil-shock": { "limited": 20, "sustained": -10, "regional": -8, "nuclear": -5, "usIntervention": -10 },
+    "chinese-energy": { "limited": 15, "sustained": -8, "regional": -5, "nuclear": -3, "usIntervention": -8 },
+    "gulf-fear": { "limited": 12, "sustained": -8, "regional": -5, "nuclear": -2, "usIntervention": -5 },
+    "alliance-pressure": { "limited": 5, "sustained": 3, "regional": -3, "nuclear": 0, "usIntervention": -8 },
+    "iran-attacks-us": { "limited": -25, "sustained": -10, "regional": 15, "nuclear": 0, "usIntervention": 35 },
+    "civilian-casualties": { "limited": -15, "sustained": 0, "regional": 25, "nuclear": 5, "usIntervention": 10 },
+    "leadership-strike": { "limited": -10, "sustained": 5, "regional": 20, "nuclear": 8, "usIntervention": 5 },
+    "uprising": { "limited": 25, "sustained": -15, "regional": -8, "nuclear": -12, "usIntervention": -5 }
+  }
+} 

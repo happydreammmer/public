@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "npm run build -w deeptube && npm run build -w dictator && npm run build -w meeting-agent && npm run build -w osee",
+    "build": "npm run build -w deeptube && npm run build -w dictator && npm run build -w meeting-agent && npm run build -w osee && npm run build -w country-data",
     "deploy": "npm run build && gh-pages -d dist"
   },
   "devDependencies": {
@@ -14,6 +14,7 @@
     "deeptube",
     "dictator",
     "meeting-agent",
-    "osee"
+    "osee",
+    "country-data"
   ]
 } 

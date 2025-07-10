@@ -42,11 +42,12 @@ jobs:
       - name: Create deployment directory
         run: |
           mkdir -p public
-          cp -r dist/* public/
+          cp -r ../dist/* public/
+          mkdir -p public/country-data
+          cp -r country-data/build/* public/country-data/
           cp -r cv public/
           cp -r business-data public/
           cp -r companies-data public/
-          cp -r country-data public/
           cp -r event-hunter public/
           cp -r israel-iran-war public/
           cp index.html public/

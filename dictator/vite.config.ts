@@ -7,7 +7,7 @@ export default defineConfig(({ mode }) => {
       root: 'src',
       base: '/public/dictator/',
       build: {
-        outDir: '../../dist/dictator',
+        outDir: '../../../dist/dictator',
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
