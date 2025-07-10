@@ -17,6 +17,7 @@ import { updateElementText, downloadFile } from './utils/uiUtils';
 import { StorageService } from './services/storageService';
 import { marked } from 'marked';
 import { getApiKey, saveApiKey } from './utils/apiKey';
+import './styles/index.css';
 
 class VoiceNotesApp {
   private recordButton!: HTMLButtonElement;

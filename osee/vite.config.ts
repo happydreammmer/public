@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
     return {
       base: '/public/osee/',
       build: {
-        outDir: './build',
+        outDir: './build/',
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

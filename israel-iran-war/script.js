@@ -25,11 +25,13 @@ async function loadDashboardData() {
         
         // Populate the page with loaded data
         populatePageContent();
+        initCharts(); // Charts are initialized after data is loaded
         
     } catch (error) {
         console.error('Error loading dashboard data:', error);
         // Fallback to default values if data loading fails
         setDefaultData();
+        initCharts(); // Initialize charts with default data on failure
     }
 }
 
@@ -220,19 +222,20 @@ function updateTicker() {
 function setDefaultData() {
     // Fallback default values if JSON loading fails
     baseProbabilities = {
-        limited: 25,
-        sustained: 40,
-        regional: 10,
-        nuclear: 10,
-        usIntervention: 25
+        covert: 35,
+        breakout: 20,
+        diplomatic: 25,
+        strike: 15,
+        statusQuo: 5
     };
     
     dynamicProbabilities = {...baseProbabilities};
     
     riskFactors = {
-        'iran-prestige': { limited: -10, sustained: 15, regional: 8, nuclear: 0, usIntervention: -3 },
-        'israeli-existential': { limited: -8, sustained: 5, regional: 10, nuclear: 5, usIntervention: 12 },
-        // ... other default risk factors would go here
+        'covert-reconstruction': { covert: 30, breakout: 5, diplomatic: -15, strike: 10, statusQuo: -10 },
+        'npt-exit': { covert: -20, breakout: 40, diplomatic: -25, strike: 15, statusQuo: -15 },
+        'iaea-suspension': { covert: 25, breakout: 10, diplomatic: -10, strike: 5, statusQuo: -5 },
+        'enrichment-restart': { covert: 10, breakout: 15, diplomatic: -10, strike: 20, statusQuo: -10 }
     };
 }
 
@@ -325,11 +328,11 @@ function updateDynamicProbabilities() {
         activeRisks.forEach(factor => {
             const impacts = riskFactors[factor];
             if (impacts) {
-                dynamicProbabilities.limited += impacts.limited;
-                dynamicProbabilities.sustained += impacts.sustained;
-                dynamicProbabilities.regional += impacts.regional;
-                dynamicProbabilities.nuclear += impacts.nuclear;
-                dynamicProbabilities.usIntervention += impacts.usIntervention;
+                dynamicProbabilities.covert += impacts.covert || 0;
+                dynamicProbabilities.breakout += impacts.breakout || 0;
+                dynamicProbabilities.diplomatic += impacts.diplomatic || 0;
+                dynamicProbabilities.strike += impacts.strike || 0;
+                dynamicProbabilities.statusQuo += impacts.statusQuo || 0;
             }
         });
         
@@ -349,22 +352,24 @@ function updateDynamicProbabilities() {
 
 function updateDynamicChart() {
     try {
-        const labels = [
-            `Limited Escalation (${dynamicProbabilities.limited}%)`,
-            `Sustained Campaign (${dynamicProbabilities.sustained}%)`,
-            `Regional War (${dynamicProbabilities.regional}%)`,
-            `Nuclear Breakout (${dynamicProbabilities.nuclear}%)`,
-            `US Intervention (${dynamicProbabilities.usIntervention}%)`
-        ];
+        if (!dashboardData) return;
+
+        const scenarioItems = dashboardData.scenarios.items;
+        
+        const scenarioTitleMap = {
+            'covert': "Covert Nuclear Reconstruction",
+            'breakout': "Open Nuclear Breakout",
+            'diplomatic': "Renewed Diplomatic Engagement",
+            'strike': "Israeli Preventive Strike 2.0",
+            'statusQuo': "Status Quo Maintenance"
+        };
+        
+        const dataKeys = Object.keys(dynamicProbabilities);
+        const labels = dataKeys.map(key => `${scenarioTitleMap[key] || key} (${dynamicProbabilities[key]}%)`);
+        const data = dataKeys.map(key => dynamicProbabilities[key]);
 
         if (dynamicChart) {
-            dynamicChart.data.datasets[0].data = [
-                dynamicProbabilities.limited,
-                dynamicProbabilities.sustained,
-                dynamicProbabilities.regional,
-                dynamicProbabilities.nuclear,
-                dynamicProbabilities.usIntervention
-            ];
+            dynamicChart.data.datasets[0].data = data;
             dynamicChart.data.labels = labels;
             dynamicChart.update('none');
         }
@@ -391,15 +396,22 @@ function closeTicker() {
 
 function initCharts() {
     try {
+        const scenarioItems = dashboardData ? dashboardData.scenarios.items : [];
+        const baseProbs = dashboardData ? dashboardData.baseProbabilities : {};
+        
+        const staticChartLabels = scenarioItems.map(item => `${item.title} (${item.probability}%)`);
+        const staticChartData = scenarioItems.map(item => item.probability);
+        const staticChartColors = scenarioItems.map(item => item.color);
+
         const ctx1 = document.getElementById('probabilityChart');
         if (ctx1) {
             probabilityChart = new Chart(ctx1.getContext('2d'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Limited Escalation (25%)', 'Sustained Campaign (40%)', 'Regional War (10%)', 'Nuclear Breakout (10%)', 'US Intervention (25%)'],
+                    labels: staticChartLabels.length > 0 ? staticChartLabels : ['Loading...'],
                     datasets: [{
-                        data: [25, 40, 10, 10, 25],
-                        backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6f42c1', '#fd7e14'],
+                        data: staticChartData.length > 0 ? staticChartData : [100],
+                        backgroundColor: staticChartColors.length > 0 ? staticChartColors : ['#cccccc'],
                         borderWidth: 3,
                         borderColor: '#fff'
                     }]
@@ -421,15 +433,27 @@ function initCharts() {
             });
         }
 
+        const scenarioTitleMap = {
+            'covert': "Covert Nuclear Reconstruction",
+            'breakout': "Open Nuclear Breakout",
+            'diplomatic': "Renewed Diplomatic Engagement",
+            'strike': "Israeli Preventive Strike 2.0",
+            'statusQuo': "Status Quo Maintenance"
+        };
+
+        const dynamicChartKeys = Object.keys(baseProbs);
+        const dynamicChartLabels = dynamicChartKeys.length > 0 ? dynamicChartKeys.map(key => `${scenarioTitleMap[key] || key} (${baseProbs[key]}%)`) : ['Loading...'];
+        const dynamicChartData = dynamicChartKeys.length > 0 ? dynamicChartKeys.map(key => baseProbs[key]) : [100];
+        
         const ctx2 = document.getElementById('dynamicChart');
         if (ctx2) {
             dynamicChart = new Chart(ctx2.getContext('2d'), {
                 type: 'doughnut',
                 data: {
-                    labels: ['Limited Escalation (25%)', 'Sustained Campaign (40%)', 'Regional War (10%)', 'Nuclear Breakout (10%)', 'US Intervention (25%)'],
+                    labels: dynamicChartLabels,
                     datasets: [{
-                        data: [25, 40, 10, 10, 25],
-                        backgroundColor: ['#28a745', '#ffc107', '#dc3545', '#6f42c1', '#fd7e14'],
+                        data: dynamicChartData,
+                        backgroundColor: staticChartColors.length > 0 ? staticChartColors : ['#cccccc'],
                         borderWidth: 3,
                         borderColor: '#fff'
                     }]
@@ -463,13 +487,10 @@ function initCharts() {
 // Initialize the dashboard
 document.addEventListener('DOMContentLoaded', async function() {
     try {
-        // Load data first
+        // Load data first, which will then initialize charts
         await loadDashboardData();
         
-        // Initialize charts
-        initCharts();
-        
-        // Update poll results
+        // Update poll results view
         updatePollResults();
         
         // Show ticker

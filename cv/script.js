@@ -697,22 +697,27 @@ function downloadPDF() {
         pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
     };
 
-    // Use html2pdf to generate the PDF
-    html2pdf().from(element).set(opt).toPdf().get('pdf').then(function () {
-        // Restore button state
-        button.querySelector('.download-text').textContent = originalText;
-        button.disabled = false;
-        gsap.to(button, { scale: 1, duration: 0.2 });
-    }).catch((error) => {
-        console.error('Error generating PDF:', error);
-        // Restore button state on error
-        button.querySelector('.download-text').textContent = 'Error!';
-        setTimeout(() => {
+    // Use html2pdf to generate and automatically download the PDF
+    html2pdf()
+        .from(element)
+        .set(opt)
+        .save()                             // triggers the download
+        .then(() => {
+            // Restore button state on success
             button.querySelector('.download-text').textContent = originalText;
             button.disabled = false;
             gsap.to(button, { scale: 1, duration: 0.2 });
-        }, 2000);
-    });
+        })
+        .catch((error) => {
+            console.error('Error generating PDF:', error);
+            // Restore button state on error
+            button.querySelector('.download-text').textContent = 'Error!';
+            setTimeout(() => {
+                button.querySelector('.download-text').textContent = originalText;
+                button.disabled = false;
+                gsap.to(button, { scale: 1, duration: 0.2 });
+            }, 2000);
+        });
 }
 
 
