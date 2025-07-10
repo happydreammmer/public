@@ -1,0 +1,19 @@
+{
+  "name": "public-directory-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "npm run build -w deeptube && npm run build -w dictator && npm run build -w meeting-agent && npm run build -w osee",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
+  },
+  "workspaces": [
+    "deeptube",
+    "dictator",
+    "meeting-agent",
+    "osee"
+  ]
+} 

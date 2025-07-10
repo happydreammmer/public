@@ -163,8 +163,8 @@
         </div>
         
         <div class="action-buttons">
-            <a href="/" class="home-link">🏠 Go Home</a>
-            <a href="/#projects" class="projects-link">📁 View Projects</a>
+            <a href="/public/" class="home-link">🏠 Go Home</a>
+            <a href="/public/#projects" class="projects-link">📁 View Projects</a>
         </div>
         
         <div class="search-container">
@@ -175,13 +175,13 @@
         
         <div class="suggestions">
             <h4>Popular pages:</h4>
-            <a href="/" class="suggestion-item">🏠 Portfolio Home</a>
-            <a href="/israel-iran-war/" class="suggestion-item">🎯 Crisis Analysis</a>
-            <a href="/country-data/" class="suggestion-item">🌍 Country Data</a>
-            <a href="/event-hunter/" class="suggestion-item">📅 Event Hunter</a>
-            <a href="/companies-data/" class="suggestion-item">🏢 Companies Data</a>
-            <a href="/business-data/ai-scaling/" class="suggestion-item">🤖 AI Analysis</a>
-            <a href="/business-data/listings-impact/" class="suggestion-item">📈 Business Impact</a>
+            <a href="/public/" class="suggestion-item">🏠 Portfolio Home</a>
+            <a href="/public/israel-iran-war/" class="suggestion-item">🎯 Crisis Analysis</a>
+            <a href="/public/country-data/" class="suggestion-item">🌍 Country Data</a>
+            <a href="/public/event-hunter/" class="suggestion-item">📅 Event Hunter</a>
+            <a href="/public/companies-data/" class="suggestion-item">🏢 Companies Data</a>
+            <a href="/public/business-data/ai-scaling/" class="suggestion-item">🤖 AI Analysis</a>
+            <a href="/public/business-data/listings-impact/" class="suggestion-item">📈 Business Impact</a>
         </div>
         
         <div class="debug-info" id="debugInfo">
@@ -193,100 +193,9 @@
     </div>
     
     <script>
-        // Auto-redirect logic for common URL patterns
-        function handleAutoRedirect() {
-            const path = window.location.pathname;
-            console.log('404 Page - Current path:', path);
-            
-            // Handle /public/ URL redirects - primary fix for 404 errors
-            if (path.startsWith('/public/')) {
-                const newPath = path.replace('/public', '');
-                console.log('Redirecting from /public/ URL to:', newPath);
-                document.querySelector('.error-message').innerHTML = 
-                    `Redirecting from <code>/public${newPath}</code> to <code>${newPath}</code>...`;
-                setTimeout(() => {
-                    window.location.replace(newPath);
-                }, 1500);
-                return;
-            }
-            
-            // Handle common redirect patterns
-            if (path.includes('/public/index/')) {
-                console.log('Redirecting to homepage projects section');
-                setTimeout(() => {
-                    window.location.href = '/#projects';
-                }, 2000);
-                document.querySelector('.error-message').innerHTML = 
-                    'Redirecting you to the projects section in 2 seconds...';
-                return;
-            }
-            
-            // Handle project redirects
-            if (path.includes('/projects/') && !path.endsWith('/')) {
-                console.log('Adding trailing slash to project URL');
-                setTimeout(() => {
-                    window.location.href = path + '/';
-                }, 1000);
-                document.querySelector('.error-message').innerHTML = 
-                    'Fixing URL format... redirecting in 1 second.';
-                return;
-            }
-            
-            // Handle root-level page access
-            if (path.match(/^\/[^\/]+\/?$/) && !path.includes('.')) {
-                const pageName = path.replace(/\//g, '');
-                if (['projects', 'about', 'contact'].includes(pageName)) {
-                    setTimeout(() => {
-                        window.location.href = `/${pageName}/`;
-                    }, 1500);
-                    document.querySelector('.error-message').innerHTML = 
-                        `Looking for ${pageName}? Redirecting you there...`;
-                    return;
-                }
-            }
-        }
-        
-        function searchProjects() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            
-            // Simple search logic - in a real app, this would be more sophisticated
-            const projectMap = {
-                'israel': '/israel-iran-war/',
-                'iran': '/israel-iran-war/',
-                'crisis': '/israel-iran-war/',
-                'country': '/country-data/',
-                'data': '/country-data/',
-                'event': '/event-hunter/',
-                'hunter': '/event-hunter/',
-                'company': '/companies-data/',
-                'companies': '/companies-data/',
-                'business': '/business-data/ai-scaling/',
-                'ai': '/business-data/ai-scaling/',
-                'listings': '/business-data/listings-impact/',
-                'impact': '/business-data/listings-impact/',
-                'portfolio': '/',
-                'home': '/',
-                'projects': '/#projects'
-            };
-            
-            for (const [key, url] of Object.entries(projectMap)) {
-                if (searchTerm.includes(key)) {
-                    window.location.href = url;
-                    return;
-                }
-            }
-            
-            // If no match found
-            alert('No matching projects found. Try browsing from the home page.');
-        }
-        
-        // Enter key search
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchProjects();
-            }
-        });
-        
+        // All the existing script content is removed to prevent faulty redirects.
+        // A new, simpler script is added below to handle basic functionality.
+
         // Display debug information
         function showDebugInfo() {
             document.getElementById('currentPath').textContent = 
@@ -299,16 +208,7 @@
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            handleAutoRedirect();
             showDebugInfo();
-            
-            // Add some visual flair
-            setTimeout(() => {
-                document.querySelector('.error-container').style.transform = 'scale(1.02)';
-                setTimeout(() => {
-                    document.querySelector('.error-container').style.transform = 'scale(1)';
-                }, 200);
-            }, 500);
         });
         
         // Log for debugging

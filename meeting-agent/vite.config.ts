@@ -7,6 +7,9 @@ export default defineConfig(({ mode }) => {
     return {
       plugins: [react()],
       base: '/public/meeting-agent/',
+      build: {
+        outDir: '../../dist/meeting-agent',
+      },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
         'process.env.GEMINI_API_KEY': JSON.stringify(env.GEMINI_API_KEY)

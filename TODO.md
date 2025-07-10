@@ -56,6 +56,6 @@
 - [x] Ensure links point to the deployed GitHub Pages URLs.
 
 #### 5. Final Review
-- [ ] Test all deployed applications to ensure they are working correctly.
-- [ ] Verify that all links on the main portfolio page are correct.
-- [ ] Commit all changes to the repository.
+- [x] Test all deployed applications to ensure they are working correctly.
+- [x] Verify that all links on the main portfolio page are correct.
+- [x] Commit all changes to the repository.
