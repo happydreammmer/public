@@ -37,9 +37,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Fix permissions
-        run: chmod +x ./node_modules/.bin/react-scripts
-
       - name: Build all projects
         run: npm run build
 
@@ -50,7 +47,7 @@ jobs:
           cp -r dictator/build/* public/dictator/
           cp -r meeting-agent/build/* public/meeting-agent/
           cp -r osee/build/* public/osee/
-          cp -r country-data/build/* public/country-data/
+          cp -r country-data/dist/* public/country-data/
           cp -r cv public/
           cp -r business-data public/
           cp -r companies-data public/
