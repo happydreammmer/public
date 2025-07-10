@@ -35,16 +35,20 @@ jobs:
         run: |
           rm -f package-lock.json
           npm install
-          cd country-data && npm install && cd ..
 
-      - name: Build all projects except country-data
-        run: npm run build -w deeptube && npm run build -w dictator && npm run build -w meeting-agent && npm run build -w osee
-
-      - name: Build country-data with explicit permissions
+      - name: Install country-data dependencies
         run: |
           cd country-data
-          chmod +x node_modules/.bin/react-scripts
-          npx --yes react-scripts build
+          npm ci
+          cd ..
+
+      - name: Build Vite projects
+        run: npm run build
+
+      - name: Build country-data
+        run: |
+          cd country-data
+          npm run build
           cd ..
 
       - name: Create deployment directory
