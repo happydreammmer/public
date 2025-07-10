@@ -8,9 +8,9 @@ import {
   MenuItem, 
   Typography,
   Paper,
-  Grid,
   InputAdornment
 } from '@mui/material';
+import Grid from '@mui/material/Grid';
 import { 
   Search as SearchIcon, 
   AccountBalance as PoliticalIcon,
@@ -132,10 +132,18 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         sx={{ 
           fontWeight: 700, 
           color: '#f8fafc', 
-          mb: 2,
           display: 'flex',
           alignItems: 'center',
-          gap: 1
+          gap: 1.5,
+          fontSize: '1.15rem',
+          letterSpacing: 0.2,
+          background: 'linear-gradient(90deg, #38bdf8 0%, #818cf8 100%)',
+          backgroundClip: 'text',
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          borderBottom: '2px solid rgba(56, 189, 248, 0.15)',
+          pb: 1,
+          mb: 3
         }}
       >
         🔧 Interactive Filters & Controls

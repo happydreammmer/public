@@ -1,169 +1,42 @@
-/* General App Layout */
-.app {
-    width: 100%;
-    max-width: 1400px; /* Consistent max-width */
-    padding: 2rem;
-    box-sizing: border-box;
-    text-align: left; /* Default to left-align */
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
 }
 
-/* Header Styles */
-.header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 12px;
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-.header h1 {
-    font-size: 2.5rem;
-    color: #58a6ff;
-    margin-bottom: 0.5rem;
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Section Wrapper */
-.section {
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 12px;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
 }
 
-.section h2 {
-    font-size: 1.5rem;
-    color: #c9d1d9;
-    margin-top: 0;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid #30363d;
-    padding-bottom: 1rem;
+.card {
+  padding: 2em;
 }
 
-/* Chart Styles */
-.recharts-surface {
-    overflow: visible; /* Ensure tooltips are not clipped */
-}
-
-.recharts-tooltip-wrapper {
-    z-index: 1000;
-}
-
-.custom-tooltip {
-    background: #2d333b;
-    border: 1px solid #444c56;
-    border-radius: 8px;
-    padding: 0.75rem 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    color: #c9d1d9;
-}
-
-.tooltip-label {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-    color: #58a6ff;
-}
-
-/* Filter Panel Styles */
-.filter-panel {
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-bottom: 1.5rem;
-}
-
-.filter-group {
-    display: flex;
-    flex-direction: column;
-}
-
-.filter-group label {
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    color: #8b949e;
-}
-
-.filter-group input,
-.filter-group select {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 6px;
-    padding: 0.5rem 0.75rem;
-    color: #c9d1d9;
-    min-width: 200px;
-}
-
-/* Data Analysis Section */
-.data-analysis-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1.5rem;
-}
-
-.analysis-card {
-    background: #0d1117;
-    border: 1px solid #30363d;
-    border-radius: 8px;
-    padding: 1.5rem;
-}
-
-.analysis-card h3 {
-    font-size: 1.2rem;
-    color: #58a6ff;
-    margin-top: 0;
-    margin-bottom: 1rem;
-}
-
-.analysis-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.analysis-list li {
-    display: flex;
-    align-items: baseline;
-    margin-bottom: 0.75rem;
-    font-size: 0.95rem;
-}
-
-.list-rank {
-    font-weight: bold;
-    color: #8b949e;
-    min-width: 2rem; /* Ensure consistent spacing */
-}
-
-.list-name {
-    font-weight: 500;
-    color: #c9d1d9;
-}
-
-.list-value {
-    margin-left: auto;
-    font-weight: 600;
-    color: #58a6ff;
-}
-
-/* Key Insights Section */
-.insights-section {
-    margin-top: 2rem; /* Add space above the insights */
-}
-.insights-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-.insight-card h3 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-}
-
-.insight-card ul {
-    list-style-type: '› ';
-    padding-left: 1rem;
-    color: #8b949e;
+.read-the-docs {
+  color: #888;
 }

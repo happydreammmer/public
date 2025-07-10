@@ -49,12 +49,11 @@ jobs:
           mkdir -p public/companies-data
           mkdir -p public/event-hunter
           mkdir -p public/israel-iran-war
-          cp -r deeptube/build/* public/deeptube/
-          cp -r dictator/build/* public/dictator/
-          cp -r meeting-agent/build/* public/meeting-agent/
-          cp -r meeting-agent/build/assets public/meeting-agent/ || true
-          cp -r osee/build/* public/osee/
-          cp -r country-data/build/* public/country-data/
+          cp -r deeptube/build/. public/deeptube/
+          cp -r dictator/build/. public/dictator/
+          cp -r meeting-agent/build/. public/meeting-agent/
+          cp -r osee/build/. public/osee/
+          cp -r country-data/build/. public/country-data/
           cp -r country-data/public/data/* public/country-data/data/
           cp -r cv public/
           cp -r business-data/* public/business-data/
