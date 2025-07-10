@@ -33,7 +33,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          rm -f package-lock.json
+          find . -name "package-lock.json" -delete
           npm install
 
       - name: Build all projects
