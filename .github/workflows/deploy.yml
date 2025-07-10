@@ -52,7 +52,7 @@ jobs:
           cp -r deeptube/build/* public/deeptube/
           cp -r dictator/build/* public/dictator/
           cp -r meeting-agent/build/* public/meeting-agent/
-          cp -r meeting-agent/build/assets public/meeting-agent/
+          cp -r meeting-agent/build/assets public/meeting-agent/ || true
           cp -r osee/build/* public/osee/
           cp -r country-data/build/* public/country-data/
           cp -r country-data/public/data/* public/country-data/data/
