@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hatef Kouzechi - AI Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.4;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: auto;
+        }
+        
+        #dataflow-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        
+        .resume-container {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 90vh;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: visible;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.15);
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            position: relative;
+            z-index: 2;
+            margin: 20px 0;
+        }
+        
+        .sidebar {
+            background: linear-gradient(180deg, rgba(26, 32, 44, 0.95) 0%, rgba(45, 55, 72, 0.95) 100%);
+            backdrop-filter: blur(15px);
+            color: white;
+            padding: 30px 25px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: visible;
+            animation: slideInLeft 0.6s ease;
+        }
+        
+        .sidebar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .profile-section {
+            text-align: center;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+        
+        .name {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .title {
+            font-size: 0.9em;
+            opacity: 0.8;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info {
+            font-size: 0.8em;
+            line-height: 1.6;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            opacity: 0.9;
+            transition: opacity 0.3s ease;
+        }
+        
+        .contact-item:hover {
+            opacity: 1;
+        }
+        
+        .contact-item a {
+            color: inherit;
+            text-decoration: none;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .sidebar-title {
+            font-size: 1em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #e2e8f0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .skill-item {
+            margin-bottom: 12px;
+        }
+        
+        .skill-name {
+            font-size: 0.8em;
+            margin-bottom: 4px;
+            font-weight: 500;
+        }
+        
+        .skill-bar {
+            height: 6px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 3px;
+            transition: width 0.8s ease;
+        }
+        
+        .language-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.85em;
+        }
+        
+        .language-level {
+            background: rgba(255,255,255,0.2);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.75em;
+        }
+        
+        .cert-item {
+            margin-bottom: 10px;
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+        
+        .main-content {
+            padding: 30px 35px;
+            display: flex;
+            flex-direction: column;
+            overflow: visible;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-main {
+            margin-bottom: 25px;
+        }
+        
+        .header-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .summary {
+            font-size: 0.9em;
+            line-height: 1.6;
+            color: #4a5568;
+            text-align: justify;
+            animation: fadeInUp 0.8s ease;
+        }
+        
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            flex: 1;
+            align-items: start;
+            overflow: visible;
+            padding-right: 10px;
+        }
+        
+        .left-column, .right-column {
+            /* Remove individual scrolling - columns scroll together with page */
+        }
+        
+        .section {
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 1.1em;
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 15px;
+            position: relative;
+            padding-left: 15px;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+        
+        .experience-item {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.9) 0%, rgba(237, 242, 247, 0.9) 100%);
+            backdrop-filter: blur(5px);
+            border-radius: 10px;
+            border-left: 3px solid #667eea;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .experience-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+        }
+        
+        .experience-item:nth-child(1) { animation-delay: 0.1s; }
+        .experience-item:nth-child(2) { animation-delay: 0.2s; }
+        .experience-item:nth-child(3) { animation-delay: 0.3s; }
+        .experience-item:nth-child(4) { animation-delay: 0.4s; }
+        
+        .job-header {
+            margin-bottom: 8px;
+        }
+        
+        .job-title {
+            font-size: 0.9em;
+            font-weight: 600;
+            color: #1a202c;
+            line-height: 1.2;
+        }
+        
+        .company {
+            font-size: 0.8em;
+            color: #667eea;
+            font-weight: 500;
+        }
+        
+        .duration {
+            font-size: 0.75em;
+            color: #718096;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        
+        .job-description {
+            font-size: 0.8em;
+            color: #4a5568;
+            line-height: 1.5;
+        }
+        
+        .project-item {
+            margin-bottom: 12px;
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.9) 0%, rgba(237, 242, 247, 0.9) 100%);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            border-top: 2px solid #e53e3e;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 20px rgba(229, 62, 62, 0.15);
+        }
+        
+        .project-item:nth-child(1) { animation-delay: 0.5s; }
+        .project-item:nth-child(2) { animation-delay: 0.6s; }
+        .project-item:nth-child(3) { animation-delay: 0.7s; }
+        
+        .project-title {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #1a202c;
+            margin-bottom: 4px;
+        }
+        
+        .project-description {
+            font-size: 0.75em;
+            color: #4a5568;
+            line-height: 1.4;
+            margin-bottom: 6px;
+        }
+        
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        
+        .tech-tag {
+            background: #e53e3e;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 8px;
+            font-size: 0.65em;
+            font-weight: 500;
+        }
+        
+        .education-item {
+            padding: 12px;
+            background: linear-gradient(135deg, rgba(247, 250, 252, 0.9) 0%, rgba(237, 242, 247, 0.9) 100%);
+            backdrop-filter: blur(5px);
+            border-radius: 8px;
+            border-left: 3px solid #38b2ac;
+        }
+        
+        .degree {
+            font-size: 0.85em;
+            font-weight: 600;
+            color: #1a202c;
+        }
+        
+        .university {
+            font-size: 0.8em;
+            color: #38b2ac;
+            margin-bottom: 4px;
+        }
+        
+        .year {
+            font-size: 0.75em;
+            color: #718096;
+        }
+        
+        .download-section {
+            margin-top: 30px;
+            text-align: right;
+            padding-right: 15px;
+        }
+        
+        .download-btn {
+            background: linear-gradient(135deg, #e53e3e, #c53030);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 0.85em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+            animation: pulse 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .download-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+        
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(229, 62, 62, 0.5);
+            animation: none;
+        }
+        
+        .download-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .achievements {
+            background: linear-gradient(135deg, rgba(254, 215, 215, 0.9) 0%, rgba(254, 178, 178, 0.9) 100%);
+            backdrop-filter: blur(5px);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #e53e3e;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            animation: slideInRight 0.8s ease 0.2s both;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .achievements:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(229, 62, 62, 0.2);
+        }
+        
+        .achievement-number {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: #c53030;
+            line-height: 1;
+        }
+        
+        .achievement-text {
+            font-size: 0.75em;
+            color: #742a2a;
+            font-weight: 500;
+        }
+        
+        /* Individual component scrollbars removed - using unified page scroll */
+        
+        body::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        body::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+        
+        body::-webkit-scrollbar-thumb {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+        
+        body::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        @media (max-width: 1024px) {
+            .resume-container {
+                grid-template-columns: 280px 1fr;
+                height: 95vh;
+            }
+            
+            .sidebar {
+                padding: 20px 18px;
+            }
+            
+            .main-content {
+                padding: 25px 30px;
+            }
+            
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                overflow: auto;
+            }
+            
+            .resume-container {
+                grid-template-columns: 1fr;
+                height: auto;
+                max-height: none;
+            }
+            
+            .sidebar {
+                padding: 25px 20px;
+            }
+            
+            .main-content {
+                padding: 25px 20px;
+            }
+            
+            .header-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .download-section {
+                position: static;
+                text-align: center;
+                margin-top: 20px;
+            }
+            
+            #dataflow-canvas {
+                display: none;
+            }
+        }
+        
+        @media print {
+            * {
+                animation: none !important;
+                transition: none !important;
+            }
+            
+            body {
+                background: white !important;
+                padding: 0;
+                overflow: visible;
+            }
+            
+            #dataflow-canvas {
+                display: none !important;
+            }
+            
+            .resume-container {
+                height: auto !important;
+                max-height: none !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                background: white !important;
+                backdrop-filter: none !important;
+                grid-template-columns: 300px 1fr !important;
+            }
+            
+            .sidebar {
+                background: #1a202c !important;
+                backdrop-filter: none !important;
+                animation: none !important;
+            }
+            
+            .main-content {
+                background: white !important;
+                backdrop-filter: none !important;
+                overflow: visible !important;
+            }
+            
+            .content-grid {
+                overflow: visible !important;
+            }
+            
+            .download-section {
+                display: none !important;
+            }
+            
+            .experience-item,
+            .project-item,
+            .education-item,
+            .achievements {
+                background: #f7fafc !important;
+                backdrop-filter: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            
+            .skill-progress {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="dataflow-canvas"></canvas>
+    
+    <div class="resume-container">
+        <div class="sidebar">
+            <div class="profile-section">
+                <div class="avatar">
+                    <img id="profile-photo" src="hatef.jpg" alt="Hatef Kouzechi">
+                    <span id="initials" style="display: none;">HK</span>
+                </div>
+                <h1 class="name">Hatef Kouzechi</h1>
+                <p class="title">AI Engineer & Developer</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span>📧</span>
+                        <a href="mailto:hkouzechi@gmail.com">hkouzechi@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>💼</span>
+                        <a href="https://linkedin.com/in/hkouzechi" target="_blank">linkedin.com/in/hkouzechi</a>
+                    </div>
+                    <div class="contact-item">
+                        <span>📍</span>
+                        <span>Muscat, Oman</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Core Skills</h3>
+                <div class="skill-item">
+                    <div class="skill-name">AI/ML Development</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 90%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">JavaScript/React</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 85%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">LangChain/APIs</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 88%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Digital Marketing</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 95%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Docker/MongoDB</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 80%"></div>
+                    </div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-name">Prompt Engineering</div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: 92%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Technologies</h3>
+                <div style="font-size: 0.75em; line-height: 1.6; opacity: 0.9;">
+                    <strong>AI/ML:</strong> OpenAI, Claude, Gemini, LangChain, Vector DB<br>
+                    <strong>Frontend:</strong> React.js, HTML5, CSS3, JavaScript<br>
+                    <strong>Backend:</strong> Node.js, Express, REST APIs<br>
+                    <strong>Database:</strong> MongoDB, PostgreSQL<br>
+                    <strong>DevOps:</strong> Docker, GCP, Git, n8n<br>
+                    <strong>Marketing:</strong> GA, GTM, SEO, SEM, Automation
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Languages</h3>
+                <div class="language-item">
+                    <span>English</span>
+                    <span class="language-level">Professional</span>
+                </div>
+                <div class="language-item">
+                    <span>Persian</span>
+                    <span class="language-level">Native</span>
+                </div>
+                <div class="language-item">
+                    <span>Arabic</span>
+                    <span class="language-level">Basic</span>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Certifications</h3>
+                <div class="cert-item">🎯 Google Analytics Certified</div>
+                <div class="cert-item">📊 Digital Marketing Strategy</div>
+                <div class="cert-item">🤖 AI Application Development</div>
+                <div class="cert-item">☁️ Google Cloud Platform</div>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="header-main">
+                <div class="header-grid">
+                    <div class="summary">
+                        <strong>AI Engineer</strong> with 10+ years digital marketing expertise and 2+ years specializing in AI application development. Successfully transitioned from leading marketing initiatives that acquired <strong>2.5+ million users</strong> to building production-ready AI solutions. Combines deep business acumen with technical proficiency in modern AI frameworks and full-stack development.
+                    </div>
+                    
+                    <div class="achievements">
+                        <div class="achievement-number">2.5M+</div>
+                        <div class="achievement-text">Users Acquired Through Marketing Campaigns</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="left-column">
+                    <div class="section">
+                        <h2 class="section-title">Experience</h2>
+                        
+                        <div class="experience-item">
+                            <div class="job-header">
+                                <div class="job-title">AI Developer & Co-Founder</div>
+                                <div class="company">Apolity AI Agency</div>
+                                <span class="duration">2024 - Present</span>
+                            </div>
+                            <div class="job-description">
+                                Co-founded AI agency specializing in practical AI applications. Developed production-ready AI apps using React.js, Node.js, and various AI/ML APIs including LangChain and OpenAI.
+                            </div>
+                        </div>
+
+                        <div class="experience-item">
+                            <div class="job-header">
+                                <div class="job-title">Marketing Manager</div>
+                                <div class="company">Ztazi</div>
+                                <span class="duration">Aug 2024 - Apr 2025</span>
+                            </div>
+                            <div class="job-description">
+                                Led Ztazi rebranding project and managed comprehensive online and offline marketing campaigns. Specialized in creative marketing and strategic marketing management.
+                            </div>
+                        </div>
+
+                        <div class="experience-item">
+                            <div class="job-header">
+                                <div class="job-title">Digital Marketing Manager</div>
+                                <div class="company">Khanoumi</div>
+                                <span class="duration">Nov 2023 - Aug 2024</span>
+                            </div>
+                            <div class="job-description">
+                                Executed digital strategy, budget management, and marketing analytics. Implemented advertising campaigns and eCRM systems for customer engagement optimization.
+                            </div>
+                        </div>
+
+                        <div class="experience-item">
+                            <div class="job-header">
+                                <div class="job-title">Digital Marketing Manager</div>
+                                <div class="company">Karnameh</div>
+                                <span class="duration">Oct 2022 - Nov 2023</span>
+                            </div>
+                            <div class="job-description">
+                                Managed comprehensive digital marketing operations and strategic initiatives. Focused on customer acquisition and retention through data-driven marketing approaches.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Education</h2>
+                        <div class="education-item">
+                            <div class="degree">Bachelor of Industrial Engineering</div>
+                            <div class="university">University of Tehran</div>
+                            <div class="year">2010 - 2014</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-column">
+                    <div class="section">
+                        <h2 class="section-title">Key AI Projects</h2>
+                        
+                        <div class="project-item">
+                            <div class="project-title">🎥 DeepTube</div>
+                            <div class="project-description">
+                                AI-powered YouTube analysis platform providing video summaries, transcriptions, content ideation, and analytical insights for rapid content consumption.
+                            </div>
+                            <div class="tech-tags">
+                                <span class="tech-tag">OpenAI</span>
+                                <span class="tech-tag">React</span>
+                                <span class="tech-tag">LangChain</span>
+                            </div>
+                        </div>
+
+                        <div class="project-item">
+                            <div class="project-title">🤝 Meeting Intelligence Agent</div>
+                            <div class="project-description">
+                                Smart meeting assistant with real-time transcription, searchable archives, and intelligent Q&A capabilities for previous meetings.
+                            </div>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Claude API</span>
+                                <span class="tech-tag">Speech-to-Text</span>
+                                <span class="tech-tag">Vector DB</span>
+                            </div>
+                        </div>
+
+                        <div class="project-item">
+                            <div class="project-title">🎙️ Voice Prompt Application</div>
+                            <div class="project-description">
+                                Voice-to-prompt conversion system eliminating typing barriers, enabling natural voice interactions with AI systems.
+                            </div>
+                            <div class="tech-tags">
+                                <span class="tech-tag">Gemini</span>
+                                <span class="tech-tag">Speech API</span>
+                                <span class="tech-tag">Real-time</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section">
+                        <h2 class="section-title">Additional Background</h2>
+                        <div style="font-size: 0.8em; line-height: 1.5; color: #4a5568;">
+                            <strong>Industry Expertise:</strong> 10+ years in digital marketing with deep understanding of user acquisition, conversion optimization, and growth strategies.<br><br>
+                            
+                            <strong>Technical Transition:</strong> Successfully pivoted from marketing to AI development when LLMs emerged, rapidly acquiring modern development skills including JavaScript ecosystem, containerization, and cloud platforms.<br><br>
+                            
+                            <strong>AI Ecosystem:</strong> Extensive experience with cutting-edge AI tools including OpenAI, Anthropic, Google Gemini, Perplexity, DeepSeek, Midjourney, Runway, and Grok. Stay current with rapid AI product evolution.<br><br>
+                            
+                            <strong>Business Value:</strong> Unique combination of technical AI skills and business acumen, enabling development of AI solutions that solve real-world problems and drive measurable business outcomes.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="download-section">
+                <button class="download-btn" onclick="downloadPDF()" title="Click to open print dialog, then save as PDF">
+                    📄 Download PDF
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // AI Data Flow Visualization
+        class DataFlowVisualization {
+            constructor() {
+                this.canvas = document.getElementById('dataflow-canvas');
+                this.ctx = this.canvas.getContext('2d');
+                this.particles = [];
+                this.streams = [];
+                this.aiTerms = [
+                    'AI', 'ML', 'React', 'Node.js', 'LangChain', 'OpenAI', 'Claude', 
+                    'Python', 'API', 'Vector', 'Neural', 'Data', 'Deep', 'Learn',
+                    'Prompt', 'Model', 'GPT', 'Train', 'Infer', 'Algo', 'Code',
+                    'Deploy', 'Scale', 'Cloud', 'Ops', 'Dev', 'Build', 'Test'
+                ];
+                
+                this.resize();
+                this.initStreams();
+                this.animate();
+                
+                window.addEventListener('resize', () => this.resize());
+            }
+            
+            resize() {
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+            }
+            
+            initStreams() {
+                const streamCount = Math.floor(this.canvas.width / 100);
+                this.streams = [];
+                
+                for (let i = 0; i < streamCount; i++) {
+                    this.streams.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        speed: 0.5 + Math.random() * 1.5,
+                        angle: Math.random() * Math.PI * 2,
+                        length: 100 + Math.random() * 200,
+                        opacity: 0.1 + Math.random() * 0.3,
+                        hue: 220 + Math.random() * 40
+                    });
+                }
+                
+                // Initialize particles
+                for (let i = 0; i < 30; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: (Math.random() - 0.5) * 0.5,
+                        vy: (Math.random() - 0.5) * 0.5,
+                        size: 1 + Math.random() * 2,
+                        opacity: 0.2 + Math.random() * 0.6,
+                        term: this.aiTerms[Math.floor(Math.random() * this.aiTerms.length)],
+                        termOpacity: 0.1 + Math.random() * 0.3,
+                        lastTermTime: 0
+                    });
+                }
+            }
+            
+            drawStream(stream) {
+                this.ctx.save();
+                this.ctx.translate(stream.x, stream.y);
+                this.ctx.rotate(stream.angle);
+                
+                const gradient = this.ctx.createLinearGradient(0, 0, stream.length, 0);
+                gradient.addColorStop(0, `hsla(${stream.hue}, 70%, 60%, 0)`);
+                gradient.addColorStop(0.5, `hsla(${stream.hue}, 70%, 60%, ${stream.opacity})`);
+                gradient.addColorStop(1, `hsla(${stream.hue}, 70%, 60%, 0)`);
+                
+                this.ctx.strokeStyle = gradient;
+                this.ctx.lineWidth = 1;
+                this.ctx.beginPath();
+                this.ctx.moveTo(0, 0);
+                this.ctx.lineTo(stream.length, 0);
+                this.ctx.stroke();
+                
+                // Add flowing dots
+                for (let i = 0; i < 3; i++) {
+                    const dotX = (Date.now() * stream.speed * 0.01 + i * stream.length / 3) % stream.length;
+                    this.ctx.fillStyle = `hsla(${stream.hue}, 70%, 70%, ${stream.opacity * 2})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(dotX, 0, 1, 0, Math.PI * 2);
+                    this.ctx.fill();
+                }
+                
+                this.ctx.restore();
+            }
+            
+            drawParticle(particle) {
+                // Draw particle
+                this.ctx.fillStyle = `rgba(102, 126, 234, ${particle.opacity})`;
+                this.ctx.beginPath();
+                this.ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                this.ctx.fill();
+                
+                // Occasionally show AI term
+                if (Date.now() - particle.lastTermTime > 3000 + Math.random() * 5000) {
+                    particle.lastTermTime = Date.now();
+                    particle.showTerm = true;
+                    setTimeout(() => {
+                        particle.showTerm = false;
+                    }, 2000);
+                }
+                
+                if (particle.showTerm) {
+                    this.ctx.fillStyle = `rgba(102, 126, 234, ${particle.termOpacity})`;
+                    this.ctx.font = '10px monospace';
+                    this.ctx.fillText(particle.term, particle.x + 5, particle.y - 5);
+                }
+            }
+            
+            animate() {
+                this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw streams
+                this.streams.forEach(stream => {
+                    this.drawStream(stream);
+                    
+                    // Move streams slowly
+                    stream.x += Math.cos(stream.angle) * stream.speed * 0.1;
+                    stream.y += Math.sin(stream.angle) * stream.speed * 0.1;
+                    
+                    // Wrap around screen
+                    if (stream.x < -stream.length) stream.x = this.canvas.width;
+                    if (stream.x > this.canvas.width + stream.length) stream.x = -stream.length;
+                    if (stream.y < -stream.length) stream.y = this.canvas.height;
+                    if (stream.y > this.canvas.height + stream.length) stream.y = -stream.length;
+                });
+                
+                // Draw particles
+                this.particles.forEach(particle => {
+                    this.drawParticle(particle);
+                    
+                    // Move particles
+                    particle.x += particle.vx;
+                    particle.y += particle.vy;
+                    
+                    // Wrap around screen
+                    if (particle.x < 0) particle.x = this.canvas.width;
+                    if (particle.x > this.canvas.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = this.canvas.height;
+                    if (particle.y > this.canvas.height) particle.y = 0;
+                });
+                
+                requestAnimationFrame(() => this.animate());
+            }
+        }
+        
+
+
+        function downloadPDF() {
+            // Hide animations for print
+            const canvas = document.getElementById('dataflow-canvas');
+            const downloadSection = document.querySelector('.download-section');
+            
+            canvas.style.display = 'none';
+            downloadSection.style.display = 'none';
+            
+            const originalTitle = document.title;
+            document.title = 'Hatef_Kouzechi_AI_Engineer_Resume';
+            
+            // Add print-specific class to body
+            document.body.classList.add('printing');
+            
+            // Use setTimeout to ensure styles are applied
+            setTimeout(() => {
+                // Trigger print dialog
+                window.print();
+                
+                // Restore after print
+                setTimeout(() => {
+                    canvas.style.display = 'block';
+                    downloadSection.style.display = 'block';
+                    document.title = originalTitle;
+                    document.body.classList.remove('printing');
+                }, 1000);
+            }, 100);
+        }
+
+        // Initialize everything
+        window.addEventListener('load', () => {
+            // Initialize data flow animation
+            if (window.innerWidth > 768) {
+                new DataFlowVisualization();
+            }
+            
+            // Animate skill bars
+            const skillBars = document.querySelectorAll('.skill-progress');
+            skillBars.forEach((bar, index) => {
+                const targetWidth = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = targetWidth;
+                }, index * 200);
+            });
+        });
+    </script>
+</body>
+</html>
