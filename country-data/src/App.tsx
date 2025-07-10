@@ -115,7 +115,7 @@ function App() {
       setError(null);
       setLoadingProgress(20);
 
-      const response = await fetch(`/data/final_country_data.csv`);
+      const response = await fetch(`/public/country-data/data/final_country_data.csv`);
       setLoadingProgress(40);
 
       if (!response.ok) {
