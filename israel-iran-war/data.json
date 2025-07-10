@@ -1,261 +1,263 @@
 {
   "meta": {
     "title": "Iran-Israel Crisis Dashboard",
-    "subtitle": "Strategic Analysis & Game Theory Assessment",
-    "lastUpdated": "June 13, 2025",
-    "status": "Active Crisis"
+    "subtitle": "Post-Ceasefire Analysis & Strategic Assessment",
+    "lastUpdated": "July 10, 2025",
+    "status": "Fragile Ceasefire - High Tension"
   },
   "breakingNews": {
-    "text": "🚨 BREAKING: Israel launches \"Operation Rising Lion\" - Major strike on Iranian nuclear facilities",
+    "text": "🔥 POST-CEASEFIRE ANALYSIS: Iran threatens NPT withdrawal, can restart enrichment within months",
     "isActive": true
   },
   "gameTheoryNote": {
-    "title": "🎯 Game Theory Framework: \"Chicken Game\" Dynamics",
-    "description": "Strategic Assessment: This conflict represents a classic \"Chicken Game\" where both players race toward each other, neither wanting to retreat first, but both knowing collision would be devastating. Israel cannot allow Iran to reach the nuclear threshold, while Iran cannot afford to appear to be folding for fear of losing prestige and regional leadership."
+    "title": "🎯 Game Theory Update: \"Temporary Retreat\" Dynamics",
+    "description": "Strategic Shift: The 12-day war ended in a fragile ceasefire, but both sides are now in a \"temporary retreat\" phase. Iran's nuclear program was damaged but not destroyed, creating a new chicken game dynamic where Iran must decide whether to openly pursue nuclear weapons or rebuild covertly. Israel faces the dilemma of whether to accept this temporary setback or prepare for another round."
   },
   "poll": {
-    "question": "Which scenario do you think is most likely over the next 6 months? (Probabilities based on game theory analysis)",
+    "question": "Which scenario is most likely over the next 12 months? (Post-ceasefire probabilities)",
     "options": [
       {
         "id": 1,
-        "title": "Limited Escalation & Diplomacy",
-        "probability": "Strategic: 25%",
-        "description": "Face-saving proportional response → Gulf mediation"
+        "title": "Covert Nuclear Reconstruction",
+        "probability": "Strategic: 35%",
+        "description": "Iran secretly rebuilds while maintaining diplomatic facade"
       },
       {
         "id": 2,
-        "title": "Sustained Military Campaign",
-        "probability": "Strategic: 40%",
-        "description": "Controlled escalation - India-Pakistan model"
+        "title": "Open Nuclear Breakout",
+        "probability": "Strategic: 20%",
+        "description": "Iran exits NPT and rushes to weapons capability"
       },
       {
         "id": 3,
-        "title": "Regional War Escalation",
-        "probability": "Strategic: 10%",
-        "description": "Miscalculation leads to uncontrolled conflict"
+        "title": "Renewed Diplomatic Engagement",
+        "probability": "Strategic: 25%",
+        "description": "EU/US-mediated nuclear negotiations resume"
       },
       {
         "id": 4,
-        "title": "Iranian Nuclear Breakout",
-        "probability": "Strategic: 10%",
-        "description": "Iran's \"slow path\" strategy accelerates"
+        "title": "Israeli Preventive Strike 2.0",
+        "probability": "Strategic: 15%",
+        "description": "Israel strikes again within 6-12 months"
       },
       {
         "id": 5,
-        "title": "US Military Intervention",
-        "probability": "Strategic: 25%",
-        "description": "B-2 strikes after Trump ultimatum failure"
+        "title": "Status Quo with Periodic Tensions",
+        "probability": "Strategic: 5%",
+        "description": "Fragile ceasefire holds without major escalation"
       }
     ]
   },
   "scenarios": {
-    "description": "Game Theory Assessment: Iran's nuclear strategy follows a \"slow path\" to avoid triggering US/Israeli intervention until the last moment possible. Current dynamics represent strategic restraint, not weakness, but understanding that the next stage may be uncontrollable. Analysis incorporates escalation dominance theory, commitment problems, and asymmetric stakes.",
-    "chartLegend": "Methodology: Game theory analysis incorporating chicken game dynamics, escalation dominance theory, commitment problems, asymmetric stakes, and historical escalation patterns from similar conflicts.",
+    "description": "Post-War Game Theory Assessment: Iran's nuclear program was damaged but not eliminated, creating new strategic dynamics. Iran faces a choice between covert reconstruction (high probability) or open breakout (high risk). Israel must decide whether to accept temporary victory or prepare for round two. The ceasefire has created a temporary equilibrium, but underlying dynamics remain explosive.",
+    "chartLegend": "Updated Methodology: Post-conflict analysis incorporating actual damage assessments, Iranian response patterns, IAEA monitoring gaps, and revised intelligence estimates of nuclear reconstruction timelines.",
     "items": [
       {
         "id": 1,
-        "title": "Limited Escalation & Face-Saving",
-        "probability": 25,
-        "color": "#28a745",
-        "description": "Strategic Logic: Both sides seek controlled de-escalation to avoid catastrophic costs while maintaining credibility. Gulf mediation provides face-saving exit ramp. Risk: Chicken game dynamics make retreat signal weakness."
+        "title": "Covert Nuclear Reconstruction",
+        "probability": 35,
+        "color": "#dc3545",
+        "description": "Most Likely: Iran pursues clandestine nuclear program rebuilding while maintaining diplomatic facade. Intelligence suggests 3-6 month reconstruction timeline for basic enrichment capabilities. Iran's IAEA suspension creates monitoring blind spots."
       },
       {
         "id": 2,
-        "title": "Controlled Escalation Campaign",
-        "probability": 40,
-        "color": "#ffc107",
-        "description": "Most Probable: \"India-Pakistan model\" - exchange of blows with mutual restraint to avoid all-out war. Both sides test limits while maintaining escalation control. Duration: 3-6 months of measured responses."
+        "title": "Open Nuclear Breakout",
+        "probability": 20,
+        "color": "#6f42c1",
+        "description": "High Risk: Iran exits NPT and openly pursues nuclear weapons. Triggered by perceived Israeli preparation for second strike or regime survival concerns. Would guarantee renewed military conflict within months."
       },
       {
         "id": 3,
-        "title": "Escalation to Regional War",
-        "probability": 10,
-        "color": "#dc3545",
-        "description": "Miscalculation Risk: Nuclear escalation can occur rapidly once conventional deterrence fails. Triggers: Massive civilian casualties, leadership strikes, or proxy escalation beyond control thresholds."
+        "title": "Renewed Diplomatic Engagement",
+        "probability": 25,
+        "color": "#28a745",
+        "description": "Diplomatic Window: EU-mediated negotiations resume, potentially including US-Iran bilateral talks. Success depends on Iranian willingness to accept enhanced monitoring in exchange for sanctions relief and security guarantees."
       },
       {
         "id": 4,
-        "title": "Iranian Nuclear Sprint",
-        "probability": 10,
-        "color": "#6f42c1",
-        "description": "Desperation Strategy: Iran's \"slow path\" strategy accelerates to weapons capability if conventional deterrence fails. Currently at 60% enrichment - can produce weapons-grade in weeks."
+        "title": "Israeli Preventive Strike 2.0",
+        "probability": 15,
+        "color": "#fd7e14",
+        "description": "Preemptive Logic: Israel strikes again within 6-12 months if intelligence confirms nuclear reconstruction. Higher probability if Iran exits NPT or enrichment levels spike. US support uncertain for second round."
       },
       {
         "id": 5,
-        "title": "US Military Intervention",
-        "probability": 25,
-        "color": "#fd7e14",
-        "description": "Escalation Dominance: B-2 bombers with MOPs represent only capability to destroy deep underground facilities. Trump's commitment trap and Israeli pressure create intervention pathway."
+        "title": "Status Quo Maintenance",
+        "probability": 5,
+        "color": "#ffc107",
+        "description": "Unstable Equilibrium: Current ceasefire holds without major escalation. Low probability due to underlying nuclear timeline pressures and mutual strategic mistrust. Requires sustained diplomatic management."
       }
     ]
   },
   "riskCalculator": {
-    "intro": "Game Theory Analysis: Large conflicts become large because they escalate - fighting is equally likely to escalate as deescalate in any given year. Adjust factors below to model escalation dynamics and commitment problems.",
+    "intro": "Post-Ceasefire Risk Assessment: The 12-day war created new strategic realities but didn't resolve underlying nuclear crisis. Iran's program was damaged but not eliminated, creating unstable equilibrium. Adjust factors below to model post-conflict dynamics.",
     "escalationAnalysis": {
-      "title": "⚠️ Escalation Dynamics Analysis",
-      "description": "Current Risk Level: Large wars become large because they escalate. Stability-instability paradox: Nuclear threats reduce major war probability but increase minor conflicts. Both sides in \"competition in risk-taking\" where resolve matters as much as capabilities."
+      "title": "⚠️ Post-War Escalation Dynamics",
+      "description": "Current Risk Level: Higher than pre-war due to demonstrated willingness to use force, nuclear program damage but not elimination, and collapsed diplomatic frameworks. Iran's IAEA suspension creates intelligence gaps that increase miscalculation risks."
     },
     "categories": [
       {
-        "title": "🏛️ Commitment & Resolve Factors",
+        "title": "🔬 Nuclear Program Factors",
         "factors": [
           {
-            "id": "iran-prestige",
-            "label": "Iranian Regime Prestige at Stake",
-            "impact": "+15% Sustained Campaign (cannot appear weak)"
+            "id": "covert-reconstruction",
+            "label": "Iran's Covert Nuclear Reconstruction",
+            "impact": "+30% Covert Reconstruction (most likely path)"
           },
           {
-            "id": "israeli-existential",
-            "label": "Israeli Existential Threat Perception",
-            "impact": "+12% US Intervention (forces US hand)"
+            "id": "npt-exit",
+            "label": "Iran Exits NPT",
+            "impact": "+40% Open Breakout (point of no return)"
           },
           {
-            "id": "trump-commitment",
-            "label": "Trump Commitment Trap",
-            "impact": "+20% US Intervention (credibility stakes)"
+            "id": "iaea-suspension",
+            "label": "IAEA Monitoring Suspension",
+            "impact": "+25% Covert Reconstruction (intelligence blind spots)"
           },
           {
-            "id": "rally-flag",
-            "label": "Rally-Around-Flag Effect",
-            "impact": "+8% Sustained Campaign (domestic support)"
+            "id": "enrichment-restart",
+            "label": "Rapid Enrichment Restart",
+            "impact": "+20% Israeli Strike 2.0 (triggers preventive action)"
           }
         ]
       },
       {
-        "title": "⚡ Escalation Dominance Factors",
+        "title": "🛡️ Strategic Stability Factors",
         "factors": [
           {
-            "id": "b2-dominance",
-            "label": "B-2 Bunker-Buster Deployment",
-            "impact": "+25% US Intervention (escalation dominance)"
+            "id": "israeli-intelligence",
+            "label": "Israeli Intelligence on Reconstruction",
+            "impact": "+35% Israeli Strike 2.0 (early warning triggers)"
           },
           {
-            "id": "asymmetric-retaliation",
-            "label": "Iranian Asymmetric Retaliation",
-            "impact": "+18% Regional War (proxy activation)"
+            "id": "trump-diplomacy",
+            "label": "Trump's Diplomatic Engagement",
+            "impact": "+20% Diplomatic Engagement (personal involvement)"
           },
           {
-            "id": "israeli-intel",
-            "label": "Israeli Intelligence Superiority",
-            "impact": "+10% Sustained Campaign (tactical advantage)"
+            "id": "iran-regime-pressure",
+            "label": "Iranian Regime Internal Pressure",
+            "impact": "+15% Open Breakout (survival strategy)"
           },
           {
-            "id": "nuclear-threshold",
-            "label": "Iran Nuclear Threshold Crossing",
-            "impact": "+30% Nuclear Breakout (point of no return)"
+            "id": "eu-mediation",
+            "label": "European Union Mediation Efforts",
+            "impact": "+25% Diplomatic Engagement (face-saving path)"
           }
         ]
       },
       {
-        "title": "🌍 Strategic Stability Factors",
+        "title": "🌍 Regional Security Factors",
         "factors": [
           {
-            "id": "oil-shock",
-            "label": "Oil Market Shock ($120+/barrel)",
-            "impact": "+20% Limited Escalation (global pressure)"
+            "id": "gulf-mediation",
+            "label": "Gulf States Mediation Role",
+            "impact": "+15% Diplomatic Engagement (regional pressure)"
           },
           {
-            "id": "chinese-energy",
-            "label": "Chinese Energy Security Concerns",
-            "impact": "+15% Limited Escalation (mediation pressure)"
+            "id": "chinese-energy-concerns",
+            "label": "Chinese Energy Security Pressure",
+            "impact": "+20% Diplomatic Engagement (economic leverage)"
           },
           {
-            "id": "gulf-fear",
-            "label": "Gulf States Fear Spillover",
-            "impact": "+12% Limited Escalation (mediation efforts)"
+            "id": "oil-price-stability",
+            "label": "Oil Market Stability",
+            "impact": "+10% Status Quo (reduced crisis pressure)"
           },
           {
-            "id": "alliance-pressure",
-            "label": "Alliance Burden-Sharing Pressure",
-            "impact": "-8% US Intervention (restraint from allies)"
+            "id": "us-domestic-pressure",
+            "label": "US Domestic War Fatigue",
+            "impact": "+15% Diplomatic Engagement (restraint on military action)"
           }
         ]
       },
       {
-        "title": "📅 Critical Decision Points",
+        "title": "📅 Critical Timeline Factors",
         "factors": [
           {
-            "id": "iran-attacks-us",
-            "label": "Iran Attacks US Military Assets",
-            "impact": "+35% US Intervention (direct provocation)"
+            "id": "nuclear-timeline",
+            "label": "3-6 Month Nuclear Reconstruction Window",
+            "impact": "+25% Covert Reconstruction (time pressure)"
           },
           {
-            "id": "civilian-casualties",
-            "label": "Massive Civilian Casualties",
-            "impact": "+25% Regional War (escalation spiral)"
+            "id": "winter-energy-crisis",
+            "label": "Winter 2025 Energy Crisis Risk",
+            "impact": "+20% Diplomatic Engagement (economic pressure)"
           },
           {
-            "id": "leadership-strike",
-            "label": "Iranian Leadership Decapitation",
-            "impact": "+20% Regional War (regime survival)"
+            "id": "us-election-cycle",
+            "label": "US Midterm Election Approach",
+            "impact": "+15% Diplomatic Engagement (political timing)"
           },
           {
-            "id": "uprising",
-            "label": "Popular Uprising in Iran",
-            "impact": "+25% Limited Escalation (regime weakness)"
+            "id": "iaea-board-meeting",
+            "label": "Next IAEA Board Meeting",
+            "impact": "+10% Open Breakout (formal NPT exit mechanism)"
           }
         ]
       }
     ]
   },
   "timeline": {
-    "description": "Critical decision points where game theory dynamics will determine conflict trajectory",
+    "description": "Post-ceasefire critical decision points that will determine whether fragile peace holds or conflict resumes",
     "events": [
       {
-        "date": "72hrs",
-        "title": "🎯 Iranian Strategic Response Choice",
-        "description": "Game Theory Moment: Iran must choose between proportional response (maintains chicken game) or massive retaliation (risks escalation dominance by US/Israel). Neither side wants to be first to retreat, but both know collision would be devastating."
+        "date": "August 2025",
+        "title": "🔬 Nuclear Reconstruction Assessment",
+        "description": "Intelligence Window: First assessments of Iranian nuclear reconstruction efforts. IAEA monitoring gaps create uncertainty. Israeli intelligence capabilities will be crucial in determining whether Iran is rebuilding covertly or openly."
       },
       {
-        "date": "July 2025",
-        "title": "🇺🇸 Trump Ultimatum Expiry",
-        "description": "Commitment Trap: Trump's public ultimatum creates domestic credibility stakes. Credible deterrence requires both capability and perceived resolve. B-2 deployment signals escalation dominance preparation."
+        "date": "September 2025",
+        "title": "🇪🇺 European Mediation Initiative",
+        "description": "Diplomatic Opportunity: EU-led effort to restart nuclear negotiations before Iranian capabilities are fully restored. Success depends on Iranian willingness to accept enhanced monitoring and Israeli restraint guarantees."
       },
       {
-        "date": "Aug-Sept 2025",
-        "title": "⚖️ Escalation Control Assessment",
-        "description": "Strategic Calculation: Escalation dynamics determine whether conflicts grow in severity. Both sides assess whether controlled escalation remains viable or risks spiraling beyond control mechanisms."
+        "date": "October-November 2025",
+        "title": "⚖️ Decision Point: Diplomacy vs. Action",
+        "description": "Strategic Crossroads: If diplomacy fails and Iranian nuclear reconstruction accelerates, Israel faces decision on second preventive strike. US support uncertain, making timing critical."
       },
       {
-        "date": "Oct 2025",
-        "title": "🔄 Resolution or Entrenchment",
-        "description": "End Game: Either successful face-saving de-escalation through third-party mediation, or acceptance of new \"cold war\" equilibrium with periodic controlled escalation cycles. Real victory is to prevent the crash, not lead to it."
+        "date": "December 2025",
+        "title": "🎯 Final Escalation or Stabilization",
+        "description": "End Game: Either successful diplomatic framework establishing new nuclear constraints, or renewed military conflict as Iran approaches nuclear threshold. Winter energy concerns may force resolution."
       }
     ]
   },
   "tickerHeadlines": [
-    "Game Theory Alert: Iran-Israel locked in \"Chicken Game\" - neither side can afford to retreat first",
-    "Strategic Analysis: Israeli strikes demonstrate escalation dominance but risk triggering Iranian desperation moves",
-    "US B-2 deployment creates commitment trap for Trump - credibility stakes force intervention decision",
-    "Iranian \"slow path\" nuclear strategy may accelerate to breakout if conventional deterrence fails",
-    "Oil shock to $120+ would create global pressure for immediate de-escalation - economic trump card",
-    "Strategic Assessment: 40% probability of sustained \"India-Pakistan model\" controlled escalation",
-    "Escalation Dynamics: Large conflicts grow because fighting is equally likely to escalate as de-escalate",
-    "Gulf states positioning as mediators - only face-saving exit ramp for both sides in chicken game"
+    "POST-CEASEFIRE: Iran can restart uranium enrichment within months according to IAEA chief",
+    "INTELLIGENCE ASSESSMENT: US strikes set back Iran's nuclear program by months, not years",
+    "DIPLOMATIC WINDOW: EU calls for immediate restart of nuclear negotiations",
+    "STRATEGIC THREAT: Iran threatens to exit NPT if diplomatic pressure continues",
+    "MONITORING CRISIS: Iran's IAEA suspension creates intelligence blind spots",
+    "RECONSTRUCTION TIMELINE: Iranian nuclear facilities show signs of rapid repair efforts",
+    "ISRAELI POSITION: Netanyahu keeps military option open for 'second round' if needed",
+    "TRUMP DILEMMA: President weighs diplomatic engagement vs. military support for Israel",
+    "REGIONAL STABILITY: Gulf states push for mediated solution to prevent energy crisis",
+    "NUCLEAR PROLIFERATION: Experts warn Iran may accelerate covert weapons program"
   ],
   "baseProbabilities": {
-    "limited": 25,
-    "sustained": 40,
-    "regional": 10,
-    "nuclear": 10,
-    "usIntervention": 25
+    "covert": 35,
+    "breakout": 20,
+    "diplomatic": 25,
+    "strike": 15,
+    "statusQuo": 5
   },
   "riskFactors": {
-    "iran-prestige": { "limited": -10, "sustained": 15, "regional": 8, "nuclear": 0, "usIntervention": -3 },
-    "israeli-existential": { "limited": -8, "sustained": 5, "regional": 10, "nuclear": 5, "usIntervention": 12 },
-    "trump-commitment": { "limited": -15, "sustained": -5, "regional": 0, "nuclear": -5, "usIntervention": 20 },
-    "rally-flag": { "limited": -5, "sustained": 8, "regional": 2, "nuclear": 0, "usIntervention": -2 },
-    "b2-dominance": { "limited": -10, "sustained": -8, "regional": 3, "nuclear": -10, "usIntervention": 25 },
-    "asymmetric-retaliation": { "limited": -15, "sustained": 10, "regional": 18, "nuclear": 2, "usIntervention": 5 },
-    "israeli-intel": { "limited": 0, "sustained": 10, "regional": -5, "nuclear": -3, "usIntervention": 0 },
-    "nuclear-threshold": { "limited": -20, "sustained": -10, "regional": 5, "nuclear": 30, "usIntervention": 15 },
-    "oil-shock": { "limited": 20, "sustained": -10, "regional": -8, "nuclear": -5, "usIntervention": -10 },
-    "chinese-energy": { "limited": 15, "sustained": -8, "regional": -5, "nuclear": -3, "usIntervention": -8 },
-    "gulf-fear": { "limited": 12, "sustained": -8, "regional": -5, "nuclear": -2, "usIntervention": -5 },
-    "alliance-pressure": { "limited": 5, "sustained": 3, "regional": -3, "nuclear": 0, "usIntervention": -8 },
-    "iran-attacks-us": { "limited": -25, "sustained": -10, "regional": 15, "nuclear": 0, "usIntervention": 35 },
-    "civilian-casualties": { "limited": -15, "sustained": 0, "regional": 25, "nuclear": 5, "usIntervention": 10 },
-    "leadership-strike": { "limited": -10, "sustained": 5, "regional": 20, "nuclear": 8, "usIntervention": 5 },
-    "uprising": { "limited": 25, "sustained": -15, "regional": -8, "nuclear": -12, "usIntervention": -5 }
+    "covert-reconstruction": { "covert": 30, "breakout": 5, "diplomatic": -15, "strike": 10, "statusQuo": -10 },
+    "npt-exit": { "covert": -20, "breakout": 40, "diplomatic": -25, "strike": 15, "statusQuo": -15 },
+    "iaea-suspension": { "covert": 25, "breakout": 10, "diplomatic": -10, "strike": 5, "statusQuo": -5 },
+    "enrichment-restart": { "covert": 10, "breakout": 15, "diplomatic": -10, "strike": 20, "statusQuo": -10 },
+    "israeli-intelligence": { "covert": 5, "breakout": 10, "diplomatic": -15, "strike": 35, "statusQuo": -15 },
+    "trump-diplomacy": { "covert": -10, "breakout": -15, "diplomatic": 20, "strike": -10, "statusQuo": 5 },
+    "iran-regime-pressure": { "covert": 10, "breakout": 15, "diplomatic": -10, "strike": 5, "statusQuo": -5 },
+    "eu-mediation": { "covert": -15, "breakout": -20, "diplomatic": 25, "strike": -10, "statusQuo": 5 },
+    "gulf-mediation": { "covert": -10, "breakout": -15, "diplomatic": 15, "strike": -5, "statusQuo": 5 },
+    "chinese-energy-concerns": { "covert": -10, "breakout": -15, "diplomatic": 20, "strike": -10, "statusQuo": 5 },
+    "oil-price-stability": { "covert": -5, "breakout": -10, "diplomatic": 5, "strike": -5, "statusQuo": 10 },
+    "us-domestic-pressure": { "covert": -5, "breakout": -10, "diplomatic": 15, "strike": -15, "statusQuo": 5 },
+    "nuclear-timeline": { "covert": 25, "breakout": 10, "diplomatic": -10, "strike": 15, "statusQuo": -15 },
+    "winter-energy-crisis": { "covert": -10, "breakout": -15, "diplomatic": 20, "strike": -10, "statusQuo": 5 },
+    "us-election-cycle": { "covert": -5, "breakout": -10, "diplomatic": 15, "strike": -10, "statusQuo": 5 },
+    "iaea-board-meeting": { "covert": -10, "breakout": 10, "diplomatic": -5, "strike": 5, "statusQuo": 0 }
   }
-} 
+}

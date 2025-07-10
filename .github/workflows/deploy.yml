@@ -35,6 +35,7 @@ jobs:
         run: |
           rm -f package-lock.json
           npm install
+          cd country-data && npm install && cd ..
 
       - name: Build all projects
         run: npm run build
