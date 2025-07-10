@@ -5,25 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hatef Kouzechi - AI Engineer</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <canvas id="dataflow-canvas"></canvas>
     
     <div class="resume-container">
         <div class="sidebar">
-            <div class="profile-info">
-                <h1>Hatef Kouzechi</h1>
-                <p>AI Engineer</p>
+            <div class="profile-section">
+                <div class="avatar">
+                    <img id="profile-photo" src="hatef.jpg" alt="Hatef Kouzechi" style="display: none;">
+                    <div id="initials">HK</div>
+                </div>
+                <div class="profile-info">
+                    <h1 class="name">Hatef Kouzechi</h1>
+                    <p class="title">AI Engineer</p>
+                </div>
             </div>
-            <div class="contact-info">
-                <p>Email: hatef.kouzechi@gmail.com</p>
-                <p>Phone: +98 912 123 4567</p>
-                <p>Location: Tehran, Iran</p>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Contact</h3>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">📧</span>
+                        <a href="mailto:hatef.kouzechi@gmail.com">hatef.kouzechi@gmail.com</a>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📱</span>
+                        <span>+98 912 123 4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">📍</span>
+                        <span>Tehran, Iran</span>
+                    </div>
+                </div>
             </div>
-            <div class="social-links">
-                <a href="https://github.com/hatef-kouzechi" target="_blank">GitHub</a>
-                <a href="https://linkedin.com/in/hatef-kouzechi" target="_blank">LinkedIn</a>
-                <a href="https://twitter.com/hatef_kouzechi" target="_blank">Twitter</a>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Skills</h3>
+                <div class="skills-grid">
+                    <div class="skill-item">
+                        <span class="skill-name">AI/ML Development</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">React.js & Node.js</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">LangChain & APIs</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-item">
+                        <span class="skill-name">Digital Marketing</span>
+                        <div class="skill-bar">
+                            <div class="skill-progress" style="width: 95%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Technologies</h3>
+                <div class="tech-stack">
+                    <span class="tech-chip">OpenAI</span>
+                    <span class="tech-chip">Claude</span>
+                    <span class="tech-chip">Gemini</span>
+                    <span class="tech-chip">LangChain</span>
+                    <span class="tech-chip">React</span>
+                    <span class="tech-chip">Node.js</span>
+                    <span class="tech-chip">TypeScript</span>
+                    <span class="tech-chip">MongoDB</span>
+                    <span class="tech-chip">Docker</span>
+                </div>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Links</h3>
+                <div class="social-links">
+                    <a href="https://github.com/hatef-kouzechi" target="_blank" class="social-link">
+                        <span class="social-icon">💻</span>
+                        <span>GitHub</span>
+                    </a>
+                    <a href="https://linkedin.com/in/hatef-kouzechi" target="_blank" class="social-link">
+                        <span class="social-icon">💼</span>
+                        <span>LinkedIn</span>
+                    </a>
+                    <a href="https://twitter.com/hatef_kouzechi" target="_blank" class="social-link">
+                        <span class="social-icon">🐦</span>
+                        <span>Twitter</span>
+                    </a>
+                </div>
             </div>
         </div>
 
@@ -142,14 +222,22 @@
 
                     <div class="section">
                         <h2 class="section-title">Additional Background</h2>
-                        <div style="font-size: 0.8em; line-height: 1.5; color: #4a5568;">
-                            <strong>Industry Expertise:</strong> 10+ years in digital marketing with deep understanding of user acquisition, conversion optimization, and growth strategies.<br><br>
+                        <div class="background-content">
+                            <div class="background-item">
+                                <strong>Industry Expertise:</strong> 10+ years in digital marketing with deep understanding of user acquisition, conversion optimization, and growth strategies.
+                            </div>
                             
-                            <strong>Technical Transition:</strong> Successfully pivoted from marketing to AI development when LLMs emerged, rapidly acquiring modern development skills including JavaScript ecosystem, containerization, and cloud platforms.<br><br>
+                            <div class="background-item">
+                                <strong>Technical Transition:</strong> Successfully pivoted from marketing to AI development when LLMs emerged, rapidly acquiring modern development skills including JavaScript ecosystem, containerization, and cloud platforms.
+                            </div>
                             
-                            <strong>AI Ecosystem:</strong> Extensive experience with cutting-edge AI tools including OpenAI, Anthropic, Google Gemini, Perplexity, DeepSeek, Midjourney, Runway, and Grok. Stay current with rapid AI product evolution.<br><br>
+                            <div class="background-item">
+                                <strong>AI Ecosystem:</strong> Extensive experience with cutting-edge AI tools including OpenAI, Anthropic, Google Gemini, Perplexity, DeepSeek, Midjourney, Runway, and Grok. Stay current with rapid AI product evolution.
+                            </div>
                             
-                            <strong>Business Value:</strong> Unique combination of technical AI skills and business acumen, enabling development of AI solutions that solve real-world problems and drive measurable business outcomes.
+                            <div class="background-item">
+                                <strong>Business Value:</strong> Unique combination of technical AI skills and business acumen, enabling development of AI solutions that solve real-world problems and drive measurable business outcomes.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,7 +246,8 @@
 
         <div class="download-section">
             <button class="download-btn" onclick="downloadPDF()">
-                📄 Download PDF
+                <span class="download-icon">📄</span>
+                <span class="download-text">Download PDF</span>
             </button>
         </div>
     </div>

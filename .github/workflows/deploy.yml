@@ -37,8 +37,15 @@ jobs:
           npm install
           cd country-data && npm install && cd ..
 
-      - name: Build all projects
-        run: npm run build
+      - name: Build all projects except country-data
+        run: npm run build -w deeptube && npm run build -w dictator && npm run build -w meeting-agent && npm run build -w osee
+
+      - name: Build country-data with explicit permissions
+        run: |
+          cd country-data
+          chmod +x node_modules/.bin/react-scripts
+          npx --yes react-scripts build
+          cd ..
 
       - name: Create deployment directory
         run: |
