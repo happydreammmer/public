@@ -1,0 +1,6 @@
+{
+  "name": "Gemini OCR - V2",
+  "description": "An application to extract text from images and PDF files using the Gemini AI. Upload or drag and drop your files to get started.",
+  "requestFramePermissions": [],
+  "prompt": ""
+}

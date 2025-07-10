@@ -1,0 +1,133 @@
+
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 40px; 
+  border-bottom: 1px solid var(--color-border);
+  transition: border-color var(--transition-normal);
+  flex-wrap: wrap; 
+  flex-shrink: 0;
+}
+
+.editor-title {
+  font-size: 22px;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+  flex-grow: 1;
+  margin-right: 16px; 
+  color: var(--color-text);
+  font-family: var(--font-primary);
+  background-color: transparent;
+  min-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.editor-title.placeholder-active {
+  color: var(--color-text-tertiary);
+  opacity: 0.8;
+  font-style: italic;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Increased from 8px */
+}
+
+/* Base styles for action-button icon-button variant, used in header and sidebar */
+.action-button.icon-button { 
+  width: 38px; height: 38px; font-size: 15px; 
+  background: transparent;
+  border: 1px solid transparent; /* Keep border for layout consistency, make transparent */
+  box-shadow: none;
+  backdrop-filter: none;
+  color: var(--color-text-secondary);
+  border-radius: 50%; /* Consistent with other action buttons */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition-fast) background-color, var(--transition-fast) color, var(--transition-fast) transform;
+}
+.action-button.icon-button:hover:not(:disabled) {
+  background: var(--color-surface-hover);
+  color: var(--color-text);
+  transform: scale(1.1);
+  box-shadow: none; /* Ensure no shadow on hover for icon buttons */
+}
+.action-button.icon-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  background: transparent !important; /* Ensure disabled state doesn't pick up other action-button background */
+}
+
+
+/* Prompt Mode Toggle Styles */
+.prompt-mode-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-surface);
+  border-radius: 18px; /* Adjusted for smaller height */
+  padding: 3px; /* Adjusted padding */
+  cursor: pointer;
+  user-select: none;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+  border: 1px solid var(--color-border);
+  height: 34px; /* Reduced height */
+}
+
+.prompt-mode-option {
+  display: flex;
+  align-items: center;
+  padding: 0 10px; /* Reduced padding */
+  font-size: 12px; /* Reduced font size */
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+  z-index: 1;
+  height: 100%;
+  gap: 5px; /* Reduced gap */
+}
+
+.prompt-mode-option i {
+  font-size: 13px; /* Reduced icon size */
+}
+
+.prompt-mode-option.active {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.prompt-mode-slider {
+  position: absolute;
+  top: 1.5px; /* Adjusted for new parent padding (3px / 2) */
+  bottom: 1.5px; /* Adjusted for new parent padding (3px / 2) */
+  left: 1.5px; /* Adjusted for new parent padding (3px / 2) */
+  width: calc(50% - 3px); /* Adjusted: 50% minus (2 * left offset) */
+  background-color: var(--color-surface-active);
+  border-radius: 16px; /* Adjusted border-radius, slightly less than parent */
+  transition: transform var(--transition-normal) ease-in-out, background-color var(--transition-normal);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.prompt-mode-toggle[data-active-mode="smart"] .prompt-mode-slider {
+  transform: translateX(calc(100% + 3px)); /* Adjusted: 100% of its width + (2 * left offset) */
+}
+
+body.light-mode .prompt-mode-toggle {
+  background-color: var(--color-surface-hover-light);
+}
+body.light-mode .prompt-mode-slider {
+  background-color: var(--color-bg-alt-light);
+}
+body.light-mode .prompt-mode-option.active {
+  color: var(--color-accent-light);
+}
+/* End Prompt Mode Toggle Styles */

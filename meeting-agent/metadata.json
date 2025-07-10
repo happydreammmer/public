@@ -1,0 +1,8 @@
+{
+  "name": "MultiLang Meeting Agent",
+  "description": "Record or upload meeting audio to automatically generate transcriptions with speaker labels, concise summaries, and actionable task lists, powered by Gemini.",
+  "requestFramePermissions": [
+    "microphone"
+  ],
+  "prompt": ""
+}

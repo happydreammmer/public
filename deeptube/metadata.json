@@ -1,0 +1,6 @@
+{
+  "name": "DeepTube",
+  "description": "Capture content from Youtube videos",
+  "requestFramePermissions": [],
+  "prompt": ""
+}
