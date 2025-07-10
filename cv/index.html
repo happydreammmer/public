@@ -4,19 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hatef Kouzechi - AI Engineer</title>
-    <link rel="stylesheet" href="styles.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preload" href="hatef.jpg" as="image">
     
-    <!-- Animation Libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js"></script>
 </head>
 <body class="loading">
+    <noscript>
+        <div class="noscript-fallback">
+            <h1>JavaScript is required to view this page.</h1>
+            <p>Please enable JavaScript in your browser settings to see the full interactive experience.</p>
+        </div>
+    </noscript>
     <!-- Loading Screen -->
     <div id="loading-screen">
         <div class="loading-content">
@@ -103,15 +105,15 @@
                     <div class="contact-info">
                         <div class="contact-item floating-element" data-float-speed="2">
                             <span class="contact-icon">📧</span>
-                            <a href="mailto:hatef.kouzechi@gmail.com">hatef.kouzechi@gmail.com</a>
+                            <a href="mailto:h.kouzechi@gmail.com">h.kouzechi@gmail.com</a>
                         </div>
                         <div class="contact-item floating-element" data-float-speed="2.5">
                             <span class="contact-icon">📱</span>
-                            <span>+98 912 123 4567</span>
+                            <span>+968 7740 7956</span>
                         </div>
                         <div class="contact-item floating-element" data-float-speed="3">
                             <span class="contact-icon">📍</span>
-                            <span>Tehran, Iran</span>
+                            <span>Muscat, Oman</span>
                         </div>
                     </div>
                 </div>
@@ -131,6 +133,13 @@
                         </div>
                         <div class="skill-item morphing-skill" data-skill="85">
                             <span class="skill-name">React.js & Node.js</span>
+                            <div class="skill-bar-3d">
+                                <div class="skill-progress-3d"></div>
+                                <div class="skill-glow"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item morphing-skill" data-skill="92">
+                            <span class="skill-name">Prompt Eng &amp; AI Agents</span>
                             <div class="skill-bar-3d">
                                 <div class="skill-progress-3d"></div>
                                 <div class="skill-glow"></div>
@@ -271,60 +280,6 @@
                                 <div class="education-glow"></div>
                             </div>
                         </div>
-                    </div>
-
-                    <div class="right-column" data-aos="fade-up" data-aos-delay="400">
-                        <div class="section projects-section">
-                            <h2 class="section-title">
-                                <span class="title-number">03</span>
-                                AI Projects
-                                <div class="title-line"></div>
-                            </h2>
-                            
-                            <div class="projects-grid">
-                                <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="100">
-                                    <div class="project-icon">🎥</div>
-                                    <div class="project-title holographic-text">DeepTube</div>
-                                    <div class="project-description">
-                                        AI-powered YouTube analysis platform providing video summaries, transcriptions, content ideation, and analytical insights for rapid content consumption.
-                                    </div>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag pulse-tag">OpenAI</span>
-                                        <span class="tech-tag pulse-tag">React</span>
-                                        <span class="tech-tag pulse-tag">LangChain</span>
-                                    </div>
-                                    <div class="project-glow"></div>
-                                </div>
-
-                                <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="200">
-                                    <div class="project-icon">🤝</div>
-                                    <div class="project-title holographic-text">Meeting Intelligence Agent</div>
-                                    <div class="project-description">
-                                        Smart meeting assistant with real-time transcription, searchable archives, and intelligent Q&A capabilities for previous meetings.
-                                    </div>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag pulse-tag">Claude API</span>
-                                        <span class="tech-tag pulse-tag">Speech-to-Text</span>
-                                        <span class="tech-tag pulse-tag">Vector DB</span>
-                                    </div>
-                                    <div class="project-glow"></div>
-                                </div>
-
-                                <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="300">
-                                    <div class="project-icon">🎙️</div>
-                                    <div class="project-title holographic-text">Voice Prompt Application</div>
-                                    <div class="project-description">
-                                        Voice-to-prompt conversion system eliminating typing barriers, enabling natural voice interactions with AI systems.
-                                    </div>
-                                    <div class="tech-tags">
-                                        <span class="tech-tag pulse-tag">Gemini</span>
-                                        <span class="tech-tag pulse-tag">Speech API</span>
-                                        <span class="tech-tag pulse-tag">Real-time</span>
-                                    </div>
-                                    <div class="project-glow"></div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="section background-section">
                             <h2 class="section-title">
@@ -355,6 +310,84 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="right-column" data-aos="fade-up" data-aos-delay="400">
+                        <div class="section projects-section">
+                            <h2 class="section-title">
+                                <span class="title-number">03</span>
+                                AI Projects
+                                <div class="title-line"></div>
+                            </h2>
+                            
+                            <div class="projects-grid">
+                                <a href="../deeptube/" target="_blank" class="project-link">
+                                    <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="100">
+                                        <div class="project-icon">🎥</div>
+                                        <div class="project-title holographic-text">DeepTube</div>
+                                        <div class="project-description">
+                                            AI-powered YouTube analysis platform providing video summaries, transcriptions, content ideation, and analytical insights for rapid content consumption.
+                                        </div>
+                                        <div class="tech-tags">
+                                            <span class="tech-tag pulse-tag">OpenAI</span>
+                                            <span class="tech-tag pulse-tag">React</span>
+                                            <span class="tech-tag pulse-tag">LangChain</span>
+                                        </div>
+                                        <div class="project-glow"></div>
+                                    </div>
+                                </a>
+
+                                <a href="../meeting-agent/" target="_blank" class="project-link">
+                                    <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="200">
+                                        <div class="project-icon">🤝</div>
+                                        <div class="project-title holographic-text">Meeting Agent</div>
+                                        <div class="project-description">
+                                            Smart meeting assistant with real-time transcription, searchable archives, and intelligent Q&A capabilities for previous meetings.
+                                        </div>
+                                        <div class="tech-tags">
+                                            <span class="tech-tag pulse-tag">Claude API</span>
+                                            <span class="tech-tag pulse-tag">Speech-to-Text</span>
+                                            <span class="tech-tag pulse-tag">Vector DB</span>
+                                        </div>
+                                        <div class="project-glow"></div>
+                                    </div>
+                                </a>
+
+                                <a href="../dictator/" target="_blank" class="project-link">
+                                    <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="300">
+                                        <div class="project-icon">🎙️</div>
+                                        <div class="project-title holographic-text">Dictator</div>
+                                        <div class="project-description">
+                                            Voice-to-prompt conversion system eliminating typing barriers, enabling natural voice interactions with AI systems.
+                                        </div>
+                                        <div class="tech-tags">
+                                            <span class="tech-tag pulse-tag">Gemini</span>
+                                            <span class="tech-tag pulse-tag">Speech API</span>
+                                            <span class="tech-tag pulse-tag">Real-time</span>
+                                        </div>
+                                        <div class="project-glow"></div>
+                                    </div>
+                                </a>
+
+                                <a href="../osee/" target="_blank" class="project-link">
+                                    <div class="project-item floating-card" data-aos="flip-up" data-aos-delay="400">
+                                        <div class="project-icon">🖼️</div>
+                                        <div class="project-title holographic-text">Osee</div>
+                                        <div class="project-description">
+                                            A powerful tool for analyzing images with multimodal AI, allowing users to upload multiple images and ask questions about them.
+                                        </div>
+                                        <div class="tech-tags">
+                                            <span class="tech-tag pulse-tag">Gemini Pro Vision</span>
+                                            <span class="tech-tag pulse-tag">React</span>
+                                            <span class="tech-tag pulse-tag">TypeScript</span>
+                                        </div>
+                                        <div class="project-glow"></div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        
+                    </div>
                 </div>
             </div>
         </div>
@@ -374,6 +407,12 @@
     <!-- Cursor Trail -->
     <div id="cursor-trail"></div>
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/TextPlugin.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/particles.js/2.0.0/particles.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
+    <script src="script.js" defer></script>
 </body>
 </html>

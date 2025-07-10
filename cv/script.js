@@ -19,8 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
     initScrollAnimations();
     loadProfilePhoto();
     
-    // Start loading sequence
-    simulateLoading();
+    // Start loading sequence when the window is fully loaded
+    window.addEventListener('load', () => {
+        finishLoading();
+    });
 });
 
 // Loading Screen Animation
@@ -29,30 +31,29 @@ function initLoadingScreen() {
     const loadingProgress = document.querySelector('.loading-progress');
     
     gsap.set(loadingProgress, { width: '0%' });
-}
 
-function simulateLoading() {
-    const loadingProgress = document.querySelector('.loading-progress');
-    const loadingScreen = document.getElementById('loading-screen');
-    
+    // Animate the loading bar
     gsap.to(loadingProgress, {
         width: '100%',
-        duration: 3,
+        duration: 1.5,
+        ease: 'power1.inOut',
+        repeat: -1,
+        yoyo: true
+    });
+}
+
+function finishLoading() {
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    gsap.to(loadingScreen, {
+        opacity: 0,
+        duration: 0.5,
         ease: 'power2.inOut',
         onComplete: () => {
-            setTimeout(() => {
-                gsap.to(loadingScreen, {
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'power2.inOut',
-                    onComplete: () => {
-                        loadingScreen.style.display = 'none';
-                        document.body.classList.remove('loading');
-                        isLoading = false;
-                        startMainAnimations();
-                    }
-                });
-            }, 500);
+            loadingScreen.style.display = 'none';
+            document.body.classList.remove('loading');
+            isLoading = false;
+            startMainAnimations();
         }
     });
 }
@@ -418,16 +419,16 @@ function initScrollAnimations() {
     
     // Projects animation
     gsap.fromTo('.floating-card', {
-        y: 100,
-        rotation: 10,
+        y: 50,
+        rotation: 0,
         opacity: 0
     }, {
         y: 0,
         rotation: 0,
         opacity: 1,
-        duration: 1,
+        duration: 0.8,
         stagger: 0.2,
-        ease: 'elastic.out(1, 0.5)',
+        ease: 'power2.out',
         scrollTrigger: {
             trigger: '.projects-section',
             start: 'top 80%'
@@ -576,7 +577,7 @@ function initInteractiveElements() {
         card.addEventListener('mouseenter', () => {
             gsap.to(card, {
                 scale: 1.02,
-                rotationX: 5,
+                y: -5,
                 duration: 0.3,
                 ease: 'power2.out'
             });
@@ -585,7 +586,7 @@ function initInteractiveElements() {
         card.addEventListener('mouseleave', () => {
             gsap.to(card, {
                 scale: 1,
-                rotationX: 0,
+                y: 0,
                 duration: 0.3,
                 ease: 'power2.out'
             });
@@ -670,67 +671,50 @@ function loadProfilePhoto() {
 
 // Download PDF function
 function downloadPDF() {
-    // Create loading animation
     const button = document.querySelector('.futuristic-button');
-    const originalText = button.innerHTML;
-    
-    button.innerHTML = '<span>Generating PDF...</span>';
+    const originalText = button.querySelector('.download-text').textContent;
+    const buttonIcon = button.querySelector('.download-icon');
+
+    button.querySelector('.download-text').textContent = 'Generating...';
+    button.disabled = true;
     gsap.to(button, { scale: 0.95, duration: 0.1 });
-    
-    // Hide elements for print
-    const elementsToHide = [
-        '#three-canvas',
-        '#particles-background',
-        '#mouse-follower',
-        '#cursor-trail',
-        '.download-section'
-    ];
-    
-    elementsToHide.forEach(selector => {
-        const element = document.querySelector(selector);
-        if (element) element.style.display = 'none';
-    });
-    
-    // Add print styles
-    const printStyles = document.createElement('style');
-    printStyles.innerHTML = `
-        @media print {
-            body { 
-                background: white !important; 
-                color: black !important;
-                transform: scale(0.8);
-                transform-origin: top left;
-            }
-            .sidebar, .glass-card, .floating-card, .neon-card {
-                background: #f8f9fa !important;
-                border: 1px solid #dee2e6 !important;
-                box-shadow: none !important;
-            }
-        }
-    `;
-    document.head.appendChild(printStyles);
-    
-    setTimeout(() => {
-        window.print();
-        
-        // Restore elements
+
+    // Element to be converted to PDF
+    const element = document.querySelector('.resume-container');
+
+    // Options for html2pdf
+    const opt = {
+        margin: [0, 0, 0, 0],
+        filename: 'Hatef_Kouzechi_CV.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { 
+            scale: 2, 
+            useCORS: true,
+            backgroundColor: null,
+            logging: false,
+        },
+        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+    };
+
+    // Use html2pdf to generate the PDF
+    html2pdf().from(element).set(opt).toPdf().get('pdf').then(function () {
+        // Restore button state
+        button.querySelector('.download-text').textContent = originalText;
+        button.disabled = false;
+        gsap.to(button, { scale: 1, duration: 0.2 });
+    }).catch((error) => {
+        console.error('Error generating PDF:', error);
+        // Restore button state on error
+        button.querySelector('.download-text').textContent = 'Error!';
         setTimeout(() => {
-            elementsToHide.forEach(selector => {
-                const element = document.querySelector(selector);
-                if (element && selector !== '.download-section') {
-                    element.style.display = 'block';
-                }
-            });
-            
-            const downloadSection = document.querySelector('.download-section');
-            if (downloadSection) downloadSection.style.display = 'block';
-            
-            document.head.removeChild(printStyles);
-            button.innerHTML = originalText;
+            button.querySelector('.download-text').textContent = originalText;
+            button.disabled = false;
             gsap.to(button, { scale: 1, duration: 0.2 });
-        }, 1000);
-    }, 500);
+        }, 2000);
+    });
 }
+
 
 // Smooth scrolling
 function initSmoothScrolling() {

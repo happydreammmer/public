@@ -1,58 +1,41 @@
-### Project Integration and Deployment Plan
+### CV Page Enhancement Plan
 
-This plan is currently **BLOCKED** by a critical deployment issue.
+This plan outlines the tasks to improve the CV page based on user feedback.
 
-#### 6. Resolve Monorepo Deployment Failure
+#### 1. Content and Information Updates
+- **Status:** `COMPLETED`
+- **Tasks:**
+  - [x] **Contact Info:** Update email, phone, and location in `cv/index.html`.
+  - [x] **Skills:** Add "Prompt Engineering" and "AI Agents" to the skills section in `cv/index.html`.
+  - [x] **AI Projects:**
+      - [x] Add project cards for `Deeptube`, `Meeting Agent`, `Dictator`, and `Osee`.
+      - [x] Link projects to their respective GitHub repositories and live demos.
 
-- **Problem:** The GitHub Actions workflow is consistently failing during the `npm ci` or `npm install` step, specifically when trying to build the `country-data` Create React App. The error is `sh: 1: react-scripts: Permission denied`, which indicates a problem with how dependencies are being installed and accessed in the CI environment.
+#### 2. UI/UX and Layout Improvements
+- **Status:** `COMPLETED`
+- **Tasks:**
+  - [x] **Reduce Animations:**
+      - [x] Tone down or remove distracting text and element animations in `cv/styles.css` and `cv/script.js` to improve readability.
+      - [x] Specifically address `glitch-text`, excessive card/icon movements.
+  - [x] **Adjust Hero Layout:** Lower the "Scroll to explore" indicator to give more space below the stats section.
+  - [x] **Rebalance Main Layout:**
+      - [x] Move the "Additional Background" section to the left column under "Education" in `cv/index.html`.
+      - [x] Ensure the two columns have a more similar height for a balanced look.
 
-- **[COMPLETED] Solution: Migrate `country-data` to Vite**
-  - **Plan:**
-    - [x] **1. Create a new Vite project for `country-data`:** Set up a new Vite project with React and TypeScript.
-    - [x] **2. Migrate existing code:** Move the existing components, data, and styles to the new Vite project structure.
-    - [x] **3. Update dependencies:** Add necessary dependencies like D3.js and Material-UI to the new `package.json`.
-    - [x] **4. Configure Vite:** Set up the `vite.config.ts` file with the correct base path for GitHub Pages deployment.
-    - [x] **5. Test locally:** Ensure the application runs correctly in the local development environment.
-    - [x] **6. Update the root `package.json`:** Add a script to build the new Vite-based `country-data` project.
-    - [x] **7. Update the CI/CD workflow:** Modify the GitHub Actions workflow to build the new Vite project instead of the old Create React App.
+#### 3. PDF Generation Overhaul
+- **Status:** `COMPLETED`
+- **Tasks:**
+  - [x] **Integrate PDF Library:** Add `html2pdf.js` (or a similar library) to `cv/index.html`.
+  - [x] **Refactor Download Function:** Rewrite the `downloadPDF` function in `cv/script.js` to use the new library.
+  - [x] **Create Print-Friendly Styles:**
+      - [x] Design a clean, professional CSS style for the PDF output.
+      - [x] This style should prioritize content and readability over complex animations and backgrounds.
+      - [x] Ensure the PDF layout is well-structured and visually appealing.
+  - [x] **Test PDF Export:** Thoroughly test the PDF export functionality to ensure a high-quality output.
 
-- **[COMPLETED] Solution: Fix `deploy.yml` mkdir issue**
-  - **Plan:**
-    - [x] **1. Create a new Vite project for `country-data`:** Set up a new Vite project with React and TypeScript.
-
-- **Possible Solutions to Investigate (Archived - No Longer Relevant):**
-  - **2. Regenerate `package-lock.json`:** The lockfile is clearly corrupted or incomplete. The next step must be to regenerate it from a clean state locally and commit the updated version.
-  - **3. Node.js Version:** The build log shows a warning (`EBADENGINE`) that `@google/genai` requires Node.js `v20.0.0` or higher, but the workflow is using `v18`. This mismatch could be a contributing factor.
-  - **4. Caching Issues:** The npm cache in the GitHub Actions runner might be corrupted. Clearing the cache before installation could resolve the issue.
-  - **5. Monorepo Dependency Hoisting:** The use of `shamefully-hoist=true` in `.npmrc`, while sometimes necessary, can create complex and fragile dependency trees. A more structured approach to managing workspace dependencies might be required.
-  - **6. Handle optional dependencies for Rollup:** The error points to a missing optional native module for Rollup on Linux. Try running npm install --force in the workflow or specifically for deeptube to ensure optional deps are installed.
-  - **7. Switch from npm ci to npm install in CI:** npm ci may skip optional deps due to lockfile strictness; using npm install could resolve it.
-  - **8. Platform-specific fixes:** Since this occurs on Ubuntu runner, test with a different runner OS or add steps to install missing system dependencies for native modules.
-
-#### 1. API Key Integration & UI/UX Enhancements (Completed)
-- [x] **Project: `deeptube`**
-- [x] **Project: `dictator`**
-- [x] **Project: `meeting-agent`**
-- [x] **Project: `osee`**
-
-#### 2. Refactor `meeting-agent` Project (Completed)
-- [x] Reorganized file structure.
-- [x] Converted `app.ts` to a functional React component.
-- [x] Broke down the UI into smaller components.
-- [x] Managed state using React hooks.
-- [x] Fixed `package.json` dependencies.
-
-#### 3. GitHub Pages Deployment Preparation (Blocked)
-- **Project: `deeptube`**
-- **Project: `dictator`**
-- **Project: `meeting-agent`**
-- **Project: `osee`**
-
-#### 4. Update Main Portfolio Page (Blocked)
-- [ ] Add project cards for new projects.
-- [ ] Ensure links point to deployed URLs.
-
-#### 5. Final Review (Blocked)
-- [ ] Test all deployed applications.
-- [ ] Verify all links on the main portfolio page.
-- [ ] Commit all changes.
+#### 4. Final Review
+- **Status:** `COMPLETED`
+- **Tasks:**
+  - [x] Review all implemented changes on the webpage.
+  - [x] Verify that all content is correct and links are working.
+  - [x] Commit the final, polished version.

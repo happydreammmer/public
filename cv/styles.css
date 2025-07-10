@@ -18,6 +18,22 @@
     --text-accent: #a0aec0;
 }
 
+.noscript-fallback {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #0c0c0c;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 10001;
+}
+
 html {
     scroll-behavior: smooth;
     overflow-x: hidden;
@@ -265,7 +281,7 @@ body {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: nameGlow 3s ease-in-out infinite alternate;
+    /* animation: nameGlow 3s ease-in-out infinite alternate; */
 }
 
 .hero-title {
@@ -317,17 +333,17 @@ body {
 
 .hero-scroll-indicator {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
     color: var(--text-accent);
-    animation: bounce 2s infinite;
+    animation: bounce 2.5s infinite;
 }
 
 .scroll-mouse {
-    width: 30px;
-    height: 50px;
+    width: 25px;
+    height: 45px;
     border: 2px solid var(--text-accent);
     border-radius: 15px;
     margin: 0 auto 10px;
@@ -699,7 +715,7 @@ body {
 
 .glitch-text {
     position: relative;
-    animation: glitchText 4s infinite;
+    animation: glitchText 8s infinite steps(1);
 }
 
 .company {
@@ -754,6 +770,12 @@ body {
     gap: 30px;
 }
 
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 .floating-card {
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(20px);
@@ -763,19 +785,19 @@ body {
     position: relative;
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    animation: cardFloat 6s ease-in-out infinite;
+    /* animation: cardFloat 6s ease-in-out infinite; */
 }
 
 .floating-card:hover {
-    transform: translateY(-15px) rotateX(5deg);
+    transform: translateY(-10px);
     box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 
 .project-icon {
-    font-size: 3rem;
+    font-size: 2.5rem;
     margin-bottom: 20px;
-    filter: drop-shadow(0 0 20px currentColor);
-    animation: iconSpin 10s linear infinite;
+    filter: drop-shadow(0 0 15px currentColor);
+    /* animation: iconSpin 10s linear infinite; */
 }
 
 .holographic-text {
@@ -979,11 +1001,13 @@ body {
 }
 
 @keyframes glitchText {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-2px); }
-    40% { transform: translateX(2px); }
-    60% { transform: translateX(-1px); }
-    80% { transform: translateX(1px); }
+    0% { transform: translateX(0); }
+    95% { transform: translateX(0); }
+    96% { transform: translateX(-3px); }
+    97% { transform: translateX(3px); }
+    98% { transform: translateX(-2px); }
+    99% { transform: translateX(2px); }
+    100% { transform: translateX(0); }
 }
 
 @keyframes badgeFloat {
@@ -991,15 +1015,15 @@ body {
     50% { transform: translateY(-3px); }
 }
 
-@keyframes cardFloat {
+/* @keyframes cardFloat {
     0%, 100% { transform: translateY(0px); }
     50% { transform: translateY(-10px); }
-}
+} */
 
-@keyframes iconSpin {
+/* @keyframes iconSpin {
     0% { transform: rotateY(0deg); }
     100% { transform: rotateY(360deg); }
-}
+} */
 
 @keyframes holographicShift {
     0%, 100% { background-position: 0% 50%; }
@@ -1164,41 +1188,117 @@ body {
     }
 }
 
-/* Print Styles */
+/* Print Styles for PDF Generation */
 @media print {
-    body {
-        background: white !important;
-        color: black !important;
+    html, body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
     }
-    
-    #loading-screen,
+
+    .resume-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        border: none;
+    }
+
     #three-canvas,
     #particles-background,
     #mouse-follower,
     #cursor-trail,
-    .download-section {
+    .download-section,
+    .hero-scroll-indicator {
         display: none !important;
     }
-    
-    .resume-container {
-        background: white !important;
-    }
-    
-    .sidebar,
-    .glass-card,
-    .floating-card,
-    .neon-card {
-        background: #f8f9fa !important;
-        border: 1px solid #dee2e6 !important;
-        box-shadow: none !important;
-    }
-    
+
     .hero-section {
-        height: auto !important;
+        height: auto;
+        padding: 40px 20px;
+        background: #f8f9fa;
+        text-align: center;
         page-break-after: always;
+    }
+
+    .hero-content {
+        flex-direction: column;
+    }
+
+    .hero-name, .hero-title, .hero-description {
+        color: #212529 !important;
+    }
+
+    .name-part {
+        background: none;
+        -webkit-text-fill-color: initial;
+    }
+
+    .stat-number {
+        color: #0d6efd !important;
+    }
+
+    .stat-label {
+        color: #6c757d !important;
+    }
+
+    .main-container {
+        display: block !important;
+        padding: 20px;
+    }
+
+    .sidebar {
+        position: static !important;
+        width: 100%;
+        box-shadow: none;
+        background: transparent !important;
+        border: 1px solid #dee2e6;
+        margin-bottom: 20px;
+        padding: 20px;
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .left-column, .right-column {
+        padding: 0;
     }
     
     .section {
-        break-inside: avoid;
+        page-break-inside: avoid;
+    }
+
+    .glass-card, .floating-card, .neon-card {
+        background: #f8f9fa !important;
+        border: 1px solid #dee2e6 !important;
+        box-shadow: none !important;
+        backdrop-filter: none;
+    }
+
+    .glitch-text, .holographic-text {
+        color: #212529 !important;
+        -webkit-text-fill-color: initial;
+        background: none;
+    }
+
+    .company {
+        color: #0d6efd !important;
+    }
+
+    .floating-badge {
+        background: #0d6efd !important;
+        color: #ffffff !important;
+    }
+    
+    .tech-chip {
+        background: #e9ecef !important;
+        color: #212529 !important;
+    }
+
+    .pulse-tag {
+        animation: none;
     }
 } 
