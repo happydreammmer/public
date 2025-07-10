@@ -27,7 +27,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
                 <li key={country.name}>
                   <span className="list-rank">#{index + 1}</span>
                   <span className="list-name">{country.name}</span>
-                  <span className="list-value">${country.gdp_per_capita.toLocaleString()}</span>
+                  <span className="list-value">{typeof country.gdp_per_capita === 'number' ? `$${country.gdp_per_capita.toLocaleString()}` : 'N/A'}</span>
                 </li>
               ))}
             </ul>
@@ -39,7 +39,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
                 <li key={country.name}>
                   <span className="list-rank">#{index + 1}</span>
                   <span className="list-name">{country.name}</span>
-                  <span className="list-value">{country.freedom_index.toFixed(1)}</span>
+                  <span className="list-value">{typeof country.freedom_index === 'number' ? country.freedom_index.toFixed(1) : 'N/A'}</span>
                 </li>
               ))}
             </ul>
@@ -51,7 +51,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
                 <li key={country.name}>
                   <span className="list-rank">#{index + 1}</span>
                   <span className="list-name">{country.name}</span>
-                  <span className="list-value">{(country.population / 1_000_000).toFixed(1)}M</span>
+                  <span className="list-value">{typeof country.population === 'number' ? (country.population / 1_000_000).toFixed(1) + 'M' : 'N/A'}</span>
                 </li>
               ))}
             </ul>
