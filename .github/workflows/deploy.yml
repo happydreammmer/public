@@ -32,9 +32,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          find . -name "package-lock.json" -delete
-          npm install
+        run: npm ci
 
       - name: Build all projects
         run: npm run build
