@@ -3,27 +3,26 @@
  * SPDX-License-Identifier: Apache-2.0
 */
 /* tslint:disable */
-import { GoogleGenerativeAI, ChatSession, Content } from '@google/generative-ai';
+import { GoogleGenAI, Chat, GenerateContentResponse } from '@google/genai';
 import { MODEL_NAME } from '../config/constants';
 
-let genAI: GoogleGenerativeAI;
+let genAI: GoogleGenAI;
 
 export const updateApiKey = (key: string) => {
-  genAI = new GoogleGenerativeAI(key);
+  genAI = new GoogleGenAI({ apiKey: key });
 };
 
-const generateContent = async (contents: Content[], config?: any): Promise<string | null> => {
+const generateContent = async (contents: any[], config?: any): Promise<string | null> => {
   if (!genAI) {
     throw new Error('API key not set.');
   }
   try {
-    const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-    const result = await model.generateContent({
-      contents,
-      generationConfig: config,
+    const response: GenerateContentResponse = await genAI.models.generateContent({
+      model: MODEL_NAME,
+      contents: contents,
+      config: config,
     });
-    const response = await result.response;
-    const text = response.text();
+    const text = response.text;
     return text && text.trim() !== '' ? text : null;
   } catch (error) {
     console.error('Error generating content:', error);
@@ -42,52 +41,55 @@ const cleanJsonString = (jsonStr: string): string => {
 };
 
 export const generateTranscription = async (base64Audio: string, mimeType: string, promptTemplate: string): Promise<string | null> => {
-  const contents: Content[] = [
-    {role: "user", parts: [
-        {text: promptTemplate},
-        {inlineData: {mimeType: mimeType, data: base64Audio}},
-    ]},
+  const contents = [
+    { text: promptTemplate },
+    { inlineData: { mimeType: mimeType, data: base64Audio } },
   ];
   return generateContent(contents);
 };
 
 export const generateSummary = async (transcriptionText: string, promptTemplate: string): Promise<string | null> => {
   const prompt = promptTemplate.replace('${transcriptionText}', transcriptionText);
-  const contents: Content[] = [{role: "user", parts: [{text: prompt}]}];
+  const contents = [{ text: prompt }];
   return generateContent(contents);
 };
 
 export const generateActionItems = async (transcriptionText: string, promptTemplate: string): Promise<string | null> => {
   const prompt = promptTemplate.replace('${transcriptionText}', transcriptionText);
-  const contents: Content[] = [{role: "user", parts: [{text: prompt}]}];
+  const contents = [{ text: prompt }];
   const responseText = await generateContent(contents, { responseMimeType: "application/json" });
   return responseText ? cleanJsonString(responseText) : null;
 };
 
 export const generateSentimentAnalysis = async (transcriptionText: string, promptTemplate: string): Promise<string | null> => {
   const prompt = promptTemplate.replace('${transcriptionText}', transcriptionText);
-  const contents: Content[] = [{role: "user", parts: [{text: prompt}]}];
+  const contents = [{ text: prompt }];
   return generateContent(contents);
 };
 
-export const createChatSession = (systemInstructionText: string, initialModelResponseText: string): ChatSession => {
+export const createChatSession = (systemInstructionText: string, initialModelResponseText: string): Chat => {
   if (!genAI) {
     throw new Error('API key not set.');
   }
-  const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-  const history: Content[] = [
+  const history = [
     { role: "user", parts: [{ text: systemInstructionText }] },
     { role: "model", parts: [{ text: initialModelResponseText }] }
   ];
-  return model.startChat({ history });
+  return genAI.chats.create({
+    model: MODEL_NAME,
+    config: {},
+    history: history,
+  });
 };
 
-export async function* sendChatMessageStream(chat: ChatSession, message: string): AsyncGenerator<string, void, undefined> {
+export async function* sendChatMessageStream(chat: Chat, message: string): AsyncGenerator<string, void, undefined> {
   try {
-    const result = await chat.sendMessageStream(message);
-    for await (const chunk of result.stream) {
-      const chunkText = await chunk.text();
-      yield chunkText;
+    const result = await chat.sendMessageStream({ message });
+    for await (const chunk of result) {
+      const chunkText = chunk.text || '';
+      if (chunkText) {
+        yield chunkText;
+      }
     }
   } catch (error) {
     console.error('Error sending chat message stream:', error);
