@@ -1,9 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Voice Prompt App</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dictator - Voice Notes App</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -11,132 +11,19 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="./styles.css" />
-    <script type="importmap">
-      {
-        "imports": {
-          "@google/genai": "https://esm.sh/@google/genai@^0.8.0",
-          "marked": "https://esm.sh/marked@^4.0.0"
-        }
-      }
-    </script>
-  </head>
-  <body>
-    <div id="api-key-container">
-      <h1>Enter Gemini API Key</h1>
-      <p>To use this application, please enter your Google Gemini API key.</p>
-      <input type="password" id="api-key-input" placeholder="Enter your API key">
-      <button id="save-api-key">Save Key</button>
-    </div>
-
-    <div id="app-container" style="display: none;">
-      <header class="main-header">
-        <div class="logo-container">
-          <h1>Dictator</h1>
-        </div>
-        <div class="controls-container">
-          <button id="clear-api-key" class="header-button">Clear API Key</button>
-          <button id="themeToggleBtn" class="header-button" aria-label="Toggle Theme">
-            <i class="fas fa-sun"></i>
-          </button>
-          <button id="settingsButton" class="header-button" aria-label="Settings">
-            <i class="fas fa-cog"></i>
-          </button>
-          <button id="historyToggleBtn" class="header-button" aria-label="Toggle History">
-            <i class="fas fa-history"></i>
-          </button>
-        </div>
-      </header>
-      <main class="main-content">
-        <div class="editor-view">
-          <div class="editor-header">
-            <div contenteditable="true" class="editor-title" id="editorTitle"
-              placeholder="Your note's title will appear here...">
-            </div>
-          </div>
-          <div class="cards-container">
-            <div class="card" id="rawTranscriptionCard">
-              <div class="card-header">
-                <h2><i class="fas fa-closed-captioning"></i> Raw Transcription</h2>
-                <div class="card-actions">
-                  <button class="card-action-btn" id="copyRawBtn" aria-label="Copy Transcription"><i
-                      class="fas fa-copy"></i></button>
-                  <button class="card-action-btn" id="downloadRawBtn" aria-label="Download Transcription"><i
-                      class="fas fa-download"></i></button>
-                </div>
-              </div>
-              <div class="card-content" id="rawTranscription" contenteditable="true"
-                placeholder="Your live transcription will appear here after you finish recording...">
-              </div>
-            </div>
-            <div class="card" id="promptResponseCard">
-              <div class="card-header">
-                <h2><i class="fas fa-magic"></i> AI-Enhanced Response</h2>
-                <div class="card-actions">
-                  <button class="card-action-btn" id="copyPromptBtn" aria-label="Copy Response"><i
-                      class="fas fa-copy"></i></button>
-                  <button class="card-action-btn" id="downloadPromptBtn" aria-label="Download Response"><i
-                      class="fas fa-download"></i></button>
-                </div>
-              </div>
-              <div class="card-content" id="promptOutput" contenteditable="true"
-                placeholder="The AI's response to your prompt will appear here...">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="recording-controls-container">
-          <div class="recording-interface-wrapper">
-            <div class="recording-interface">
-              <div class="status-indicator"></div>
-              <h3 id="liveRecordingTitle" class="live-recording-title"></h3>
-              <canvas id="liveWaveformCanvas" class="live-waveform"></canvas>
-              <p id="liveRecordingTimerDisplay" class="live-timer-display"></p>
-            </div>
-          </div>
-          <div id="recordingStatus">Ready to record or upload audio</div>
-          <div id="audioPlayerContainer" style="display: none;">
-            <audio id="audioPlaybackElement" controls></audio>
-          </div>
-          <div class="main-action-buttons">
-            <button id="recordButton" class="record-button" aria-label="Start Recording">
-              <i class="fas fa-microphone"></i>
-            </button>
-            <button id="newButton" class="control-button" aria-label="New Note"><i class="fas fa-plus"></i></button>
-            <button id="uploadButton" class="control-button" aria-label="Upload Audio File"><i
-                class="fas fa-upload"></i></button>
-            <input type="file" id="audioFileInput" accept="audio/*" style="display: none;">
-            <button id="downloadBothBtn" class="control-button" aria-label="Download Both Outputs"><i
-                class="fas fa-file-archive"></i></button>
-          </div>
-        </div>
-      </main>
-    </div>
-
-    <aside id="historySidebar" class="history-sidebar">
-      <h2><i class="fas fa-history"></i> Note History</h2>
-      <ul id="historyList" class="history-list"></ul>
-    </aside>
-
-    <div id="settingsModal" class="modal" style="display: none;">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2><i class="fas fa-cog"></i> Application Settings</h2>
-          <button id="closeSettingsBtn" class="close-button">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="setting-item">
-            <label for="customSystemInstruction">Custom System Instruction:</label>
-            <textarea id="customSystemInstruction"
-              placeholder="e.g., You are a helpful assistant that summarizes technical documents."></textarea>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button id="saveSettingsBtn" class="button-primary">Save Settings</button>
-        </div>
-      </div>
-    </div>
-
-    <script type="module" src="./app.js"></script>
-  </body>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://esm.sh/@google/genai@^1.4.0",
+    "react/": "https://esm.sh/react@^19.1.0/",
+    "react": "https://esm.sh/react@^19.1.0",
+    "react-dom/": "https://esm.sh/react-dom@^19.1.0/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="module" src="./index.tsx"></script>
+</body>
 </html>

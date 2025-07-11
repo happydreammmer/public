@@ -39,8 +39,8 @@ jobs:
 
       - name: Clear build directories
         run: |
-          rm -rf deeptube/build osee/build country-data/build
-          rm -rf deeptube/dist osee/dist country-data/dist
+          rm -rf deeptube/build osee/build country-data/build dictator/build meeting-agent/build
+          rm -rf deeptube/dist osee/dist country-data/dist dictator/dist meeting-agent/dist
           rm -rf */node_modules/.vite
           ls -la */build || echo "No build directories found"
 
@@ -48,10 +48,12 @@ jobs:
         run: |
           echo "Building with vite configs..."
           grep -r "base:" */vite.config.ts || echo "No base configs found"
-          # Build only vite projects (excluding dictator and meeting-agent which are now static)
+          # Build all vite projects
           npm run build:deeptube
           npm run build:osee
           npm run build:country-data
+          npm run build:dictator
+          npm run build:meeting-agent
           
       - name: Verify build outputs
         run: |
@@ -73,8 +75,8 @@ jobs:
           mkdir -p public/event-hunter
           mkdir -p public/israel-iran-war
           cp -r deeptube/build/. public/deeptube/
-          cp dictator/index.html dictator/app.js dictator/styles.css public/dictator/
-          cp meeting-agent/index.html meeting-agent/app.js meeting-agent/styles.css public/meeting-agent/
+          cp -r dictator/build/. public/dictator/
+          cp -r meeting-agent/build/. public/meeting-agent/
           cp -r osee/build/. public/osee/
           cp -r country-data/build/. public/country-data/
           cp -r country-data/public/data/* public/country-data/data/

@@ -262,19 +262,19 @@ const App: React.FC = () => {
   }
 
   return (
-    <div className="h-full flex flex-col bg-slate-900">
+    <div className="h-full flex flex-col bg-slate-900 overflow-hidden">
       <Header />
-      <div className="p-4 bg-slate-800 border-b border-slate-700 flex justify-between items-center">
-        <span className="text-sm text-slate-300">API Key is set.</span>
-        <button onClick={handleClearApiKey} className="px-4 py-1.5 text-xs bg-red-600 rounded-md hover:bg-red-700 transition-colors">
+      <div className="p-3 sm:p-4 bg-slate-800 border-b border-slate-700 flex justify-between items-center">
+        <span className="text-xs sm:text-sm text-slate-300">API Key is set.</span>
+        <button onClick={handleClearApiKey} className="px-3 sm:px-4 py-1 sm:py-1.5 text-xs bg-red-600 rounded-md hover:bg-red-700 transition-colors">
           Clear API Key
         </button>
       </div>
       <ErrorMessage message={appError} onDismiss={dismissAppError} />
 
-      <main className="flex-grow flex flex-col md:flex-row overflow-hidden p-4 sm:p-6 gap-6">
-        <div className="md:w-2/5 lg:w-1/3 flex flex-col h-full md:pr-3">
-          <div className="bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50 flex flex-col h-full p-6 space-y-4">
+      <main className="flex-grow flex flex-col md:flex-row overflow-hidden p-4 sm:p-6 gap-4 md:gap-6">
+        <div className="md:w-2/5 lg:w-1/3 flex flex-col md:h-full md:pr-3">
+          <div className="bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50 flex flex-col md:h-full p-4 sm:p-6 space-y-3 sm:space-y-4">
             <section className="space-y-4 flex-shrink-0">
               <div className="text-left">
                 <h2 className="text-xl font-semibold text-slate-100">Upload Documents</h2>
@@ -292,7 +292,7 @@ const App: React.FC = () => {
             {files.length > 0 && (
               <FileQueueDisplay
                 files={files}
-                className="flex-grow overflow-y-auto custom-scrollbar min-h-[100px]"
+                className="flex-grow overflow-y-auto custom-scrollbar min-h-[100px] md:max-h-none"
               />
             )}
 
@@ -313,26 +313,26 @@ const App: React.FC = () => {
           </div>
         </div>
 
-        <div className="md:w-3/5 lg:w-2/3 flex flex-col custom-scrollbar overflow-y-auto md:pl-3 h-full gap-6 pb-2">
+        <div className="md:w-3/5 lg:w-2/3 flex flex-col custom-scrollbar overflow-y-auto md:pl-3 md:h-full gap-4 md:gap-6 pb-2">
           {(!overallLoading && displayableFiles.length === 0 && files.length === 0) && ( // Initial state
-            <section className="w-full h-full flex flex-col items-center justify-center text-center p-6 bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-20 h-20 text-slate-500 mb-6">
+            <section className="w-full md:h-full min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center text-center p-4 sm:p-6 bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 sm:w-20 sm:h-20 text-slate-500 mb-4 sm:mb-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
               </svg>
-              <h3 className="text-xl font-semibold text-slate-200">Results Area</h3>
-              <p className="text-slate-400 mt-2 max-w-md">
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-200">Results Area</h3>
+              <p className="text-slate-400 mt-2 max-w-md text-sm sm:text-base">
                 Upload files using the panel on the left to see extracted text results here.
               </p>
             </section>
           )}
 
           {(isQueueProcessing || (hasPendingFiles && displayableFiles.length === 0)) && files.length > 0 && ( // Loading state
-            <section className="w-full h-full flex flex-col items-center justify-center text-center p-6 bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50">
+            <section className="w-full md:h-full min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center text-center p-4 sm:p-6 bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50">
               <LoadingSpinner />
-              <p className="text-lg font-medium text-blue-400 mt-4">
+              <p className="text-base sm:text-lg font-medium text-blue-400 mt-4">
                 {isQueueProcessing ? `Processing file ${files.find(f => f.status === 'processing')?.file.name || ''}...` : `Initializing queue...`}
               </p>
-              <p className="text-md text-slate-300 mt-1">{files.filter(f => f.status === 'pending' && f.file.size > 0).length} file(s) pending.</p>
+              <p className="text-sm sm:text-md text-slate-300 mt-1">{files.filter(f => f.status === 'pending' && f.file.size > 0).length} file(s) pending.</p>
             </section>
           )}
 
@@ -351,12 +351,12 @@ const App: React.FC = () => {
           
           {/* Message for when all files processed but no actual content to show (e.g. all errors, or only pending non-processable from session) */}
           {!overallLoading && files.length > 0 && displayableFiles.length === 0 && (
-             <section className="w-full h-full flex flex-col items-center justify-center text-center p-6 bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-16 h-16 text-amber-400 mb-3">
+             <section className="w-full md:h-full min-h-[250px] sm:min-h-[300px] flex flex-col items-center justify-center text-center p-4 sm:p-6 bg-slate-800 rounded-xl shadow-xl shadow-slate-900/50">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-12 h-12 sm:w-16 sm:h-16 text-amber-400 mb-3">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
               </svg>
-              <h3 className="text-xl font-semibold text-slate-200">No Results to Display</h3>
-              <p className="text-slate-400 mt-2 max-w-md">
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-200">No Results to Display</h3>
+              <p className="text-slate-400 mt-2 max-w-md text-sm sm:text-base">
                 All items in the queue have been handled. Check individual statuses in the left panel or upload new files.
               </p>
             </section>

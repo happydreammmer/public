@@ -358,6 +358,7 @@ export default function App() {
             flex-direction: column;
             height: auto;
             overflow: visible;
+            gap: 1rem;
           }
         }
 
@@ -368,28 +369,18 @@ export default function App() {
           display: flex;
           flex-direction: column;
           gap: clamp(1rem, 2vw, 1.5rem); 
-          overflow-y: auto;
-          scrollbar-width: thin;
-          scrollbar-color: var(--color-subtitle) var(--color-background);
+          overflow: hidden;
 
           @media (max-width: 900px) { 
             width: 100%;
             height: auto; 
             overflow: visible; 
             min-width: unset;
+            gap: 1rem;
           }
         }
 
-        .left-side::-webkit-scrollbar {
-          width: 8px;
-        }
-        .left-side::-webkit-scrollbar-track {
-          background: var(--color-background);
-        }
-        .left-side::-webkit-scrollbar-thumb {
-          background-color: var(--color-subtitle) ;
-          border-radius: 4px;
-        }
+
 
         .right-side {
           display: flex;
@@ -411,7 +402,7 @@ export default function App() {
         .headline {
           color: var(--color-headline);
           font-family: var(--font-display);
-          font-size: clamp(2rem, 5vw, 3.25rem); 
+          font-size: clamp(1.5rem, 4vw, 2.5rem); 
           font-weight: 400;
           line-height: 1.1;
           margin-top: 0.5rem;
@@ -419,14 +410,17 @@ export default function App() {
           text-align: center;
           text-transform: uppercase;
           letter-spacing: 1px; 
+          flex-shrink: 0;
 
           @media (max-width: 768px) {
             margin-top: 0;
+            font-size: clamp(1.25rem, 3vw, 2rem);
           }
         }
 
         .input-container {
           width: 100%;
+          flex-shrink: 0;
         }
 
         .input-label {
@@ -439,13 +433,15 @@ export default function App() {
         .youtube-input {
           width: 100%;
           font-size: clamp(0.9rem, 1.8vw, 1rem); 
-          min-height: 60px; 
+          min-height: 50px; 
+          max-height: 80px;
         }
 
         .button-container {
           width: 100%;
           display: flex;
           gap: 0.5rem;
+          flex-shrink: 0;
         }
 
         .submit-button {
@@ -464,9 +460,15 @@ export default function App() {
           width: 100%;
           border: 1px solid var(--color-component-border);
           overflow: hidden; 
-          flex-grow: 1; 
+          flex: 1 1 auto;
           min-height: 0; 
+          max-height: calc(100vh - 400px);
           box-sizing: border-box;
+
+          @media (max-width: 900px) {
+            max-height: 300px;
+            min-height: 200px;
+          }
         }
 
         .video-iframe {

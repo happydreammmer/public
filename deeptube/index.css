@@ -29,6 +29,8 @@
   
   --color-component-background: #112240; /* Slightly lighter than main bg for components */
   --color-component-border: #1E3A5F; /* Consistent border for components */
+  --color-input-background: #112240; /* Background for input fields */
+  --color-header-background: #0E2038; /* Background for header */
 
 
   --font-display: 'Titan One', 'Audiowide', sans-serif; /* Added Audiowide as fallback */
