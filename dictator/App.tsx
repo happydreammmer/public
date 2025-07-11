@@ -646,6 +646,7 @@ export default function App() {
           align-items: center;
           height: 100vh;
           gap: 1rem;
+          background-color: var(--color-background);
         }
         
         .api-key-container input {
@@ -655,6 +656,7 @@ export default function App() {
           border: 1px solid var(--color-component-border);
           background: var(--color-component-background);
           color: var(--color-text);
+          font-size: 1rem;
         }
 
         .api-key-container button {
@@ -664,7 +666,18 @@ export default function App() {
           border: none;
           border-radius: 6px;
           cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
         }
+
+        .close-btn {
+          background: none;
+          border: none;
+          color: var(--color-subtitle);
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+
       `}</style>
     </div>
   );

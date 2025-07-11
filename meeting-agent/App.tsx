@@ -735,6 +735,38 @@ export default function App() {
           width: 90%;
           max-width: 400px;
         }
+
+        .modal-content h2 {
+          color: var(--color-headline);
+          text-align: center;
+        }
+
+        .modal-content p {
+          color: var(--color-subtitle);
+          text-align: center;
+          margin-bottom: 1rem;
+        }
+
+        .modal-content input {
+          padding: 0.75rem;
+          border-radius: 6px;
+          border: 1px solid var(--color-component-border);
+          background: var(--color-input-background);
+          color: var(--color-text);
+          font-size: 1rem;
+        }
+
+        .primary-btn {
+          padding: 0.75rem 1.5rem;
+          background: var(--color-accent);
+          color: #0A192F;
+          border: none;
+          border-radius: 6px;
+          cursor: pointer;
+          font-size: 1rem;
+          font-weight: 500;
+          text-align: center;
+        }
         
         .processing-overlay {
           position: fixed;
