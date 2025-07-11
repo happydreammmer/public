@@ -42,21 +42,21 @@ jobs:
 
       - name: Create deployment directory
         run: |
-          mkdir -p deploy
-          cp -r deeptube/build/. deploy/deeptube/
-          cp -r dictator/build/. deploy/dictator/
-          cp -r meeting-agent/build/. deploy/meeting-agent/
-          cp -r osee/build/. deploy/osee/
-          cp -r country-data/build/. deploy/country-data/
-          mkdir -p deploy/country-data/data
-          cp -r country-data/public/data/* deploy/country-data/data/
-          cp -r cv deploy/
-          cp -r business-data deploy/
-          cp -r companies-data deploy/
-          cp -r event-hunter deploy/
-          cp -r israel-iran-war deploy/
-          cp index.html deploy/
-          cp 404.html deploy/
+          mkdir -p deploy/public
+          cp -r deeptube/build/. deploy/public/deeptube/
+          cp -r dictator/build/. deploy/public/dictator/
+          cp -r meeting-agent/build/. deploy/public/meeting-agent/
+          cp -r osee/build/. deploy/public/osee/
+          cp -r country-data/build/. deploy/public/country-data/
+          mkdir -p deploy/public/country-data/data
+          cp -r country-data/public/data/* deploy/public/country-data/data/
+          cp -r cv deploy/public/
+          cp -r business-data deploy/public/
+          cp -r companies-data deploy/public/
+          cp -r event-hunter deploy/public/
+          cp -r israel-iran-war deploy/public/
+          cp index.html deploy/public/
+          cp 404.html deploy/public/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
