@@ -22,14 +22,14 @@ interface AppMetadata {
   title?: string;
 }
 
-const metadataResponse = await fetch('metadata.json');
+const metadataResponse = await fetch('./metadata.json');
 const appMetadata: AppMetadata = (await metadataResponse.json()) as AppMetadata;
 
 interface CookbookData {
   notebookCode: string;
 }
 
-const cookbookResponse = await fetch('cookbook.json');
+const cookbookResponse = await fetch('./cookbook.json');
 const cookbookMetadata: CookbookData =
   (await cookbookResponse.json()) as CookbookData;
 

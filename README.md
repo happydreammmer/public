@@ -1,381 +1,330 @@
 # 🌐 Public Directory - Portfolio Showcase
 
-A comprehensive collection of interactive web applications showcasing data visualization, business intelligence, event discovery, and strategic analysis platforms. Built with modern web technologies including React, D3.js, and responsive design principles.
+A comprehensive portfolio showcasing multiple web applications including AI-powered tools, data visualization platforms, business intelligence dashboards, and strategic analysis tools. Built with modern web technologies including React, TypeScript, Vite, and responsive design principles.
 
 ![Portfolio](https://img.shields.io/badge/Portfolio-2025-blue.svg)
-![Technologies](https://img.shields.io/badge/Tech-React%20%7C%20D3.js%20%7C%20JavaScript-brightgreen.svg) 
+![Technologies](https://img.shields.io/badge/Tech-React%20%7C%20TypeScript%20%7C%20Vite%20%7C%20D3.js-brightgreen.svg) 
 ![Mobile](https://img.shields.io/badge/Mobile-Optimized-green.svg)
 ![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Ready-purple.svg)
 
 ## 🚀 Live Demo
 
-**🔗 Main Portfolio**: [View Portfolio](./index/)
+**🔗 Main Portfolio**: [View Portfolio](./)
 
 Access all applications through the main portfolio dashboard with beautiful animations, theme switching, and mobile-optimized navigation.
 
 ## 📱 Applications Overview
 
-### 🔎 [Event Hunter 2025](./event-hunter/events-listing/)
+### 🤖 AI-Powered Applications
+
+#### 🎥 [DeepTube](./deeptube/)
+**YouTube Video Analysis Platform**
+- **AI-Powered Analysis**: Video content understanding using Google Gemini
+- **Multiple Analysis Types**: Summary, transcript, questions, and custom prompts
+- **Interactive Chat**: Ask follow-up questions about video content
+- **Example Gallery**: Pre-loaded video examples
+
+#### 👁️ [OSEE](./osee/)
+**Visual Content Analysis Tool**
+- **Multi-format Support**: Images, documents, and visual content analysis
+- **AI Integration**: Powered by Google Gemini for intelligent insights
+- **File Processing**: Drag-and-drop interface with queue management
+- **Theme Support**: Dark/light mode with modern UI
+
+#### 🎤 [Meeting Agent](./meeting-agent/)
+**Meeting Analysis & Documentation**
+- **Audio Processing**: Meeting recording analysis
+- **AI Transcription**: Automated meeting summaries
+- **Action Items**: Extract key decisions and follow-ups
+- **Modern Interface**: React-based with responsive design
+
+#### 📊 [Dictator](./dictator/)
+**Content Strategy Assistant**
+- **Content Analysis**: Strategic content recommendations
+- **AI Insights**: Data-driven decision making
+- **Interactive Dashboard**: Real-time analytics
+- **Export Features**: Multiple output formats
+
+### 📈 Data Visualization & Analytics
+
+#### 🌍 [Country Data Visualization](./country-data/)
+**Interactive Global Dashboard**
+- **195+ Countries**: Comprehensive global dataset
+- **D3.js Visualizations**: Interactive scatter plots and charts
+- **Multi-dimensional Analysis**: GDP, population, economic freedom, political systems
+- **React + TypeScript**: Modern architecture with Material-UI
+- **Real-time Filtering**: Dynamic search and filter capabilities
+
+#### 🔎 [Event Hunter](./event-hunter/)
 **Global Events Discovery Platform**
-- **200+ Events** across 6 continents for 2025
+- **200+ Events**: Comprehensive event database for 2025
 - **Multi-Industry Coverage**: Technology, Healthcare, Finance, Energy, Tourism
 - **Multi-Language Support**: English, Arabic, Persian/Farsi with RTL support
-- **Advanced Filtering**: Search by industry, country, date, and status
+- **Advanced Search**: Filter by industry, country, date, and status
 
-### 🏢 [Companies Data - UAE & Oman](./companies-data/companies-listing/)
-**B2B Sales Intelligence Platform**
-- **80+ Strategic Companies** across UAE & Oman
-- **15+ Key Sectors** including finance, energy, telecommunications
-- **AI Opportunities Mapping** for each company
-- **Interactive Search & Filtering** by sector, location, size, priority
+#### 🏢 [Companies Data](./companies-data/)
+**B2B Intelligence Platform**
+- **80+ Companies**: Strategic business database for UAE & Oman
+- **15+ Sectors**: Finance, energy, telecommunications, and more
+- **AI Opportunities**: Mapped potential for each company
+- **Interactive Filtering**: Search by sector, location, size, priority
 
-### 🌍 [Country Data Visualization](./country-data/political-system/)
-**Interactive Data Dashboard**
-- **Interactive Scatter Plot** with D3.js visualization
-- **Multi-dimensional Analysis**: GDP, population, economic freedom, political systems
-- **React-Powered** with Material-UI components
-- **Real-time Filtering** and dynamic search capabilities
+### 📊 Strategic Analysis
 
-### 🎯 [Iran-Israel Crisis Dashboard](./israel-iran-war/prediction/) **[NEW]**
-**Strategic Analysis & Game Theory Assessment**
-- **Interactive Poll System** with persistent data storage
-- **Multi-Language Support**: English, Arabic, Persian with strategic translations
-- **Game Theory Framework**: Chicken Game dynamics analysis
-- **Real-time Probability Calculator** with dynamic risk assessment
-- **Strategic Timeline** with critical decision points
+#### 🎯 [Israel-Iran Crisis Dashboard](./israel-iran-war/)
+**Strategic Analysis Platform**
+- **Game Theory Framework**: Strategic decision analysis
+- **Interactive Polling**: Community sentiment tracking
+- **Multi-Language**: English, Arabic, Persian support
+- **Real-time Data**: Dynamic probability calculations
 
-## 🛠️ Implementation Action Plan
+#### 📚 [Gemini JS SDK Documentation](./gemini-js-sdk-doc/)
+**Developer Resource Hub**
+- **SDK Examples**: Practical implementation guides
+- **Interactive Demos**: Live code examples
+- **Documentation**: Comprehensive API reference
+- **Getting Started**: Quick setup tutorials
 
-### Phase 1: Integration & Structure
-1. **Portfolio Integration**
-   - Add 4th project card to `index/index.html` with crisis-themed styling
-   - Update stats section (4 Active Projects)
-   - Add crisis dashboard project description and features
+### 🔧 Additional Tools
 
-2. **File Organization**
-   - Reorganize `israel-iran-war/` directory structure
-   - Create dedicated CSS, JS, and data files
-   - Implement modular architecture
+#### 📄 [CV/Resume](./cv/)
+**Professional Portfolio**
+- **Interactive Resume**: Modern web-based CV
+- **Responsive Design**: Mobile-optimized layout
+- **Professional Showcase**: Skills and experience highlight
 
-### Phase 2: Persistent Poll Data System
-**Challenge**: Static GitHub Pages doesn't support server-side storage
+#### 📊 [Business Data](./business-data/)
+**Business Analytics Hub**
+- **AI Scaling Analysis**: Business growth insights
+- **Listings Impact**: Market analysis tools
+- **Strategic Planning**: Data-driven business decisions
 
-**Solution**: Hybrid Approach
-1. **localStorage**: Immediate persistence per browser
-2. **Export/Import**: JSON data backup functionality
-3. **GitHub Integration**: Optional community data aggregation
+## 🏗️ Architecture Overview
 
-**Implementation**:
-```javascript
-// Data persistence architecture
-const PollDataManager = {
-    save: (data) => localStorage.setItem('crisis-poll-data', JSON.stringify(data)),
-    load: () => JSON.parse(localStorage.getItem('crisis-poll-data') || '{}'),
-    export: () => downloadJSON(data),
-    import: (file) => loadJSONFile(file)
-}
-```
+### Monorepo Structure
+This repository uses npm workspaces to manage multiple React/TypeScript applications:
 
-### Phase 3: Multi-Language System
-**Languages**: English (EN), Arabic (AR), Persian/Farsi (FA)
+- **Workspace Projects**: deeptube, osee, meeting-agent, dictator, country-data, gemini-js-sdk-doc
+- **Static Projects**: event-hunter, companies-data, israel-iran-war, business-data, cv
+- **Shared Dependencies**: Common build tools and deployment configuration
 
-**Implementation Strategy**:
-1. **Language Selector**: Fixed dropdown in upper-left corner
-2. **Translation Object**: Centralized translations with simple language
-3. **RTL Support**: Arabic and Persian right-to-left layout
-4. **Cultural Adaptation**: Appropriate terminology for each language
-
-```javascript
-const translations = {
-    en: { /* English */ },
-    ar: { /* Arabic - Simple */ },
-    fa: { /* Persian - Simple */ }
-}
-```
-
-### Phase 4: Enhanced Features
-1. **Real-time Updates**: Dynamic probability recalculation
-2. **Data Visualization**: Enhanced charts with Chart.js
-3. **Mobile Optimization**: Touch-friendly interactions
-4. **Accessibility**: Screen reader support and keyboard navigation
+### Technology Stack
+- **Frontend Framework**: React 18+ with TypeScript
+- **Build Tool**: Vite (for all React projects)
+- **UI Libraries**: Material-UI (@mui), custom components
+- **Data Visualization**: D3.js, Chart.js, Recharts
+- **AI Integration**: Google Gemini API
+- **Styling**: CSS Modules, responsive design, glass morphism effects
+- **State Management**: React hooks, local state
+- **Deployment**: GitHub Pages with automated builds
 
 ## 🏗️ Project Structure
 
 ```
 public-directory/
-├── 📄 index/index.html                    # Main portfolio dashboard (UPDATE)
-├── 📄 README.MD                      # This file (UPDATED)
-├── 🎯 israel-iran-war/               # Crisis analysis dashboard (NEW)
-│   ├── 📄 index.html                # Main dashboard page
-│   ├── 📊 data/
-│   │   ├── poll-data.json           # Persistent poll results
-│   │   └── translations.js          # Multi-language support
-│   ├── 🎨 assets/
-│   │   ├── styles.css               # Crisis-themed styling
-│   │   └── crisis-theme.css         # Strategic analysis theme
-│   ├── ⚙️ js/
-│   │   ├── poll-manager.js          # Poll data persistence
-│   │   ├── language-manager.js      # Multi-language system
-│   │   ├── chart-manager.js         # Dynamic probability charts
-│   │   └── game-theory.js           # Strategic analysis logic
-│   └── 📖 README.md                 # Crisis dashboard docs
-├── 🔎 event-hunter/                 # (Existing)
-├── 🏢 companies-data/               # (Existing)
-└── 🌍 country-data/                 # (Existing)
+├── 📄 index.html                     # Main portfolio dashboard
+├── 📄 README.md                      # This documentation
+├── 📄 CLAUDE.md                      # AI assistant guidance
+├── 📄 package.json                   # Workspace configuration
+│
+├── 🤖 AI-Powered Applications/
+│   ├── 🎥 deeptube/                  # YouTube analysis (React/TS)
+│   ├── 👁️ osee/                      # Visual content analysis (React/TS)
+│   ├── 🎤 meeting-agent/             # Meeting analysis (React/TS)
+│   ├── 📊 dictator/                  # Content strategy (React/TS)
+│   └── 📚 gemini-js-sdk-doc/         # SDK documentation (React/TS)
+│
+├── 📈 Data Visualization/
+│   ├── 🌍 country-data/              # Global data dashboard (React/TS)
+│   ├── 🔎 event-hunter/              # Events platform (HTML/JS)
+│   ├── 🏢 companies-data/            # Business intelligence (HTML/JS)
+│   └── 🎯 israel-iran-war/           # Strategic analysis (HTML/JS)
+│
+├── 🔧 Additional Tools/
+│   ├── 📄 cv/                        # Professional resume (HTML/JS)
+│   └── 📊 business-data/             # Business analytics (HTML/JS)
+│
+└── 🚀 Deployment/
+    ├── 📄 404.html                   # GitHub Pages 404 handler
+    └── 📄 .github/workflows/         # CI/CD pipeline
 ```
 
-## 🎯 Technical Implementation Plan
+## 🚀 Development & Deployment
 
-### Data Persistence Strategy
-1. **Local Storage**: Browser-based persistence
-2. **Export Feature**: Download poll data as JSON
-3. **Import Feature**: Upload and restore poll data
-4. **Data Validation**: Ensure data integrity across sessions
-
-### Multi-Language Architecture
-1. **Language Detection**: Browser language preference
-2. **Dynamic Content**: Real-time language switching
-3. **RTL Layout**: CSS-based directional support
-4. **Font Loading**: Arabic (Cairo) and Persian (Vazirmatn) fonts
-
-### Deployment Considerations
-- **GitHub Actions**: Automated deployment pipeline
-- **Data Files**: Poll data committed to repository
-- **Version Control**: Track poll data changes over time
-- **Backup Strategy**: Multiple data persistence layers
-
-## 🚀 Quick Start
-
-### Development Setup
+### Quick Start
 ```bash
 # Clone repository
 git clone <repository-url>
 cd public-directory
 
-# Install dependencies (for React apps)
-cd country-data && npm install && cd ..
+# Install all dependencies
+npm install
 
-# Start local development server
+# Build all React projects
+npm run build
+
+# Start local development
 python -m http.server 8000
-# Navigate to: http://localhost:8000/index/index.html
+# Navigate to: http://localhost:8000
 ```
 
-### Crisis Dashboard Standalone
+### Individual Project Development
+**React/TypeScript Projects**:
 ```bash
-# Direct access to crisis dashboard
-open israel-iran-war/prediction/index.html
-# or via local server: http://localhost:8000/israel-iran-war/prediction/
+cd [project-name]  # deeptube, osee, meeting-agent, dictator, country-data, gemini-js-sdk-doc
+npm install
+npm run dev      # Development server
+npm run build    # Production build
+npm run preview  # Preview build
 ```
 
-## 📱 Mobile Experience
+**Static HTML Projects**:
+- Open `index.html` directly or serve via local server
+- No build process required
 
-### iPhone Optimizations
-- **Safe Area Support** - Proper handling of notches and home indicators
-- **Touch Targets** - 44px minimum following Apple guidelines  
-- **No Zoom Issues** - Prevents unwanted zoom on input focus
-- **Native Scrolling** - Smooth momentum scrolling on iOS
-- **Orientation Support** - Seamless portrait/landscape transitions
+### Build Commands
+```bash
+# Build all workspace projects
+npm run build
 
-### Android Enhancements
-- **Material Design** - Following Android design principles
-- **Chrome Features** - PWA installation and offline support
-- **Performance** - Optimized animations and interactions
-- **Accessibility** - TalkBack and screen reader support
+# Build specific projects
+npm run build:deeptube
+npm run build:osee
+npm run build:country-data
+npm run build:dictator
+npm run build:meeting-agent
+npm run build:gemini-js-sdk-doc
+
+# Deploy to GitHub Pages
+npm run deploy
+```
 
 ## 🎯 Key Features
 
-### 🔍 Advanced Search & Filtering
-- **Real-time Search** across all applications
-- **Multi-dimensional Filtering** by various criteria
-- **Debounced Input** for optimal performance
-- **Visual Feedback** for user interactions
+### 🤖 AI Integration
+- **Google Gemini API**: Advanced AI capabilities across multiple applications
+- **Multi-modal Analysis**: Text, image, video, and audio processing
+- **Real-time Processing**: Interactive AI-powered insights
+- **Custom Prompts**: Flexible AI interaction patterns
 
-### 🎨 Modern Design System
-- **Glass Morphism** effects throughout
-- **Consistent Color Palette** across applications
-- **Typography Hierarchy** with Inter, Cairo, and Vazirmatn fonts
-- **Responsive Grid** system with mobile-first approach
+### 📊 Data Visualization
+- **D3.js Charts**: Interactive and responsive visualizations
+- **Real-time Filtering**: Dynamic data exploration
+- **Multi-dimensional Analysis**: Complex data relationships
+- **Export Capabilities**: Data download and sharing
 
-### 🌐 Internationalization
-- **Multi-language Support** (EN/AR/FA)
-- **RTL Layout** for Arabic and Persian
-- **Locale-aware Formatting** for dates and numbers
-- **Cultural Adaptations** in design and UX
+### 🌐 Multi-language Support
+- **Internationalization**: English, Arabic, Persian/Farsi
+- **RTL Layout**: Right-to-left language support
+- **Cultural Adaptation**: Localized user experiences
+- **Font Optimization**: Language-specific typography
 
-### ♿ Accessibility
-- **Screen Reader Support** with ARIA labels
-- **Keyboard Navigation** throughout applications
-- **High Contrast Mode** compatibility
-- **Reduced Motion** respect for user preferences
+## 🎨 Design System
 
-## 📊 Data & Analytics
+### Visual Identity
+- **Glass Morphism**: Modern translucent design effects
+- **Dark Theme**: Professional dark mode interface
+- **Color Palette**: Consistent branding across applications
+- **Typography**: Inter, Cairo, Vazirmatn fonts for multi-language support
 
-### Event Hunter
-- **200+ Global Events** for 2025
-- **50+ Countries** represented
-- **12 Industry Categories** covered
-- **Real-time Status** tracking
+### Responsive Design
+- **Mobile-First**: Optimized for all screen sizes
+- **Touch Friendly**: Appropriate touch targets and interactions
+- **Performance**: Fast loading and smooth animations
+- **Accessibility**: WCAG 2.1 compliance with screen reader support
 
-### Companies Data
-- **80+ Companies** in UAE & Oman
-- **15+ Business Sectors** analyzed
-- **AI Opportunities** mapped for each company
-- **Contact Intelligence** aggregated
+### User Experience
+- **Intuitive Navigation**: Clear information architecture
+- **Progressive Enhancement**: Works without JavaScript
+- **Error Handling**: Graceful error states and recovery
+- **Loading States**: Clear feedback during data processing
 
-### Country Data
-- **195+ Countries** visualized
-- **4 Key Metrics** compared (GDP, Population, Economic Freedom, Political Systems)
-- **Interactive Correlations** explored
-- **Real-time Filtering** capabilities
+## 📊 Data Sources & Analytics
 
-## 🚀 Deployment Options
+### Global Coverage
+- **195+ Countries**: Comprehensive international dataset
+- **200+ Events**: Global events across multiple industries
+- **80+ Companies**: Strategic business intelligence
+- **Multiple Industries**: Technology, healthcare, finance, energy, tourism
 
-### GitHub Pages (Recommended)
-```yaml
-# Automatic deployment via GitHub Actions
-# Site URL: https://yourusername.github.io/public-directory/
-```
+### AI Capabilities
+- **Google Gemini Integration**: Advanced AI processing
+- **Multi-modal Analysis**: Text, image, video, audio
+- **Real-time Processing**: Dynamic content analysis
+- **Custom Insights**: Tailored AI responses
 
-### Static Hosting
-- **Netlify**: Drag & drop deployment
-- **Vercel**: Git-based deployment
-- **Surge.sh**: Command-line deployment
-- **Firebase Hosting**: Google Cloud deployment
-
-### Custom Server
-```bash
-# Using Nginx
-server {
-    listen 80;
-    server_name your-domain.com;
-    root /path/to/public-directory;
-    index index/index.html;
-}
-```
+### Interactive Features
+- **Real-time Filtering**: Dynamic data exploration
+- **Multi-language**: English, Arabic, Persian support
+- **Export Functions**: Data download capabilities
+- **Responsive Charts**: Mobile-optimized visualizations
 
 ## 🔧 Configuration
 
-### Environment Variables
+### Environment Setup
+**Google Gemini API**: Required for AI-powered applications
 ```env
-# Optional customization
-REACT_APP_TITLE=Country Data Visualization
-REACT_APP_DATA_SOURCE=public/data/final_country_data.csv
+# Add to individual React project .env files
+VITE_GEMINI_API_KEY=your_api_key_here
 ```
 
-### Jekyll Configuration
-The project includes `_config.yml` for GitHub Pages deployment with:
-- Automatic exclusion of node_modules
-- Relative links support
-- Markdown processing with Kramdown
+### Build Configuration
+- **Vite**: Modern build tool for React projects
+- **TypeScript**: Type safety and enhanced development
+- **GitHub Pages**: Base path configuration for deployment
+- **Workspace Management**: npm workspaces for monorepo structure
 
-## 🤝 Contributing
+### Deployment
+- **GitHub Pages**: Automated deployment via GitHub Actions
+- **Static Hosting**: Compatible with Netlify, Vercel, Surge.sh
+- **Custom Servers**: Standard static file serving
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-4. **Push** to the branch (`git push origin feature/amazing-feature`)
-5. **Open** a Pull Request
+## 🛠️ Development Guidelines
 
-### Development Guidelines
-- Follow mobile-first responsive design
-- Maintain accessibility standards (WCAG 2.1)
-- Use semantic HTML and proper ARIA labels
-- Test across multiple browsers and devices
-- Optimize for performance and loading speed
+### Code Standards
+- **TypeScript**: Use TypeScript for all React projects
+- **ESLint**: Follow configured linting rules
+- **Responsive Design**: Mobile-first approach
+- **Accessibility**: WCAG 2.1 compliance
+- **Performance**: Optimize for fast loading
+
+### Project Organization
+- **Monorepo Structure**: Use npm workspaces
+- **Component Architecture**: Reusable, modular components
+- **State Management**: React hooks and local state
+- **Error Handling**: Comprehensive error boundaries
+- **Testing**: Unit and integration tests where applicable
 
 ## 📄 License
 
 This project is for educational and portfolio purposes. Individual data sources and company information are publicly available and compiled for demonstration.
 
+## 🤝 Contributing
+
+1. **Fork** the repository
+2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
+3. **Follow** development guidelines and code standards
+4. **Test** across multiple browsers and devices
+5. **Submit** a Pull Request with detailed description
+
 ## 📧 Contact
 
-For questions, suggestions, or collaboration opportunities, please refer to individual application documentation or create an issue in this repository.
+For questions, suggestions, or collaboration opportunities, please create an issue in this repository.
 
 ---
 
 ## 🏆 Project Highlights
 
-- **🎯 Business Intelligence**: Comprehensive company and event data
-- **📊 Data Visualization**: Interactive charts and analytics
-- **🌍 Global Scope**: International events and multi-country data
-- **📱 Mobile Excellence**: Optimized for all devices and screen sizes
-- **♿ Accessibility First**: Inclusive design for all users
-- **🚀 Performance**: Fast loading and smooth interactions
-- **🎨 Modern Design**: Glass morphism and contemporary UI/UX
+- **🤖 AI Integration**: Multiple AI-powered applications with Google Gemini
+- **📊 Data Visualization**: Interactive charts and real-time analytics
+- **🌍 Global Scope**: International coverage with multi-language support
+- **📱 Mobile Excellence**: Responsive design optimized for all devices
+- **⚡ Modern Stack**: React, TypeScript, Vite, and latest web technologies
+- **♿ Accessibility**: Inclusive design following WCAG guidelines
+- **🚀 Performance**: Fast loading with optimized build processes
 
-**Built with ❤️ using modern web technologies**
-rs**: All projects use the event hunter theme variables
-
-## 🎨 Design System
-
-### Color Palette
-- **Primary Background**: `linear-gradient(135deg, #0f172a 0%, #1e293b 100%)`
-- **Accent Gradient**: `linear-gradient(135deg, #38bdf8 0%, #818cf8 100%)`
-- **Text Colors**: 
-  - Primary: `#f8fafc`
-  - Secondary: `#cbd5e1`
-  - Muted: `#94a3b8`
-- **Card Background**: `rgba(30, 41, 59, 0.8)`
-- **Glass Border**: `rgba(255, 255, 255, 0.1)`
-
-### Typography
-- **Font Family**: Inter (Google Fonts)
-- **Heading Weights**: 700-900
-- **Body Weight**: 400-500
-- **Letter Spacing**: -0.02em for large headings
-
-### Components
-- **Glassmorphism Cards**: `backdrop-filter: blur(32px)`
-- **Hover Effects**: Subtle transforms and shadow changes
-- **Border Radius**: Consistent 20px for cards, 25px for buttons
-- **Animations**: Smooth transitions with reduced motion support
-
-## 🚀 Performance Features
-
-- **Font Optimization**: Preloaded Google Fonts with fallbacks
-- **Reduced Motion**: Respects user accessibility preferences
-- **Mobile First**: Optimized for touch interfaces
-- **Fast Loading**: Minimal external dependencies
-- **SEO Optimized**: Proper meta tags and semantic HTML
-
-## 📱 Browser Support
-
-- ✅ Chrome (latest)
-- ✅ Firefox (latest)
-- ✅ Safari (latest)
-- ✅ Edge (latest)
-- ✅ Mobile browsers (iOS Safari, Chrome Mobile)
-- ✅ Progressive Web App features
-
-## 🌍 Multi-language Support
-
-Several projects include full internationalization:
-- **Arabic (AR)**: Right-to-left layout support
-- **Persian/Farsi (FA)**: Custom font loading
-- **English (EN)**: Default language
-- **Dynamic Switching**: Runtime language changes
-
-## 📄 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
-## 🤝 Contributing
-
-To contribute or customize:
-1. Follow the standardized URL format: `/project-name/`
-2. Use the event hunter theme colors and components
-3. Ensure mobile responsiveness
-4. Add proper error handling and 404 redirects
-5. Update this README when adding new projects
-
-## 📞 Support
-
-For issues or questions:
-1. Check the 404 page for automatic redirects
-2. Verify all URLs follow the standardized format
-3. Ensure files are properly deployed
-4. Check browser console for JavaScript errors
+**Built with modern web technologies and AI integration**
 
 ---
 
-**Updated**: January 2025 | **Projects**: 6 | **Theme**: Event Hunter
+**Updated**: January 2025 | **Applications**: 12+ | **Stack**: React + TypeScript + AI

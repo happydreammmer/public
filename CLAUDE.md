@@ -95,6 +95,96 @@ Projects using external APIs follow this pattern:
 - Can be served from any static host
 
 ## Deployment
-- Configured for GitHub Pages deployment
-- Base path configuration in vite.config.ts for React projects
-- 404.html for client-side routing support
+
+### GitHub Pages Setup
+- **Configuration**: Automated deployment via npm scripts
+- **Base Path**: Configured in vite.config.ts for React projects
+- **404 Handling**: 404.html for client-side routing support
+- **Build Process**: All React projects build to `dist/` directories
+
+### Environment Variables
+```bash
+# Individual React projects (.env files)
+VITE_GEMINI_API_KEY=your_api_key_here
+
+# Optional customization
+VITE_APP_TITLE=Custom_Title
+VITE_DATA_SOURCE=custom_data_source
+```
+
+### Local Development
+```bash
+# Serve entire portfolio locally
+python -m http.server 8000
+# or
+npx serve .
+
+# Access at: http://localhost:8000
+```
+
+### Production Build
+```bash
+# Build all React projects
+npm run build
+
+# Individual project builds
+npm run build:deeptube
+npm run build:osee
+# ... etc
+
+# Deploy to GitHub Pages
+npm run deploy
+```
+
+### File Structure After Build
+```
+public-directory/
+├── index.html                 # Main portfolio
+├── deeptube/dist/            # Built React app
+├── osee/dist/                # Built React app
+├── country-data/dist/        # Built React app
+├── event-hunter/index.html   # Static app
+├── companies-data/index.html # Static app
+└── ... other projects
+```
+
+## Development Workflow
+
+### Adding New Projects
+1. **React/TypeScript Project**:
+   ```bash
+   # Create new Vite React project
+   npm create vite@latest project-name -- --template react-ts
+   cd project-name
+   
+   # Add to workspace in root package.json
+   "workspaces": [..., "project-name"]
+   
+   # Add build script to root package.json
+   "build:project-name": "npm run build -w project-name"
+   ```
+
+2. **Static HTML Project**:
+   - Create directory with index.html
+   - Follow existing patterns for styling and structure
+   - Add multi-language support if needed
+
+### Code Standards
+- **TypeScript**: Strict mode enabled
+- **ESLint**: Configured for React and TypeScript
+- **Responsive Design**: Mobile-first approach
+- **Accessibility**: ARIA labels, semantic HTML
+- **Performance**: Optimized builds, lazy loading
+
+### Testing
+- **React Projects**: Jest + React Testing Library (where configured)
+- **Static Projects**: Manual testing across browsers
+- **Mobile Testing**: Responsive design verification
+- **Accessibility**: Screen reader and keyboard navigation testing
+
+## Important Instructions
+- ALWAYS prefer editing existing files over creating new ones
+- Follow established patterns and conventions
+- Maintain consistency across all projects
+- Test changes across different screen sizes and browsers
+- Update CLAUDE.md when adding new projects or changing structure
