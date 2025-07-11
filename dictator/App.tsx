@@ -343,6 +343,205 @@ export default function App() {
           </div>
         </aside>
       )}
+      {/* Add layout and component styles for Dictator */}
+      <style>{`
+        .app-container {
+          min-height: 100vh;
+          background: var(--color-background);
+          color: var(--color-text);
+          font-family: var(--font-primary);
+          display: flex;
+          flex-direction: column;
+        }
+        .main-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 2rem;
+          background: var(--color-header-background);
+          border-bottom: 1px solid var(--color-component-border);
+        }
+        .logo-container h1 {
+          color: var(--color-headline);
+          font-family: var(--font-display);
+          font-size: 2.2rem;
+          margin: 0;
+          letter-spacing: 1px;
+        }
+        .controls-container {
+          display: flex;
+          gap: 0.5rem;
+        }
+        .header-button {
+          background: var(--color-accent);
+          color: #0A192F;
+          border: none;
+          border-radius: 6px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .header-button:hover {
+          background: var(--color-accent-hover);
+        }
+        .main-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex: 1;
+          padding: 2rem 0;
+        }
+        .editor-view {
+          width: 100%;
+          max-width: 700px;
+          background: var(--color-component-background);
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          padding: 2rem;
+          margin-bottom: 2rem;
+        }
+        .editor-header {
+          margin-bottom: 1.5rem;
+        }
+        .editor-title {
+          width: 100%;
+          font-size: 1.3rem;
+          padding: 0.75rem;
+          border-radius: 6px;
+          border: 1px solid var(--color-component-border);
+          background: var(--color-input-background);
+          color: var(--color-text);
+        }
+        .cards-container {
+          display: flex;
+          gap: 2rem;
+        }
+        .card {
+          flex: 1;
+          background: var(--color-background);
+          border-radius: 8px;
+          border: 1px solid var(--color-component-border);
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          display: flex;
+          flex-direction: column;
+        }
+        .card-header {
+          padding: 1rem;
+          border-bottom: 1px solid var(--color-component-border);
+          background: var(--color-header-background);
+          color: var(--color-headline);
+          border-radius: 8px 8px 0 0;
+        }
+        .card-content {
+          padding: 1rem;
+          flex: 1;
+        }
+        .card-content textarea {
+          width: 100%;
+          min-height: 100px;
+          background: var(--color-component-background);
+          color: var(--color-text);
+          border: 1px solid var(--color-component-border);
+          border-radius: 6px;
+          padding: 0.75rem;
+          font-size: 1rem;
+        }
+        .recording-controls-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        .recording-status {
+          margin-bottom: 1rem;
+          color: var(--color-subtitle);
+        }
+        .main-action-buttons {
+          display: flex;
+          gap: 1rem;
+        }
+        .record-button {
+          background: var(--color-accent);
+          color: #0A192F;
+          border: none;
+          border-radius: 50%;
+          width: 56px;
+          height: 56px;
+          font-size: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+        .record-button.recording {
+          background: var(--color-error);
+          color: #fff;
+        }
+        .control-button {
+          background: var(--color-accent-secondary);
+          color: #fff;
+          border: none;
+          border-radius: 50%;
+          width: 44px;
+          height: 44px;
+          font-size: 1.2rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .history-sidebar {
+          position: fixed;
+          right: 0;
+          top: 0;
+          width: 320px;
+          height: 100vh;
+          background: var(--color-component-background);
+          box-shadow: -2px 0 8px rgba(0,0,0,0.08);
+          z-index: 100;
+          display: flex;
+          flex-direction: column;
+        }
+        .sidebar-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem;
+          border-bottom: 1px solid var(--color-component-border);
+          background: var(--color-header-background);
+        }
+        .close-btn {
+          background: none;
+          border: none;
+          color: var(--color-error);
+          font-size: 2rem;
+          cursor: pointer;
+        }
+        .history-list {
+          flex: 1;
+          overflow-y: auto;
+          padding: 1rem;
+        }
+        .history-item {
+          padding: 0.75rem 1rem;
+          border-radius: 6px;
+          margin-bottom: 0.5rem;
+          background: var(--color-background);
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .history-item.active, .history-item:hover {
+          background: var(--color-accent);
+          color: #0A192F;
+        }
+        .history-item-title {
+          font-weight: 500;
+        }
+        .history-item-date {
+          font-size: 0.85rem;
+          color: var(--color-subtitle);
+        }
+      `}</style>
     </div>
   );
 }

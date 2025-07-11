@@ -403,6 +403,233 @@ export default function App() {
           </div>
         </div>
       )}
+      {/* Add layout and component styles for Meeting Agent */}
+      <style>{`
+        .main-app {
+          min-height: 100vh;
+          background: var(--color-background);
+          color: var(--color-text);
+          font-family: var(--font-primary);
+          display: flex;
+          flex-direction: column;
+        }
+        .main-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem 2rem;
+          background: var(--color-header-background);
+          border-bottom: 1px solid var(--color-component-border);
+        }
+        .app-title {
+          color: var(--color-headline);
+          font-family: var(--font-display);
+          font-size: 2.2rem;
+          margin: 0;
+          letter-spacing: 1px;
+        }
+        .header-controls {
+          display: flex;
+          gap: 0.5rem;
+        }
+        .header-btn {
+          background: var(--color-accent);
+          color: #0A192F;
+          border: none;
+          border-radius: 6px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .header-btn:hover {
+          background: var(--color-accent-hover);
+        }
+        .main-content {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          flex: 1;
+          padding: 2rem 0;
+        }
+        .content-wrapper {
+          width: 100%;
+          max-width: 700px;
+          background: var(--color-component-background);
+          border-radius: 10px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+          padding: 2rem;
+          margin-bottom: 2rem;
+        }
+        .recording-section {
+          display: flex;
+          align-items: center;
+          gap: 1.5rem;
+          margin-bottom: 2rem;
+        }
+        .timer-display {
+          font-size: 1.5rem;
+          color: var(--color-subtitle);
+        }
+        .record-button {
+          background: var(--color-accent);
+          color: #0A192F;
+          border: none;
+          border-radius: 50%;
+          width: 56px;
+          height: 56px;
+          font-size: 1.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: background 0.2s;
+        }
+        .record-button.recording {
+          background: var(--color-error);
+          color: #fff;
+        }
+        .results-section {
+          margin-top: 2rem;
+        }
+        .tabs {
+          display: flex;
+          gap: 1rem;
+          margin-bottom: 1rem;
+        }
+        .tab-btn {
+          background: var(--color-background);
+          color: var(--color-text);
+          border: 1px solid var(--color-component-border);
+          border-radius: 6px;
+          padding: 0.5rem 1rem;
+          font-size: 1rem;
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .tab-btn.active, .tab-btn:hover {
+          background: var(--color-accent);
+          color: #0A192F;
+        }
+        .tab-content {
+          background: var(--color-background);
+          border-radius: 8px;
+          border: 1px solid var(--color-component-border);
+          padding: 1rem;
+        }
+        .content-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+        }
+        .content-text {
+          white-space: pre-wrap;
+          font-size: 1rem;
+        }
+        .copy-btn {
+          background: var(--color-accent-secondary);
+          color: #fff;
+          border: none;
+          border-radius: 6px;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.95rem;
+          cursor: pointer;
+        }
+        .sidebar-toggle {
+          position: fixed;
+          right: 2rem;
+          bottom: 2rem;
+          background: var(--color-accent);
+          color: #0A192F;
+          border: none;
+          border-radius: 50%;
+          width: 48px;
+          height: 48px;
+          font-size: 1.3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        .sidebar {
+          position: fixed;
+          right: 0;
+          top: 0;
+          width: 320px;
+          height: 100vh;
+          background: var(--color-component-background);
+          box-shadow: -2px 0 8px rgba(0,0,0,0.08);
+          z-index: 100;
+          display: flex;
+          flex-direction: column;
+        }
+        .sidebar-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1rem;
+          border-bottom: 1px solid var(--color-component-border);
+          background: var(--color-header-background);
+        }
+        .close-btn {
+          background: none;
+          border: none;
+          color: var(--color-error);
+          font-size: 2rem;
+          cursor: pointer;
+        }
+        .meeting-list {
+          flex: 1;
+          overflow-y: auto;
+          padding: 1rem;
+        }
+        .meeting-item {
+          padding: 0.75rem 1rem;
+          border-radius: 6px;
+          margin-bottom: 0.5rem;
+          background: var(--color-background);
+          cursor: pointer;
+          transition: background 0.2s;
+        }
+        .meeting-item.active, .meeting-item:hover {
+          background: var(--color-accent);
+          color: #0A192F;
+        }
+        .meeting-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .meeting-date {
+          font-size: 0.85rem;
+          color: var(--color-subtitle);
+        }
+        .empty-message {
+          color: var(--color-subtitle);
+          text-align: center;
+          margin-top: 2rem;
+        }
+        .processing-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(10,25,47,0.7);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          z-index: 200;
+        }
+        .processing-message {
+          background: var(--color-component-background);
+          color: var(--color-headline);
+          padding: 2rem 3rem;
+          border-radius: 10px;
+          font-size: 1.3rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+        }
+      `}</style>
     </div>
   );
 }
