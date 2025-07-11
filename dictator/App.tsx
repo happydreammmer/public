@@ -152,7 +152,7 @@ export default function App() {
         }]
       });
       
-      const transcription = await transcriptionResult.text();
+      const transcription = transcriptionResult.text || '';
       
       // Get AI response
       setRecordingStatus('Getting AI response...');
@@ -164,7 +164,7 @@ export default function App() {
         }]
       });
       
-      const aiResponse = await aiResult.text();
+      const aiResponse = aiResult.text || '';
       
       // Update note
       const updatedNote: Note = {

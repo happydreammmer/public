@@ -153,7 +153,7 @@ export default function App() {
         }]
       });
 
-      const transcription = await transcriptionResult.text();
+      const transcription = transcriptionResult.text || '';
 
       // Generate summary
       const summaryResult = await geminiRef.current.models.generateContent({
@@ -163,7 +163,7 @@ export default function App() {
           parts: [{ text: `Provide a comprehensive summary of this meeting transcription. Include main topics, key decisions, and important discussions:\n\n${transcription}` }]
         }]
       });
-      const summary = await summaryResult.text();
+      const summary = summaryResult.text || '';
 
       // Generate action items
       const actionItemsResult = await geminiRef.current.models.generateContent({
@@ -173,7 +173,7 @@ export default function App() {
           parts: [{ text: `Extract all action items from this meeting transcription. For each action item, include the task description, assigned person (if mentioned), and deadline (if mentioned):\n\n${transcription}` }]
         }]
       });
-      const actionItems = await actionItemsResult.text();
+      const actionItems = actionItemsResult.text || '';
 
       // Generate sentiment analysis
       const sentimentResult = await geminiRef.current.models.generateContent({
@@ -183,7 +183,7 @@ export default function App() {
           parts: [{ text: `Provide a detailed sentiment analysis of this meeting. Include overall tone, emotional dynamics, and areas of agreement/disagreement:\n\n${transcription}` }]
         }]
       });
-      const sentiment = await sentimentResult.text();
+      const sentiment = sentimentResult.text || '';
 
       // Create meeting record
       const meeting: Meeting = {
