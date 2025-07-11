@@ -10,7 +10,8 @@
       "WebFetch(domain:happydreammmer.github.io)",
       "WebFetch(domain:happydreammmer.github.io)",
       "Bash(npm install:*)",
-      "Bash(diff:*)"
+      "Bash(diff:*)",
+      "Bash(mkdir:*)"
     ],
     "deny": []
   }
