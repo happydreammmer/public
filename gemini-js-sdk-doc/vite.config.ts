@@ -7,6 +7,12 @@ export default defineConfig(({ mode }) => {
       base: '/public/gemini-js-sdk-doc/',
       build: {
         outDir: './build',
+        target: 'es2022',
+        rollupOptions: {
+          output: {
+            format: 'es'
+          }
+        }
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
