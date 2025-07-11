@@ -11,21 +11,145 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./styles.css" />
     <script type="importmap">
       {
         "imports": {
           "@google/genai": "https://esm.sh/@google/genai@^1.4.0",
-          "marked": "https://esm.sh/marked@^15.0.12",
-          "react": "https://esm.sh/react@^18.3.1",
-          "react/": "https://esm.sh/react@^18.3.1/",
-          "react-dom": "https://esm.sh/react-dom@^18.3.1",
-          "react-dom/": "https://esm.sh/react-dom@^18.3.1/"
+          "marked": "https://esm.sh/marked@^15.0.12"
         }
       }
     </script>
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/index.tsx"></script>
+    <!-- API Key Modal -->
+    <div id="api-key-modal" class="api-key-modal">
+      <div class="modal-content">
+        <h2>Enter API Key</h2>
+        <p>Please enter your Gemini API key to continue</p>
+        <input type="password" id="api-key-input" placeholder="Enter your API key" />
+        <button id="save-api-key-btn" class="primary-btn">Save Key</button>
+      </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="main-app" style="display: none;">
+      <!-- Header -->
+      <header class="main-header">
+        <h1 class="app-title">Meeting Agent</h1>
+        <div class="header-controls">
+          <button id="language-btn" class="header-btn">
+            <span id="language-display">EN</span>
+          </button>
+          <button id="prompt-mode-btn" class="header-btn">
+            <span id="prompt-mode-display">Fast</span>
+          </button>
+          <button id="theme-btn" class="header-btn">
+            <i class="fas fa-moon" id="theme-icon"></i>
+          </button>
+          <button id="clear-api-key-btn" class="header-btn">
+            <i class="fas fa-key"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <div class="content-wrapper">
+          <!-- Recording Section -->
+          <section class="recording-section">
+            <div class="recording-display">
+              <canvas id="waveform-canvas" class="waveform-canvas"></canvas>
+              <div id="timer-display" class="timer-display">00:00</div>
+            </div>
+            <button id="record-btn" class="record-button">
+              <i class="fas fa-microphone" id="record-icon"></i>
+              <span id="record-text">Start Recording</span>
+            </button>
+          </section>
+
+          <!-- Results Section -->
+          <section id="results-section" class="results-section" style="display: none;">
+            <div class="tabs">
+              <button class="tab-btn active" data-tab="transcription">
+                <i class="fas fa-file-alt"></i> Transcription
+              </button>
+              <button class="tab-btn" data-tab="summary">
+                <i class="fas fa-compress-alt"></i> Summary
+              </button>
+              <button class="tab-btn" data-tab="action-items">
+                <i class="fas fa-tasks"></i> Action Items
+              </button>
+              <button class="tab-btn" data-tab="sentiment">
+                <i class="fas fa-smile"></i> Sentiment
+              </button>
+            </div>
+
+            <div class="tab-content">
+              <div id="transcription-content" class="tab-pane active">
+                <div class="content-header">
+                  <h3>Transcription</h3>
+                  <button class="copy-btn" data-content="transcription">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <div id="transcription-text" class="content-text"></div>
+              </div>
+
+              <div id="summary-content" class="tab-pane">
+                <div class="content-header">
+                  <h3>Summary</h3>
+                  <button class="copy-btn" data-content="summary">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <div id="summary-text" class="content-text"></div>
+              </div>
+
+              <div id="action-items-content" class="tab-pane">
+                <div class="content-header">
+                  <h3>Action Items</h3>
+                  <button class="copy-btn" data-content="action-items">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <div id="action-items-text" class="content-text"></div>
+              </div>
+
+              <div id="sentiment-content" class="tab-pane">
+                <div class="content-header">
+                  <h3>Sentiment Analysis</h3>
+                  <button class="copy-btn" data-content="sentiment">
+                    <i class="fas fa-copy"></i> Copy
+                  </button>
+                </div>
+                <div id="sentiment-text" class="content-text"></div>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Sidebar Toggle -->
+        <button id="sidebar-toggle" class="sidebar-toggle">
+          <i class="fas fa-history"></i>
+        </button>
+      </main>
+
+      <!-- Sidebar -->
+      <aside id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <h2>Meeting History</h2>
+          <button id="close-sidebar" class="close-btn">&times;</button>
+        </div>
+        <div id="meeting-list" class="meeting-list">
+          <p class="empty-message">No past meetings found.</p>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Status Messages -->
+    <div id="status-container" class="status-container"></div>
+
+    <script type="module" src="./app.js"></script>
   </body>
 </html>

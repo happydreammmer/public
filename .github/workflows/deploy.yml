@@ -39,8 +39,8 @@ jobs:
 
       - name: Clear build directories
         run: |
-          rm -rf deeptube/build dictator/build meeting-agent/build osee/build country-data/build
-          rm -rf deeptube/dist dictator/dist meeting-agent/dist osee/dist country-data/dist
+          rm -rf deeptube/build osee/build country-data/build
+          rm -rf deeptube/dist osee/dist country-data/dist
           rm -rf */node_modules/.vite
           ls -la */build || echo "No build directories found"
 
@@ -48,19 +48,20 @@ jobs:
         run: |
           echo "Building with vite configs..."
           grep -r "base:" */vite.config.ts || echo "No base configs found"
-          npm run build
+          # Build only vite projects (excluding dictator and meeting-agent which are now static)
+          npm run build:deeptube
+          npm run build:osee
+          npm run build:country-data
           
       - name: Verify build outputs
         run: |
-          echo "=== CHECKING BUILT ASSET PATHS ==="
-          echo "OSEE (working):"
-          grep -E "(assets|src=|href=)" osee/build/index.html || echo "No assets found"
-          echo "MEETING-AGENT (broken):"
-          grep -E "(assets|src=|href=)" meeting-agent/build/index.html || echo "No assets found"
-          echo "DICTATOR (broken):"
-          grep -E "(assets|src=|href=)" dictator/build/index.html || echo "No assets found"
-          echo "=== CHECKING ACTUAL ASSET FILES ==="
-          ls -la */build/assets/ || echo "No asset directories found"
+          echo "=== CHECKING BUILT PROJECTS ==="
+          echo "VITE PROJECTS (built):"
+          ls -la */build/index.html || echo "No built projects found"
+          echo "STATIC PROJECTS (vanilla JS):"
+          ls -la dictator/index.html meeting-agent/index.html || echo "No static projects found"
+          echo "=== CHECKING ASSET FILES ==="
+          ls -la */build/assets/ || echo "No vite asset directories found"
 
       - name: Create deployment directory
         run: |
@@ -72,8 +73,8 @@ jobs:
           mkdir -p public/event-hunter
           mkdir -p public/israel-iran-war
           cp -r deeptube/build/. public/deeptube/
-          cp -r dictator/build/. public/dictator/
-          cp -r meeting-agent/build/. public/meeting-agent/
+          cp dictator/index.html dictator/app.js dictator/styles.css public/dictator/
+          cp meeting-agent/index.html meeting-agent/app.js meeting-agent/styles.css public/meeting-agent/
           cp -r osee/build/. public/osee/
           cp -r country-data/build/. public/country-data/
           cp -r country-data/public/data/* public/country-data/data/

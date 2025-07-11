@@ -4,21 +4,17 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "build": "npm run build -w deeptube && npm run build -w dictator && npm run build -w meeting-agent && npm run build -w osee && npm run build -w country-data",
-    "build:dictator": "npm run build -w dictator",
-    "build:meeting-agent": "npm run build -w meeting-agent",
+    "build": "npm run build -w deeptube && npm run build -w osee && npm run build -w country-data",
     "build:osee": "npm run build -w osee",
     "build:country-data": "npm run build -w country-data",
     "build:deeptube": "npm run build -w deeptube",
-    "deploy": "npm-run-all build:deeptube build:dictator build:meeting-agent build:osee build:country-data"
+    "deploy": "npm-run-all build:deeptube build:osee build:country-data"
   },
   "devDependencies": {
     "gh-pages": "^6.1.1"
   },
   "workspaces": [
     "deeptube",
-    "dictator",
-    "meeting-agent",
     "osee",
     "country-data"
   ]
