@@ -6,7 +6,9 @@
       "Bash(cp:*)",
       "Bash(npm run build:*)",
       "Bash(bash:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "WebFetch(domain:happydreammmer.github.io)",
+      "WebFetch(domain:happydreammmer.github.io)"
     ],
     "deny": []
   }
