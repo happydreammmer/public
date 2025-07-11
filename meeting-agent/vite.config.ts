@@ -6,11 +6,9 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       plugins: [react()],
+      base: '/public/meeting-agent/',
       build: {
         outDir: './build',
-        rollupOptions: {
-          external: ['react', 'react-dom', '@google/genai', 'marked'],
-        },
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),

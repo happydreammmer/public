@@ -5,12 +5,10 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       root: 'src',
+      base: '/public/dictator/',
       build: {
         outDir: '../build',
         emptyOutDir: true,
-        rollupOptions: {
-          external: ['@google/genai', 'marked'],
-        },
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
