@@ -41,9 +41,14 @@ jobs:
         run: |
           rm -rf deeptube/build dictator/build meeting-agent/build osee/build country-data/build
           rm -rf deeptube/dist dictator/dist meeting-agent/dist osee/dist country-data/dist
+          rm -rf */node_modules/.vite
+          ls -la */build || echo "No build directories found"
 
       - name: Build all projects
-        run: npm run build
+        run: |
+          echo "Building with vite configs..."
+          grep -r "base:" */vite.config.ts || echo "No base configs found"
+          npm run build
 
       - name: Create deployment directory
         run: |
