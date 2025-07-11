@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from '@google/genai';
 
 const API_KEY_STORAGE = 'gemini_api_key';
@@ -135,16 +135,16 @@ export default function App() {
 
       // Get transcription
       setRecordingStatus('Getting transcription...');
-      const model = geminiRef.current.getGenerativeModel({ model: 'gemini-1.5-flash' });
       
-      const transcriptionResult = await model.generateContent({
+      const transcriptionResult = await geminiRef.current.models.generateContent({
+        model: 'gemini-1.5-flash',
         contents: [{
           role: 'user',
           parts: [
             { text: "Transcribe this audio in its original language. Include all spoken content." },
             { 
-              inline_data: {
-                mime_type: audioBlob.type,
+              inlineData: {
+                mimeType: audioBlob.type,
                 data: base64Audio.split(',')[1]
               }
             }
@@ -152,15 +152,19 @@ export default function App() {
         }]
       });
       
-      const transcription = await transcriptionResult.response.text();
+      const transcription = await transcriptionResult.text();
       
       // Get AI response
       setRecordingStatus('Getting AI response...');
-      const aiResult = await model.generateContent(
-        `Transform this transcribed text into a well-structured, clear response. Improve clarity, fix grammar, and organize the content logically:\n\n${transcription}`
-      );
+      const aiResult = await geminiRef.current.models.generateContent({
+        model: 'gemini-1.5-flash',
+        contents: [{
+          role: 'user',
+          parts: [{ text: `Transform this transcribed text into a well-structured, clear response. Improve clarity, fix grammar, and organize the content logically:\n\n${transcription}` }]
+        }]
+      });
       
-      const aiResponse = await aiResult.response.text();
+      const aiResponse = await aiResult.text();
       
       // Update note
       const updatedNote: Note = {

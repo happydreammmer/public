@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from '@google/genai';
 
 const API_KEY_STORAGE = 'gemini-api-key';
@@ -136,17 +136,16 @@ export default function App() {
         throw new Error('Gemini API not initialized');
       }
 
-      const model = geminiRef.current.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
       // Get transcription
-      const transcriptionResult = await model.generateContent({
+      const transcriptionResult = await geminiRef.current.models.generateContent({
+        model: 'gemini-1.5-flash',
         contents: [{
           role: 'user',
           parts: [
             { text: "Transcribe this audio in its original language. Include all spoken content." },
             {
-              inline_data: {
-                mime_type: audioBlob.type,
+              inlineData: {
+                mimeType: audioBlob.type,
                 data: base64Audio.split(',')[1]
               }
             }
@@ -154,25 +153,37 @@ export default function App() {
         }]
       });
 
-      const transcription = await transcriptionResult.response.text();
+      const transcription = await transcriptionResult.text();
 
       // Generate summary
-      const summaryResult = await model.generateContent(
-        `Provide a comprehensive summary of this meeting transcription. Include main topics, key decisions, and important discussions:\n\n${transcription}`
-      );
-      const summary = await summaryResult.response.text();
+      const summaryResult = await geminiRef.current.models.generateContent({
+        model: 'gemini-1.5-flash',
+        contents: [{
+          role: 'user',
+          parts: [{ text: `Provide a comprehensive summary of this meeting transcription. Include main topics, key decisions, and important discussions:\n\n${transcription}` }]
+        }]
+      });
+      const summary = await summaryResult.text();
 
       // Generate action items
-      const actionItemsResult = await model.generateContent(
-        `Extract all action items from this meeting transcription. For each action item, include the task description, assigned person (if mentioned), and deadline (if mentioned):\n\n${transcription}`
-      );
-      const actionItems = await actionItemsResult.response.text();
+      const actionItemsResult = await geminiRef.current.models.generateContent({
+        model: 'gemini-1.5-flash',
+        contents: [{
+          role: 'user',
+          parts: [{ text: `Extract all action items from this meeting transcription. For each action item, include the task description, assigned person (if mentioned), and deadline (if mentioned):\n\n${transcription}` }]
+        }]
+      });
+      const actionItems = await actionItemsResult.text();
 
       // Generate sentiment analysis
-      const sentimentResult = await model.generateContent(
-        `Provide a detailed sentiment analysis of this meeting. Include overall tone, emotional dynamics, and areas of agreement/disagreement:\n\n${transcription}`
-      );
-      const sentiment = await sentimentResult.response.text();
+      const sentimentResult = await geminiRef.current.models.generateContent({
+        model: 'gemini-1.5-flash',
+        contents: [{
+          role: 'user',
+          parts: [{ text: `Provide a detailed sentiment analysis of this meeting. Include overall tone, emotional dynamics, and areas of agreement/disagreement:\n\n${transcription}` }]
+        }]
+      });
+      const sentiment = await sentimentResult.text();
 
       // Create meeting record
       const meeting: Meeting = {
