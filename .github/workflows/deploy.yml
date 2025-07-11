@@ -37,6 +37,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Clear build directories
+        run: |
+          rm -rf deeptube/build dictator/build meeting-agent/build osee/build country-data/build
+          rm -rf deeptube/dist dictator/dist meeting-agent/dist osee/dist country-data/dist
+
       - name: Build all projects
         run: npm run build
 
