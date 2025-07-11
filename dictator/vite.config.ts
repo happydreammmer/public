@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       root: 'src',
-      base: '/public/dictator/',
+      base: '/dictator/',
       build: {
         outDir: '../build',
       },

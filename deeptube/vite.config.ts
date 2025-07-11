@@ -4,7 +4,7 @@ import { defineConfig, loadEnv } from 'vite';
 export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
-      base: '/public/deeptube/',
+      base: '/deeptube/',
       build: {
         outDir: './build',
       },

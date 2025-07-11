@@ -6,7 +6,7 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, '.', '');
     return {
       plugins: [react()],
-      base: '/public/meeting-agent/',
+      base: '/meeting-agent/',
       build: {
         outDir: './build',
       },

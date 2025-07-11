@@ -42,26 +42,23 @@ jobs:
 
       - name: Create deployment directory
         run: |
-          mkdir -p public/deeptube public/dictator public/meeting-agent public/osee public/country-data
-          mkdir -p public/country-data/data
-          mkdir -p public/
-          mkdir -p public/business-data
-          mkdir -p public/companies-data
-          mkdir -p public/event-hunter
-          mkdir -p public/israel-iran-war
-          cp -r deeptube/build/. public/deeptube/
-          cp -r dictator/build/. public/dictator/
-          cp -r meeting-agent/build/. public/meeting-agent/
-          cp -r osee/build/. public/osee/
-          cp -r country-data/build/. public/country-data/
-          cp -r country-data/public/data/* public/country-data/data/
-          cp -r cv public/
-          cp -r business-data/* public/business-data/
-          cp -r companies-data/* public/companies-data/
-          cp -r event-hunter/* public/event-hunter/
-          cp -r israel-iran-war/* public/israel-iran-war/
-          cp index.html public/
-          cp 404.html public/
+          mkdir -p deeptube dictator meeting-agent osee country-data
+          mkdir -p country-data/data
+          mkdir -p business-data
+          mkdir -p companies-data
+          mkdir -p event-hunter
+          mkdir -p israel-iran-war
+          cp -r deeptube/build/. deeptube/
+          cp -r dictator/build/. dictator/
+          cp -r meeting-agent/build/. meeting-agent/
+          cp -r osee/build/. osee/
+          cp -r country-data/build/. country-data/
+          cp -r country-data/public/data/* country-data/data/
+          cp -r cv ./
+          cp -r business-data/* business-data/
+          cp -r companies-data/* companies-data/
+          cp -r event-hunter/* event-hunter/
+          cp -r israel-iran-war/* israel-iran-war/
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -69,7 +66,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./
 
       - name: Deploy to GitHub Pages
         id: deployment
