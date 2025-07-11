@@ -8,7 +8,9 @@
       "Bash(bash:*)",
       "Bash(grep:*)",
       "WebFetch(domain:happydreammmer.github.io)",
-      "WebFetch(domain:happydreammmer.github.io)"
+      "WebFetch(domain:happydreammmer.github.io)",
+      "Bash(npm install:*)",
+      "Bash(diff:*)"
     ],
     "deny": []
   }

@@ -26,5 +26,6 @@
     "paths": {
       "@/*" :  ["./*"]
     }
-  }
+  },
+  "include": ["src", "style.d.ts", "App.tsx", "index.tsx", "vite.config.ts"]
 }

@@ -11,9 +11,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@google/genai": "^1.4.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "@google/genai": "latest",
+    "@monaco-editor/react": "latest",
+    "googleapis": "latest",
+    "normalize.css": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "react-tabs": "latest",
+    "jszip": "latest"
   },
   "devDependencies": {
     "@types/node": "^22.14.0",
