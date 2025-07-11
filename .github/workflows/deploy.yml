@@ -49,6 +49,18 @@ jobs:
           echo "Building with vite configs..."
           grep -r "base:" */vite.config.ts || echo "No base configs found"
           npm run build
+          
+      - name: Verify build outputs
+        run: |
+          echo "=== CHECKING BUILT ASSET PATHS ==="
+          echo "OSEE (working):"
+          grep -E "(assets|src=|href=)" osee/build/index.html || echo "No assets found"
+          echo "MEETING-AGENT (broken):"
+          grep -E "(assets|src=|href=)" meeting-agent/build/index.html || echo "No assets found"
+          echo "DICTATOR (broken):"
+          grep -E "(assets|src=|href=)" dictator/build/index.html || echo "No assets found"
+          echo "=== CHECKING ACTUAL ASSET FILES ==="
+          ls -la */build/assets/ || echo "No asset directories found"
 
       - name: Create deployment directory
         run: |
