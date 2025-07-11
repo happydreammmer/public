@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { GoogleGenAI } from '@google/genai';
+import './index.css';
 
 const API_KEY_STORAGE = 'gemini_api_key';
 
