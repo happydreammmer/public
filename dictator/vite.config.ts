@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
       build: {
         outDir: '../build',
         emptyOutDir: true,
+        rollupOptions: {
+          external: ['@google/genai', 'marked'],
+        },
       },
       define: {
         'process.env.API_KEY': JSON.stringify(env.GEMINI_API_KEY),
