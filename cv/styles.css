@@ -1373,4 +1373,146 @@ body {
     box-shadow: 0 8px 25px rgba(79, 70, 229, 0.4);
 }
 
+/* Light Theme Animation and Glow Enhancements */
+.light-theme .avatar-3d {
+    box-shadow: 
+        0 0 30px rgba(79, 70, 229, 0.3),
+        inset 0 0 30px rgba(124, 58, 237, 0.1);
+}
+
+.light-theme .avatar-glow {
+    filter: blur(15px);
+    opacity: 0.6;
+}
+
+.light-theme .stat-number {
+    text-shadow: 0 0 15px rgba(59, 130, 246, 0.4);
+}
+
+.light-theme .company {
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.3);
+}
+
+.light-theme .contact-item a:hover {
+    text-shadow: 0 0 8px rgba(59, 130, 246, 0.4);
+}
+
+.light-theme .skill-progress-3d {
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.4);
+}
+
+.light-theme .morphing-skill:hover .skill-glow {
+    opacity: 0.4;
+}
+
+.light-theme .floating-chip:hover {
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.3);
+}
+
+.light-theme .orbit-dot {
+    box-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+}
+
+.light-theme .scroll-wheel {
+    box-shadow: 0 0 8px var(--neon-blue);
+}
+
+.light-theme .title-line::after {
+    box-shadow: 0 0 12px var(--neon-blue), 0 0 24px var(--neon-blue);
+}
+
+.light-theme .glass-card:hover .experience-glow,
+.light-theme .glass-card:hover .education-glow,
+.light-theme .floating-card:hover .project-glow {
+    opacity: 0.08;
+    filter: blur(25px);
+}
+
+.light-theme .project-icon {
+    filter: drop-shadow(0 0 10px rgba(79, 70, 229, 0.4));
+}
+
+.light-theme .contact-icon {
+    filter: drop-shadow(0 0 6px rgba(79, 70, 229, 0.3));
+}
+
+.light-theme .social-icon {
+    filter: drop-shadow(0 0 6px rgba(79, 70, 229, 0.3));
+}
+
+.light-theme .title-icon {
+    filter: drop-shadow(0 0 8px rgba(79, 70, 229, 0.4));
+}
+
+.light-theme .background-icon {
+    filter: drop-shadow(0 0 8px rgba(79, 70, 229, 0.3));
+}
+
+.light-theme .download-icon {
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+}
+
+.light-theme .pulse-tag {
+    background: rgba(79, 70, 229, 0.1);
+    border: 1px solid rgba(79, 70, 229, 0.2);
+}
+
+.light-theme .floating-chip {
+    background: rgba(79, 70, 229, 0.05);
+    border: 1px solid rgba(79, 70, 229, 0.15);
+}
+
+/* Light theme specific keyframe overrides */
+@keyframes light-logoGlow {
+    0%, 100% { filter: drop-shadow(0 0 15px rgba(79, 70, 229, 0.4)); }
+    50% { filter: drop-shadow(0 0 30px rgba(79, 70, 229, 0.6)); }
+}
+
+@keyframes light-tagPulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(79, 70, 229, 0.2); }
+    50% { box-shadow: 0 0 15px rgba(79, 70, 229, 0.4); }
+}
+
+.light-theme .logo-text {
+    animation: light-logoGlow 2s ease-in-out infinite alternate;
+}
+
+.light-theme .pulse-tag {
+    animation: light-tagPulse 2s ease-in-out infinite;
+}
+
+/* Enhanced contrast for text elements in light theme */
+.light-theme .hero-title {
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+.light-theme .typing-text {
+    border-right-color: rgba(16, 185, 129, 0.8);
+}
+
+.light-theme .cursor {
+    text-shadow: 0 0 8px var(--neon-green);
+}
+
+/* Interactive hover effects enhancement for light theme */
+.light-theme .contact-item:hover {
+    background: rgba(79, 70, 229, 0.08);
+}
+
+.light-theme .interactive-button:hover .link-glow {
+    opacity: 0.1;
+}
+
+.light-theme .glass-card::before {
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+}
+
+.light-theme .floating-chip::before {
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.15), transparent);
+}
+
+.light-theme .contact-item::before {
+    background: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.1), transparent);
+}
+
  
