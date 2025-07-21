@@ -3,9 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Projects Portfolio</title>
-    <meta name="description" content="A showcase of my web development projects and experiments">
-    <meta name="keywords" content="portfolio, web development, projects, HTML, CSS, JavaScript">
+    <title>Hatef Mohammad Ali - AI Engineer & Full-Stack Developer</title>
+    <meta name="description" content="Portfolio of Hatef Mohammad Ali - AI Engineer, Full-Stack Developer, and Digital Marketing Expert showcasing innovative projects and AI solutions">
+    <meta name="keywords" content="AI Engineer, Full-Stack Developer, Digital Marketing, React, TypeScript, Gemini API, Portfolio, Hatef Mohammad Ali">
+    <link rel="apple-touch-icon" sizes="180x180" href="cv/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="cv/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="cv/icons/favicon-16x16.png">
+    <link rel="icon" href="cv/icons/favicon.ico">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -48,6 +52,60 @@
             text-align: center;
             margin-bottom: 60px;
             padding-top: 40px;
+        }
+        
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.3), 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: profileFloat 6s ease-in-out infinite;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.5), 0 12px 48px rgba(56, 189, 248, 0.2);
+        }
+        
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .profile-name {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            letter-spacing: -0.02em;
+        }
+        
+        .profile-title {
+            font-size: 1.3rem;
+            color: #38bdf8;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .profile-description {
+            font-size: 1.1rem;
+            color: #cbd5e1;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 30px;
         }
         
         .header h1 {
@@ -274,8 +332,17 @@
         }
         
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
+            .profile-name {
+                font-size: 2rem;
+            }
+            
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .profile-title {
+                font-size: 1.1rem;
             }
             
             .nav-links {
@@ -305,8 +372,15 @@
 <body>
     <div class="container">
         <header class="header">
-            <h1>My Projects Portfolio</h1>
-            <p>Welcome to my collection of projects and experiments</p>
+            <div class="profile-section">
+                <img src="hatef.jpg" alt="Hatef Mohammad Ali" class="profile-image" loading="lazy">
+                <h1 class="profile-name">Hatef Mohammad Ali</h1>
+                <h2 class="profile-title">AI Engineer & Full-Stack Developer</h2>
+                <p class="profile-description">
+                    Transforming ideas into intelligent solutions with cutting-edge AI technology. 
+                    Specialized in AI/ML development, full-stack applications, and digital marketing strategies.
+                </p>
+            </div>
             
             <div class="nav-links">
                 <a href="./cv/" class="nav-link">📄 View My CV</a>
@@ -315,16 +389,16 @@
             
             <section class="stats-section" id="stats">
                 <div class="stat-card">
-                    <div class="stat-number" id="projectCount">11</div>
-                    <div class="stat-label">Projects Completed</div>
+                    <div class="stat-number" id="projectCount">15+</div>
+                    <div class="stat-label">AI Projects</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="techCount">25+</div>
-                    <div class="stat-label">Technologies Used</div>
+                    <div class="stat-number" id="experienceCount">10+</div>
+                    <div class="stat-label">Years Experience</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-number" id="visitCount">---</div>
-                    <div class="stat-label">Site Visits</div>
+                    <div class="stat-number" id="usersCount">2.5M+</div>
+                    <div class="stat-label">Users Reached</div>
                 </div>
                 <div class="stat-card">
                     <div class="stat-number" id="updateCount">Recent</div>
@@ -396,11 +470,10 @@
                         Interactive dashboard exploring relationships between GDP, population, economic freedom, 
                         and political systems across 194 countries worldwide with advanced data visualization.
                     </p>
-                    <div class="project-tags">
-                        <span class="tag">Data Viz</span>
+                    <div class="prlet's oject-tags">
+                        <span class="tag">React JS</span>
                         <span class="tag">CSV Processing</span>
-                        <span class="tag">Global Data</span>
-                        <span class="tag">Economics</span>
+                        <span class="tag">Recharts</span>
                     </div>
                     <div class="project-links">
                         <a href="/public/country-data/" class="project-link" target="_blank" rel="noopener noreferrer">Live Demo</a>
@@ -419,7 +492,6 @@
                         <span class="tag">Business Intel</span>
                         <span class="tag">UAE</span>
                         <span class="tag">Oman</span>
-                        <span class="tag">Corporate Data</span>
                     </div>
                     <div class="project-links">
                         <a href="companies-data" class="project-link" target="_blank" rel="noopener noreferrer">Live Demo</a>
@@ -435,7 +507,6 @@
                         real-time filtering, and advanced search capabilities for global events.
                     </p>
                     <div class="project-tags">
-                        <span class="tag">Events</span>
                         <span class="tag">Multi-language</span>
                         <span class="tag">Search</span>
                         <span class="tag">Filtering</span>
@@ -457,7 +528,6 @@
                         <span class="tag">Chart.js</span>
                         <span class="tag">Geopolitics</span>
                         <span class="tag">Analytics</span>
-                        <span class="tag">Real-time</span>
                     </div>
                     <div class="project-links">
                         <a href="israel-iran-war" class="project-link" target="_blank" rel="noopener noreferrer">Live Demo</a>
@@ -509,7 +579,7 @@
 
 
         <footer class="footer">
-            <p>&copy; 2025 My Portfolio. Built with ❤️ and hosted on GitHub Pages.</p>
+            <p>&copy; 2025 Hatef Mohammad Ali. Built with ❤️ and hosted on GitHub Pages.</p>
             <p><small>Having issues? View the <a href="https://github.com/happydreammmer/public" target="_blank" style="color: rgba(255,255,255,0.8);">source code</a>.</small></p>
         </footer>
     </div>

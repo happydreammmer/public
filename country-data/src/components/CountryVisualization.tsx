@@ -3,8 +3,7 @@ import * as d3 from 'd3';
 import { 
   Box, 
   Typography, 
-  Paper,
-  Tooltip
+  Paper
 } from '@mui/material';
 import FilterPanel from './FilterPanel';
 
@@ -28,6 +27,7 @@ interface CountryVisualizationProps {
 const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState<number>(700); // was 900
   const [height, setHeight] = useState<number>(380); // was 500
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -479,18 +479,32 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
   // Helper functions for tooltip management
   
   const updateTooltipPosition = (event: MouseEvent, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>) => {
-    const mouseX = event.clientX;
-    const mouseY = event.clientY;
     const tooltipNode = tooltip.node();
+    const containerNode = containerRef.current;
 
-    if (tooltipNode) {
+    if (tooltipNode && containerNode) {
+      const containerRect = containerNode.getBoundingClientRect();
+      const mouseX = event.clientX - containerRect.left;
+      const mouseY = event.clientY - containerRect.top;
+      
       const tooltipWidth = tooltipNode.offsetWidth;
       const tooltipHeight = tooltipNode.offsetHeight;
-      const xOffset = mouseX + tooltipWidth > window.innerWidth ? -tooltipWidth - 15 : 15;
-      const yOffset = mouseY - tooltipHeight < 0 ? 15 : -tooltipHeight - 15;
+      
+      // Smart positioning to keep tooltip within container bounds
+      let xOffset = 15;
+      let yOffset = -tooltipHeight - 15;
+      
+      if (mouseX + tooltipWidth + 15 > containerRect.width) {
+        xOffset = -tooltipWidth - 15;
+      }
+      
+      if (mouseY - tooltipHeight - 15 < 0) {
+        yOffset = 15;
+      }
 
-      tooltip.style('left', `${mouseX + xOffset}px`);
-      tooltip.style('top', `${mouseY + yOffset}px`);
+      tooltip
+        .style('left', `${mouseX + xOffset}px`)
+        .style('top', `${mouseY + yOffset}px`);
     }
   };
   
@@ -529,6 +543,7 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
   return (
     <Paper 
       elevation={3} 
+      ref={containerRef}
       sx={{ 
         p: { xs: 1, sm: 2, md: 3 },
         borderRadius: 3,
@@ -557,24 +572,27 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
         />
       </Box>
       <svg ref={svgRef}></svg>
-      <Tooltip 
+      
+      {/* Custom tooltip */}
+      <div
         ref={tooltipRef}
-        title=""
-        placement="top"
-        arrow
-        open={!!activeTooltip}
-        sx={{
+        style={{
+          position: 'absolute',
           pointerEvents: 'none',
-          '& .MuiTooltip-tooltip': {
-            backgroundColor: 'rgba(15, 23, 42, 0.9)',
-            border: '1px solid rgba(56, 189, 248, 0.5)',
-            backdropFilter: 'blur(8px)',
-            borderRadius: 2
-          }
+          visibility: 'hidden',
+          opacity: 0,
+          backgroundColor: 'rgba(15, 23, 42, 0.95)',
+          border: '1px solid rgba(56, 189, 248, 0.5)',
+          borderRadius: '8px',
+          backdropFilter: 'blur(12px)',
+          boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+          fontSize: '14px',
+          fontWeight: 500,
+          zIndex: 1000,
+          maxWidth: '280px',
+          transition: 'all 0.15s ease-out'
         }}
-      >
-        <div />
-      </Tooltip>
+      />
     </Paper>
   );
 };

@@ -186,7 +186,16 @@ function App() {
           }
         }}
       >
-        <Container maxWidth="xl" sx={{ py: { xs: 2, md: 3 } }}>
+        <Container 
+          maxWidth={false} 
+          sx={{ 
+            py: { xs: 2, md: 3 }, 
+            px: { xs: 2, sm: 3, md: 4 },
+            maxWidth: '1400px',
+            mx: 'auto',
+            width: '100%'
+          }}
+        >
           <Fade in={true} timeout={800} nodeRef={mainContentRef}>
             <Box ref={mainContentRef}>
               {/* Compact Header Section */}

@@ -669,56 +669,7 @@ function loadProfilePhoto() {
     img.src = 'hatef.jpg';
 }
 
-// Download PDF function
-function downloadPDF() {
-    const button = document.querySelector('.futuristic-button');
-    const originalText = button.querySelector('.download-text').textContent;
-    const buttonIcon = button.querySelector('.download-icon');
-
-    button.querySelector('.download-text').textContent = 'Generating...';
-    button.disabled = true;
-    gsap.to(button, { scale: 0.95, duration: 0.1 });
-
-    // Element to be converted to PDF
-    const element = document.querySelector('.resume-container');
-
-    // Options for html2pdf
-    const opt = {
-        margin: [0, 0, 0, 0],
-        filename: 'Hatef_Kouzechi_CV.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { 
-            scale: 2, 
-            useCORS: true,
-            backgroundColor: null,
-            logging: false,
-        },
-        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-    };
-
-    // Use html2pdf to generate and automatically download the PDF
-    html2pdf()
-        .from(element)
-        .set(opt)
-        .save()                             // triggers the download
-        .then(() => {
-            // Restore button state on success
-            button.querySelector('.download-text').textContent = originalText;
-            button.disabled = false;
-            gsap.to(button, { scale: 1, duration: 0.2 });
-        })
-        .catch((error) => {
-            console.error('Error generating PDF:', error);
-            // Restore button state on error
-            button.querySelector('.download-text').textContent = 'Error!';
-            setTimeout(() => {
-                button.querySelector('.download-text').textContent = originalText;
-                button.disabled = false;
-                gsap.to(button, { scale: 1, duration: 0.2 });
-            }, 2000);
-        });
-}
+// Download PDF function moved to pdf.js
 
 
 // Smooth scrolling
@@ -877,6 +828,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-console.log('🚀 Welcome to Hatef\'s Interactive CV! 🚀');
+console.log('🚀 Welcome to Hatef Mohammad Ali\'s Interactive CV! 🚀');
 console.log('💡 Try the Konami code for a surprise!');
 console.log('🎨 Built with Three.js, GSAP, and lots of creativity!'); 

@@ -67,7 +67,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       backgroundColor: 'rgba(15, 23, 42, 0.6)',
       borderRadius: 2,
       color: '#f8fafc',
-      height: '56px', // Consistent height for all inputs
+      minHeight: '64px', // Increased consistent height for all inputs
       '& fieldset': {
         borderColor: 'rgba(255, 255, 255, 0.2)',
       },
@@ -81,12 +81,19 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     },
     '& .MuiInputLabel-root': {
       color: '#94a3b8',
+      fontWeight: 600,
+      fontSize: '1rem',
       '&.Mui-focused': {
         color: '#38bdf8',
       },
     },
-    '& .MuiOutlinedInput-input::placeholder': {
-      color: '#64748b',
+    '& .MuiOutlinedInput-input': {
+      fontSize: '1rem',
+      fontWeight: 500,
+      '&::placeholder': {
+        color: '#64748b',
+        opacity: 1,
+      }
     },
   };
 
@@ -149,7 +156,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         🔧 Interactive Filters & Controls
       </Typography>
       
-      <Grid container spacing={2} alignItems="center">
+      <Grid container spacing={3} alignItems="stretch">
         {/* Search Countries */}
         <Grid item xs={12} md={4}>
           <TextField
@@ -167,13 +174,20 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 </InputAdornment>
               ),
             }}
-            sx={inputStyles}
+            sx={{
+              ...inputStyles,
+              height: '100%',
+              '& .MuiOutlinedInput-root': {
+                ...inputStyles['& .MuiOutlinedInput-root'],
+                height: '100%'
+              }
+            }}
           />
         </Grid>
         
         {/* Political System */}
         <Grid item xs={12} md={4}>
-          <FormControl fullWidth size="medium">
+          <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
             <InputLabel 
               sx={{ 
                 color: '#94a3b8',
@@ -193,6 +207,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               onChange={(e) => setSelectedSystem(e.target.value as string)}
               sx={{
                 ...inputStyles['& .MuiOutlinedInput-root'],
+                height: '100%',
                 '& .MuiSvgIcon-root': {
                   color: '#94a3b8',
                 },
@@ -210,7 +225,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         
         {/* GDP Per Capita Range */}
         <Grid item xs={12} md={4}>
-          <FormControl fullWidth size="medium">
+          <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
             <InputLabel 
               sx={{ 
                 color: '#94a3b8',
@@ -230,6 +245,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               onChange={handleGdpRangeChange}
               sx={{
                 ...inputStyles['& .MuiOutlinedInput-root'],
+                height: '100%',
                 '& .MuiSvgIcon-root': {
                   color: '#94a3b8',
                 },
