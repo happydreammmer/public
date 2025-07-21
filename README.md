@@ -18,16 +18,17 @@ Access all applications through the main portfolio dashboard with beautiful anim
 ### 🤖 AI-Powered Applications
 
 #### 🎥 [DeepTube](./deeptube/)
-**YouTube Video Analysis Platform**
+**YouTube Content Capture Platform**
+- **Content Extraction**: Capture and analyze content from YouTube videos
 - **AI-Powered Analysis**: Video content understanding using Google Gemini
 - **Multiple Analysis Types**: Summary, transcript, questions, and custom prompts
 - **Interactive Chat**: Ask follow-up questions about video content
 - **Example Gallery**: Pre-loaded video examples
 
 #### 👁️ [OSEE](./osee/)
-**Visual Content Analysis Tool**
-- **Multi-format Support**: Images, documents, and visual content analysis
-- **AI Integration**: Powered by Google Gemini for intelligent insights
+**Gemini OCR - Text Extraction Tool**
+- **Multi-format Support**: Extract text from images and PDF files
+- **AI-Powered OCR**: Powered by Google Gemini for accurate text recognition
 - **File Processing**: Drag-and-drop interface with queue management
 - **Theme Support**: Dark/light mode with modern UI
 
@@ -146,7 +147,8 @@ public-directory/
 │
 └── 🚀 Deployment/
     ├── 📄 404.html                   # GitHub Pages 404 handler
-    └── 📄 .github/workflows/         # CI/CD pipeline
+    ├── 📄 .github/workflows/         # CI/CD pipeline
+    └── 📄 package.json               # Workspace configuration & build scripts
 ```
 
 ## 🚀 Development & Deployment
@@ -271,11 +273,13 @@ VITE_GEMINI_API_KEY=your_api_key_here
 ### Build Configuration
 - **Vite**: Modern build tool for React projects
 - **TypeScript**: Type safety and enhanced development
+- **Build Output**: Projects build to `dist/` or `build/` directories depending on configuration
 - **GitHub Pages**: Base path configuration for deployment
 - **Workspace Management**: npm workspaces for monorepo structure
 
 ### Deployment
-- **GitHub Pages**: Automated deployment via GitHub Actions
+- **GitHub Pages**: Manual deployment via npm scripts
+- **GitHub Actions**: Automated CI/CD pipeline (see `.github/workflows/deploy.yml`)
 - **Static Hosting**: Compatible with Netlify, Vercel, Surge.sh
 - **Custom Servers**: Standard static file serving
 
@@ -327,4 +331,4 @@ For questions, suggestions, or collaboration opportunities, please create an iss
 
 ---
 
-**Updated**: January 2025 | **Applications**: 12+ | **Stack**: React + TypeScript + AI
+**Updated**: January 2025 | **Applications**: 11 | **Stack**: React + TypeScript + AI
