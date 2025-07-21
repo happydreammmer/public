@@ -45,7 +45,7 @@ For HTML/JS projects (companies-data, event-hunter, israel-iran-war):
 ### Monorepo Structure
 - Uses npm workspaces defined in root `package.json`
 - Each React project has its own dependencies but shares common tooling
-- Workspace projects: osee, meeting-agent, dictator, country-data, deeptube
+- Workspace projects: osee, meeting-agent, dictator, country-data, deeptube, gemini-js-sdk-doc
 
 ### Technology Stack
 - **Frontend Framework**: React 18+ with TypeScript
@@ -101,6 +101,12 @@ Projects using external APIs follow this pattern:
 - **Base Path**: Configured in vite.config.ts for React projects
 - **404 Handling**: 404.html for client-side routing support
 - **Build Process**: All React projects build to `dist/` directories
+- **Static Assets**: Use relative paths (e.g., `./image.jpg`) for proper GitHub Pages deployment
+
+### Common Deployment Issues
+- **Image Loading**: Profile images and assets should use relative paths (`./hatef.jpg`) to work correctly on GitHub Pages
+- **JavaScript Errors**: Check for missing DOM elements before referencing them in scripts
+- **Path Resolution**: GitHub Pages serves from `/public/` subdirectory, ensure all links are relative
 
 ### Environment Variables
 ```bash
@@ -181,6 +187,12 @@ public-directory/
 - **Static Projects**: Manual testing across browsers
 - **Mobile Testing**: Responsive design verification
 - **Accessibility**: Screen reader and keyboard navigation testing
+
+### Debugging
+- **Console Logging**: Check browser console for JavaScript errors
+- **Image Loading**: Verify image paths are correct and files exist
+- **GitHub Pages**: Test locally first, then check deployed version
+- **Path Issues**: Use relative paths (`./`) for assets in the main portfolio page
 
 ## Important Instructions
 - ALWAYS prefer editing existing files over creating new ones

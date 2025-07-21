@@ -373,7 +373,7 @@
     <div class="container">
         <header class="header">
             <div class="profile-section">
-                <img src="hatef.jpg" alt="Hatef Mohammad Ali" class="profile-image" loading="lazy">
+                <img src="./hatef.jpg" alt="Hatef Mohammad Ali" class="profile-image" loading="lazy">
                 <h1 class="profile-name">Hatef Mohammad Ali</h1>
                 <h2 class="profile-title">AI Engineer & Full-Stack Developer</h2>
                 <p class="profile-description">
@@ -610,7 +610,8 @@
             let visits = localStorage.getItem('portfolioVisits') || 0;
             visits = parseInt(visits) + 1;
             localStorage.setItem('portfolioVisits', visits);
-            document.getElementById('visitCount').textContent = visits;
+            // Element doesn't exist, so we'll skip this for now
+            // document.getElementById('visitCount').textContent = visits;
         }
         
         function updateLastModified() {
