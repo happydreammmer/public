@@ -6,8 +6,63 @@ let scene, camera, renderer, particles, mouseFollower, cursorTrail = [];
 let isLoading = true;
 let animationId;
 
+// Theme toggle functionality
+function initThemeToggle() {
+    const toggleBtn = document.getElementById('theme-toggle');
+    const themeIcon = document.querySelector('.theme-icon');
+    
+    if (!toggleBtn || !themeIcon) {
+        console.warn('Theme toggle elements not found');
+        return;
+    }
+    
+    // Load saved theme
+    const savedTheme = localStorage.getItem('cv-theme') || 'dark';
+    if (savedTheme === 'light') {
+        document.documentElement.classList.add('light-theme');
+        themeIcon.textContent = '☀️';
+    }
+    
+    // Toggle functionality
+    toggleBtn.addEventListener('click', () => {
+        const isLight = document.documentElement.classList.toggle('light-theme');
+        themeIcon.textContent = isLight ? '☀️' : '🌙';
+        
+        // Save preference
+        localStorage.setItem('cv-theme', isLight ? 'light' : 'dark');
+        
+        // Animate transition if GSAP is available
+        if (typeof gsap !== 'undefined') {
+            gsap.to(document.body, {
+                duration: 0.5,
+                ease: 'power2.inOut'
+            });
+        }
+    });
+    
+    // Add hover effects if GSAP is available
+    if (typeof gsap !== 'undefined') {
+        toggleBtn.addEventListener('mouseenter', () => {
+            gsap.to(toggleBtn, {
+                scale: 1.1,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+        
+        toggleBtn.addEventListener('mouseleave', () => {
+            gsap.to(toggleBtn, {
+                scale: 1,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+    }
+}
+
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+    initThemeToggle();
     initLoadingScreen();
     initThreeJS();
     initParticles();
@@ -248,73 +303,15 @@ function initParticles() {
     });
 }
 
-// Custom Cursor
+// Custom Cursor - Disabled
 function initCursor() {
-    if (window.innerWidth <= 768) return;
-    
-    const cursor = document.getElementById('mouse-follower');
-    const trail = document.getElementById('cursor-trail');
-    
-    let mouseX = 0, mouseY = 0;
-    let cursorX = 0, cursorY = 0;
-    
-    document.addEventListener('mousemove', (e) => {
-        mouseX = e.clientX;
-        mouseY = e.clientY;
-        
-        // Create trail effect
-        createCursorTrail(mouseX, mouseY);
-    });
-    
-    function updateCursor() {
-        cursorX += (mouseX - cursorX) * 0.1;
-        cursorY += (mouseY - cursorY) * 0.1;
-        
-        cursor.style.left = cursorX + 'px';
-        cursor.style.top = cursorY + 'px';
-        
-        requestAnimationFrame(updateCursor);
-    }
-    
-    updateCursor();
-    
-    // Interactive cursor effects
-    document.querySelectorAll('a, button, .interactive').forEach(element => {
-        element.addEventListener('mouseenter', () => {
-            gsap.to(cursor, { scale: 2, duration: 0.3 });
-        });
-        
-        element.addEventListener('mouseleave', () => {
-            gsap.to(cursor, { scale: 1, duration: 0.3 });
-        });
-    });
+    // Cursor functionality disabled for better user experience
+    return;
 }
 
 function createCursorTrail(x, y) {
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail-dot';
-    trail.style.cssText = `
-        position: fixed;
-        width: 4px;
-        height: 4px;
-        background: #bf00ff;
-        border-radius: 50%;
-        pointer-events: none;
-        z-index: 9998;
-        left: ${x}px;
-        top: ${y}px;
-        mix-blend-mode: screen;
-    `;
-    
-    document.body.appendChild(trail);
-    
-    gsap.to(trail, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out',
-        onComplete: () => trail.remove()
-    });
+    // Trail functionality disabled
+    return;
 }
 
 // GSAP Animations

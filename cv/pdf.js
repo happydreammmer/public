@@ -41,11 +41,11 @@ function downloadPDF() {
 
     // Enhanced options for html2pdf
     const opt = {
-        margin: [0.5, 0.5, 0.5, 0.5],
+        margin: [0.3, 0.3, 0.3, 0.3],
         filename: 'Hatef_Mohammad_Ali_CV.pdf',
         image: { 
             type: 'jpeg', 
-            quality: 1.0 
+            quality: 0.98 
         },
         html2canvas: { 
             scale: 2,
@@ -55,19 +55,24 @@ function downloadPDF() {
             windowWidth: 1200,
             windowHeight: 1600,
             scrollX: 0,
-            scrollY: 0
+            scrollY: 0,
+            removeContainer: true,
+            async: true,
+            allowTaint: false,
+            foreignObjectRendering: false
         },
         jsPDF: { 
             unit: 'in', 
             format: 'a4', 
             orientation: 'portrait',
-            compress: true
+            compress: true,
+            precision: 2
         },
         pagebreak: { 
             mode: ['avoid-all', 'css', 'legacy'],
             before: '.page-break-before',
             after: '.page-break-after',
-            avoid: ['.experience-item', '.project-item', '.neon-card']
+            avoid: ['.experience-item', '.project-item', '.neon-card', '.glass-card', '.floating-card']
         }
     };
 
@@ -132,14 +137,17 @@ function preparePDFLayout() {
     document.documentElement.classList.add('light-theme');
     document.body.classList.add('pdf-mode');
     
-    // Hide complex elements
-    hideComplexElements();
-    
-    // Simplify animations
-    disableAnimations();
-    
-    // Optimize layout for PDF
-    optimizeForPDF();
+    // Wait a moment for theme to apply
+    setTimeout(() => {
+        // Hide complex elements
+        hideComplexElements();
+        
+        // Simplify animations
+        disableAnimations();
+        
+        // Optimize layout for PDF
+        optimizeForPDF();
+    }, 100);
 }
 
 function restoreOriginalLayout() {
@@ -232,14 +240,18 @@ function optimizeForPDF() {
     const heroSection = document.querySelector('.hero-section');
     if (heroSection) {
         heroSection.style.height = 'auto';
-        heroSection.style.padding = '40px 20px';
+        heroSection.style.minHeight = 'auto';
+        heroSection.style.padding = '30px 20px';
+        heroSection.style.pageBreakAfter = 'always';
     }
     
     // Optimize main container layout
     const mainContainer = document.querySelector('.main-container');
     if (mainContainer) {
         mainContainer.style.display = 'block';
-        mainContainer.style.padding = '20px';
+        mainContainer.style.padding = '15px';
+        mainContainer.style.maxWidth = '100%';
+        mainContainer.style.width = '100%';
     }
     
     // Stack sidebar content
@@ -247,16 +259,31 @@ function optimizeForPDF() {
     if (sidebar) {
         sidebar.style.position = 'static';
         sidebar.style.width = '100%';
-        sidebar.style.marginBottom = '20px';
+        sidebar.style.marginBottom = '15px';
         sidebar.style.pageBreakInside = 'avoid';
+        sidebar.style.background = '#ffffff';
+        sidebar.style.border = '1px solid #e2e8f0';
     }
     
     // Optimize content grid
     const contentGrid = document.querySelector('.content-grid');
     if (contentGrid) {
         contentGrid.style.gridTemplateColumns = '1fr';
-        contentGrid.style.gap = '20px';
+        contentGrid.style.gap = '15px';
+        contentGrid.style.display = 'block';
     }
+    
+    // Ensure proper text colors
+    document.querySelectorAll('.glitch-text, .holographic-text').forEach(el => {
+        el.style.color = '#1f2937';
+        el.style.background = 'none';
+        el.style.webkitTextFillColor = 'initial';
+    });
+    
+    // Fix company colors
+    document.querySelectorAll('.company').forEach(el => {
+        el.style.color = '#3b82f6';
+    });
     
     // Add page breaks
     addPageBreaks();
@@ -302,64 +329,7 @@ function addPageBreaks() {
     }
 }
 
-// Theme toggle functionality
-function initThemeToggle() {
-    const toggleBtn = document.getElementById('theme-toggle');
-    const themeIcon = document.querySelector('.theme-icon');
-    
-    if (!toggleBtn || !themeIcon) {
-        console.warn('Theme toggle elements not found');
-        return;
-    }
-    
-    // Load saved theme
-    const savedTheme = localStorage.getItem('cv-theme') || 'dark';
-    if (savedTheme === 'light') {
-        document.documentElement.classList.add('light-theme');
-        themeIcon.textContent = '☀️';
-    }
-    
-    // Toggle functionality
-    toggleBtn.addEventListener('click', () => {
-        const isLight = document.documentElement.classList.toggle('light-theme');
-        themeIcon.textContent = isLight ? '☀️' : '🌙';
-        
-        // Save preference
-        localStorage.setItem('cv-theme', isLight ? 'light' : 'dark');
-        
-        // Animate transition if GSAP is available
-        if (typeof gsap !== 'undefined') {
-            gsap.to(document.body, {
-                duration: 0.5,
-                ease: 'power2.inOut'
-            });
-        }
-    });
-    
-    // Add hover effects if GSAP is available
-    if (typeof gsap !== 'undefined') {
-        toggleBtn.addEventListener('mouseenter', () => {
-            gsap.to(toggleBtn, {
-                scale: 1.1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-        
-        toggleBtn.addEventListener('mouseleave', () => {
-            gsap.to(toggleBtn, {
-                scale: 1,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-    }
-}
-
-// Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    initThemeToggle();
-});
+// Theme toggle is handled in script.js
 
 // Override the original downloadPDF function
 if (typeof window !== 'undefined') {

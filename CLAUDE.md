@@ -21,13 +21,14 @@ npm run build:meeting-agent
 npm run build:osee
 npm run build:country-data
 npm run build:deeptube
+npm run build:gemini-js-sdk-doc
 
 # Deploy to GitHub Pages
 npm run deploy
 ```
 
 ### Individual Project Development
-For React/TypeScript projects (osee, meeting-agent, dictator, deeptube, country-data):
+For React/TypeScript projects (osee, meeting-agent, dictator, deeptube, country-data, gemini-js-sdk-doc):
 ```bash
 cd [project-name]
 npm install
@@ -36,7 +37,7 @@ npm run build    # Build for production
 npm run preview  # Preview production build
 ```
 
-For HTML/JS projects (companies-data, event-hunter, israel-iran-war):
+For HTML/JS projects (companies-data, event-hunter, israel-iran-war, business-data, cv):
 - Open index.html directly or use a local server
 - No build process required
 
@@ -79,9 +80,9 @@ Projects using external APIs follow this pattern:
 
 ## Project-Specific Notes
 
-### AI-Powered Projects (osee, meeting-agent, dictator, deeptube)
+### AI-Powered Projects (osee, meeting-agent, dictator, deeptube, gemini-js-sdk-doc)
 - Require Google Gemini API key
-- Handle file uploads, audio recording, or video analysis
+- Handle file uploads, audio recording, video analysis, or documentation generation
 - Include real-time processing capabilities
 
 ### Data Visualization Projects (country-data, israel-iran-war)
@@ -89,7 +90,7 @@ Projects using external APIs follow this pattern:
 - Responsive charts that adapt to screen size
 - Interactive filtering and data exploration
 
-### Static Projects (companies-data, event-hunter)
+### Static Projects (companies-data, event-hunter, business-data, cv)
 - Pure HTML/CSS/JavaScript
 - No build process required
 - Can be served from any static host
@@ -136,6 +137,7 @@ npm run build
 # Individual project builds
 npm run build:deeptube
 npm run build:osee
+npm run build:gemini-js-sdk-doc
 # ... etc
 
 # Deploy to GitHub Pages
@@ -145,13 +147,18 @@ npm run deploy
 ### File Structure After Build
 ```
 public-directory/
-├── index.html                 # Main portfolio
-├── deeptube/dist/            # Built React app
-├── osee/dist/                # Built React app
-├── country-data/dist/        # Built React app
-├── event-hunter/index.html   # Static app
-├── companies-data/index.html # Static app
-└── ... other projects
+├── index.html                     # Main portfolio
+├── deeptube/dist/                # Built React app
+├── osee/dist/                    # Built React app
+├── country-data/dist/            # Built React app
+├── gemini-js-sdk-doc/dist/       # Built React app
+├── dictator/dist/                # Built React app
+├── meeting-agent/dist/           # Built React app
+├── event-hunter/index.html       # Static app
+├── companies-data/index.html     # Static app
+├── business-data/                # Static app directory
+├── cv/index.html                 # Static app
+└── israel-iran-war/index.html    # Static app
 ```
 
 ## Development Workflow

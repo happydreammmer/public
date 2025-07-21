@@ -346,8 +346,38 @@
             }
             
             .nav-links {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: center;
+                gap: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-link {
+                flex: 1;
+                min-width: 120px;
+                max-width: 140px;
+                text-align: center;
+                font-size: 0.9rem;
+                padding: 8px 12px;
+            }
+            
+            .stats-section {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin: 30px 0;
+            }
+            
+            .stat-card {
+                padding: 15px 10px;
+            }
+            
+            .stat-number {
+                font-size: 1.6rem;
+            }
+            
+            .stat-label {
+                font-size: 0.8rem;
             }
             
             .projects-grid {
@@ -377,14 +407,14 @@
                 <h1 class="profile-name">Hatef Mohammad Ali</h1>
                 <h2 class="profile-title">AI Engineer & Full-Stack Developer</h2>
                 <p class="profile-description">
-                    Transforming ideas into intelligent solutions with cutting-edge AI technology. 
-                    Specialized in AI/ML development, full-stack applications, and digital marketing strategies.
+                    Transform ideas into AI solutions. 
+                    Specialized in AI/ML development, full-stack applications, and digital marketing.
                 </p>
             </div>
             
             <div class="nav-links">
-                <a href="./cv/" class="nav-link">📄 View My CV</a>
-                <a href="https://github.com/happydreammmer" target="_blank" class="nav-link">💻 GitHub</a>
+                <a href="./cv/" class="nav-link">📄 My CV</a>
+                <a href="https://github.com/happydreammmer" target="_blank" class="nav-link">💻 My GitHub Profile</a>
             </div>
             
             <section class="stats-section" id="stats">
