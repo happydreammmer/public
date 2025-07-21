@@ -161,7 +161,7 @@ const companies = [
         "size": "medium",
         "priority": "medium",
         "sector": "investment-finance",
-        "website": "https://www.ominvest.net",
+        "website": "https://ominvest.com/",
         "description": "One of the oldest and largest investment holding companies in the region, with significant stakes in banking, insurance, leasing, and real estate. [14]",
         "address": "P.O. Box 3886, Ruwi, PC 112, Muscat, Sultanate of Oman",
         "social": [
@@ -176,7 +176,7 @@ const companies = [
         "size": "medium",
         "priority": "medium",
         "sector": "investment-finance",
-        "website": "https://www.mfcoman.com",
+        "website": "https://muscatfinance.com/",
         "description": "The first non-banking financial institution in Oman, offering a range of services including corporate lending, asset financing, trade finance, and consumer loans.",
         "address": "P.O. Box 108, PC 112, Ruwi, Muscat, Sultanate of Oman",
         "social": [
@@ -191,7 +191,7 @@ const companies = [
         "size": "medium",
         "priority": "medium",
         "sector": "investment-finance",
-        "website": "https://www.alanwar.com.om",
+        "website": "https://alanwar.om/",
         "description": "A leading investment holding company with a diversified portfolio of investments in various sectors including financial services, industrial, and real estate within Oman and the broader region.",
         "address": "P.O. Box 1508, PC 112, Ruwi, Muscat, Sultanate of Oman",
         "social": [
