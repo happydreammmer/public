@@ -666,8 +666,6 @@ function loadProfilePhoto() {
     img.src = 'hatef.jpg';
 }
 
-// Download PDF function moved to pdf.js
-
 
 // Smooth scrolling
 function initSmoothScrolling() {
