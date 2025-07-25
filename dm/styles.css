@@ -619,8 +619,8 @@ body {
     }
     
     .experience-item {
-        margin-bottom: 4mm;
-        padding-bottom: 4mm;
+        margin-bottom: 3mm;
+        padding-bottom: 3mm;
         page-break-inside: avoid;
         border-bottom: 0.5px solid var(--border-light) !important;
     }
@@ -630,27 +630,46 @@ body {
         margin-bottom: 0;
     }
     
+    .job-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1.5mm;
+        gap: 4mm;
+    }
+    
     .job-title {
         font-size: 12px;
         font-weight: 600;
-        margin-bottom: 1mm;
+        margin: 0;
+        flex: 1;
+    }
+    
+    .company-period {
+        display: flex;
+        align-items: center;
+        gap: 2mm;
+        flex-shrink: 0;
     }
     
     .company {
         color: var(--primary-blue) !important;
-        font-size: 11px;
+        font-size: 10px;
+        font-weight: 500;
     }
     
     .period {
         background-color: #f1f5f9 !important;
-        font-size: 10px;
-        padding: 1mm 2mm;
+        font-size: 9px;
+        padding: 0.5mm 1.5mm;
+        border-radius: 2mm;
+        white-space: nowrap;
     }
     
     .job-description {
         font-size: 10px;
         line-height: 1.4;
-        margin-top: 2mm;
+        margin-top: 1mm;
     }
     
     /* Right column sections */
