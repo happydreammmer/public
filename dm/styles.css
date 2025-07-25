@@ -451,18 +451,18 @@ body {
         margin: 0;
         padding: 0;
         box-shadow: none;
-        page-break-inside: avoid;
     }
     
     .cv-header {
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-orange) 100%) !important;
         color: white !important;
         padding: 20px;
-        page-break-inside: avoid;
+        page-break-after: avoid;
     }
     
     .cv-main {
-        padding: 20px;
+        padding: 20px 20px 0 20px;
+        page-break-before: avoid;
     }
     
     .content-grid {
@@ -546,16 +546,55 @@ body {
     
     /* Page break control */
     .experience-section {
-        page-break-inside: avoid;
+        page-break-inside: auto;
     }
     
     .right-column {
-        page-break-inside: avoid;
+        page-break-inside: auto;
+    }
+    
+    .left-column {
+        page-break-inside: auto;
     }
     
     @page {
         size: A4;
         margin: 15mm;
+    }
+    
+    /* Better page flow control */
+    .header-content {
+        margin-bottom: 0;
+    }
+    
+    .profile-section {
+        margin-bottom: 12px;
+    }
+    
+    .summary-section {
+        margin-top: 8px;
+    }
+    
+    .content-grid {
+        margin-top: 0;
+    }
+    
+    /* Prevent orphaned content */
+    .skills-category,
+    .industry-item,
+    .education-item {
+        page-break-inside: avoid;
+        margin-bottom: 12px;
+    }
+    
+    /* Optimize spacing for print */
+    .experience-item {
+        margin-bottom: 12px;
+        padding-bottom: 12px;
+    }
+    
+    .skills-section {
+        margin-bottom: 16px;
     }
 }
 
