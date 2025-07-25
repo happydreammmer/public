@@ -75,6 +75,7 @@ jobs:
           mkdir -p public/companies-data
           mkdir -p public/event-hunter
           mkdir -p public/israel-iran-war
+          mkdir -p public/dm
           cp -r deeptube/build/. public/deeptube/
           cp -r dictator/build/. public/dictator/
           cp -r meeting-agent/build/. public/meeting-agent/
@@ -83,6 +84,7 @@ jobs:
           cp -r gemini-js-sdk-doc/build/. public/gemini-js-sdk-doc/
           cp -r country-data/public/data/* public/country-data/data/
           cp -r cv public/
+          cp -r dm/* public/dm/
           cp -r business-data/* public/business-data/
           cp -r companies-data/* public/companies-data/
           cp -r event-hunter/* public/event-hunter/
