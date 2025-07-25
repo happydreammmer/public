@@ -94,6 +94,11 @@ Access all applications through the main portfolio dashboard with beautiful anim
 - **Responsive Design**: Mobile-optimized layout
 - **Professional Showcase**: Skills and experience highlight
 
+#### 💬 [DM Page](./dm/)
+**Direct Message Page**
+- **Simple Interface**: A clean and simple page
+- **Direct Contact**: Easy way to get in touch
+
 #### 📊 [Business Data](./business-data/)
 **Business Analytics Hub**
 - **AI Scaling Analysis**: Business growth insights
@@ -106,7 +111,7 @@ Access all applications through the main portfolio dashboard with beautiful anim
 This repository uses npm workspaces to manage multiple React/TypeScript applications:
 
 - **Workspace Projects**: deeptube, osee, meeting-agent, dictator, country-data, gemini-js-sdk-doc
-- **Static Projects**: event-hunter, companies-data, israel-iran-war, business-data, cv
+- **Static Projects**: event-hunter, companies-data, israel-iran-war, business-data, cv, dm
 - **Shared Dependencies**: Common build tools and deployment configuration
 
 ### Technology Stack
@@ -143,6 +148,7 @@ public-directory/
 │
 ├── 🔧 Additional Tools/
 │   ├── 📄 cv/                        # Professional resume (HTML/JS)
+│   ├── 💬 dm/                        # Direct message page (HTML/CSS)
 │   └── 📊 business-data/             # Business analytics (HTML/JS)
 │
 └── 🚀 Deployment/
