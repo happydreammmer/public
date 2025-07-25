@@ -95,9 +95,9 @@ Access all applications through the main portfolio dashboard with beautiful anim
 - **Professional Showcase**: Skills and experience highlight
 
 #### 💬 [DM Page](./dm/)
-**Direct Message Page**
+**Digital Marketing CV**
 - **Simple Interface**: A clean and simple page
-- **Direct Contact**: Easy way to get in touch
+- **PDF Download**: Easy way to download resume
 
 #### 📊 [Business Data](./business-data/)
 **Business Analytics Hub**
@@ -148,7 +148,7 @@ public-directory/
 │
 ├── 🔧 Additional Tools/
 │   ├── 📄 cv/                        # Professional resume (HTML/JS)
-│   ├── 💬 dm/                        # Direct message page (HTML/CSS)
+│   ├── 💬 dm/                        # Digital Marketing resume
 │   └── 📊 business-data/             # Business analytics (HTML/JS)
 │
 └── 🚀 Deployment/
