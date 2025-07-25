@@ -48,11 +48,11 @@ body {
 
 /* Container */
 .cv-container {
-    max-width: 210mm;
+    max-width: 900px;
     margin: 0 auto;
     background-color: var(--background-white);
     box-shadow: 0 0 20px var(--shadow);
-    min-height: 297mm;
+    min-height: 100vh;
 }
 
 /* Header Section */
@@ -70,7 +70,7 @@ body {
 
 .profile-section {
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: var(--spacing-lg);
 }
 
@@ -378,35 +378,62 @@ body {
     font-weight: bold;
 }
 
-/* Print Actions */
-.print-actions {
-    padding: var(--spacing-lg);
-    text-align: center;
-    background-color: var(--background-light);
+/* Fixed Download Button */
+.download-actions {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    z-index: 1000;
 }
 
-.print-btn {
+.download-btn {
     background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-orange) 100%);
     color: white;
     border: none;
-    padding: var(--spacing-md) var(--spacing-xl);
-    border-radius: 6px;
-    font-size: var(--font-size-base);
-    font-weight: 500;
+    padding: 12px 20px;
+    border-radius: 50px;
+    font-size: var(--font-size-small);
+    font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(14, 165, 233, 0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
 }
 
-.print-btn:hover {
+.download-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3);
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4);
 }
 
-/* Responsive Design */
+.download-btn:active {
+    transform: translateY(0);
+}
+
+/* Tablet Design */
+@media (max-width: 1024px) {
+    .cv-container {
+        max-width: 100%;
+        margin: 0 16px;
+    }
+}
+
+/* Mobile Design */
 @media (max-width: 768px) {
     .cv-container {
         margin: 0;
         box-shadow: none;
+        max-width: 100%;
+    }
+    
+    .cv-header {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+    
+    .cv-main {
+        padding: var(--spacing-lg) var(--spacing-md);
     }
     
     .content-grid {
@@ -418,16 +445,64 @@ body {
         flex-direction: column;
         text-align: center;
         gap: var(--spacing-md);
+        align-items: center;
     }
     
     .contact-details {
         justify-content: center;
+        flex-wrap: wrap;
     }
     
     .company-period {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--spacing-xs);
+    }
+    
+    .name {
+        font-size: 20px;
+    }
+    
+    .title {
+        font-size: var(--font-size-base);
+    }
+    
+    .download-actions {
+        bottom: 16px;
+        right: 16px;
+    }
+    
+    .download-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .cv-header {
+        padding: var(--spacing-md);
+    }
+    
+    .cv-main {
+        padding: var(--spacing-md);
+    }
+    
+    .profile-photo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .contact-details {
+        flex-direction: column;
+        align-items: center;
+        gap: var(--spacing-xs);
+    }
+    
+    .skills-section,
+    .industry-section,
+    .education-section,
+    .achievements-section {
+        padding: var(--spacing-md);
     }
 }
 
@@ -456,19 +531,23 @@ body {
     .cv-header {
         background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-orange) 100%) !important;
         color: white !important;
-        padding: 20px;
+        padding: 0;
+        margin: 0;
         page-break-after: avoid;
+        break-inside: avoid;
     }
     
     .cv-main {
-        padding: 20px 20px 0 20px;
+        padding: 0;
         page-break-before: avoid;
+        margin-top: 0;
     }
     
     .content-grid {
         display: grid;
         grid-template-columns: 2fr 1fr;
-        gap: 24px;
+        gap: 4mm;
+        margin-top: 4mm;
     }
     
     .section-title {
@@ -516,7 +595,7 @@ body {
         color: var(--primary-orange) !important;
     }
     
-    .print-actions {
+    .download-actions {
         display: none;
     }
     
@@ -559,24 +638,21 @@ body {
     
     @page {
         size: A4;
-        margin: 15mm;
+        margin: 10mm;
     }
     
     /* Better page flow control */
     .header-content {
-        margin-bottom: 0;
+        margin: 0;
+        padding: 8mm;
     }
     
     .profile-section {
-        margin-bottom: 12px;
+        margin-bottom: 4mm;
     }
     
     .summary-section {
-        margin-top: 8px;
-    }
-    
-    .content-grid {
-        margin-top: 0;
+        margin-top: 2mm;
     }
     
     /* Prevent orphaned content */
