@@ -62,17 +62,22 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
     // Monarchies (all types of monarchies)
     if (systemLower.includes('monarchy') || 
         systemLower.includes('monarch') ||
-        systemLower.includes('kingdom')) {
+        systemLower.includes('kingdom') ||
+        systemLower.includes('co-principality')) {
       return 'Monarchies';
     }
     
-    // Republics (all types of republics)
-    if (systemLower.includes('republic')) {
+    // Republics (all types of republics, democracies, and other democratic systems)
+    if (systemLower.includes('republic') ||
+        systemLower.includes('democracy') ||
+        systemLower.includes('federal') ||
+        systemLower.includes('parliamentary') ||
+        systemLower.includes('presidential')) {
       return 'Republics';
     }
     
-    // Others (everything else)
-    return 'Others';
+    // Default fallback - should not be reached with proper categorization
+    return 'Republics';
   };
   
   // Process data with simplified political systems
@@ -83,12 +88,12 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
   }));
   
   // Extract simplified political systems for filtering
-  const politicalSystems = ['All', 'Monarchies', 'Republics', 'One Party Communism', 'Theocracy', 'No Government', 'Others'];
+  const politicalSystems = ['All', 'Monarchies', 'Republics', 'One Party Communism', 'Theocracy', 'No Government'];
   
   // Refined color palette with better contrast and accessibility
   const colorScale = d3.scaleOrdinal<string>()
-    .domain(['Monarchies', 'Republics', 'One Party Communism', 'Theocracy', 'No Government', 'Others'])
-    .range(['#8b5cf6', '#22c55e', '#dc2626', '#f59e0b', '#6b7280', '#0ea5e9']);
+    .domain(['Monarchies', 'Republics', 'One Party Communism', 'Theocracy', 'No Government'])
+    .range(['#8b5cf6', '#22c55e', '#dc2626', '#f59e0b', '#6b7280']);
   
   const showTooltip = useCallback((event: MouseEvent, d: ProcessedCountryData, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>, colorScale: d3.ScaleOrdinal<string, unknown>) => {
     tooltip
@@ -138,8 +143,8 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
       .style('opacity', 0)
       .remove();
     
-    // Create SVG with optimized margins
-    const margin = { top: 25, right: isMobile ? 25 : 190, bottom: isMobile ? 70 : 60, left: isMobile ? 70 : 90 };
+    // Create SVG with optimized margins - no right margin for legend
+    const margin = { top: 25, right: 25, bottom: isMobile ? 90 : 80, left: isMobile ? 70 : 90 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     
@@ -307,6 +312,81 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
     const circlesGroup = chartGroup.append('g')
         .attr('clip-path', 'url(#chart-area)');
     
+    // Add invisible overlay for better hover detection
+    const hoverOverlay = chartGroup.append('rect')
+      .attr('width', innerWidth)
+      .attr('height', innerHeight)
+      .attr('fill', 'transparent')
+      .style('pointer-events', 'all')
+      .on('mousemove', function(event) {
+        const [mouseX, mouseY] = d3.pointer(event, this);
+        
+        // Find the closest country within hover radius
+        let closestCountry: ProcessedCountryData | null = null;
+        let minDistance = Infinity;
+        const hoverRadius = 25; // Increased hover radius for better detection
+        
+        filteredData.forEach(d => {
+          const x = xScale(d.economic_freedom);
+          const y = yScale(d.gdp_per_capita);
+          const distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
+          
+          if (distance < hoverRadius && distance < minDistance) {
+            minDistance = distance;
+            closestCountry = d;
+          }
+        });
+        
+        if (closestCountry && tooltipRef.current) {
+          // Show tooltip for closest country
+          showTooltip(event, closestCountry, d3.select(tooltipRef.current), colorScale);
+          
+          // Highlight the closest country
+          circlesGroup.selectAll('circle')
+            .transition()
+            .duration(100)
+            .attr('stroke-width', (d: ProcessedCountryData) => d.country === closestCountry!.country ? 4 : 2)
+            .attr('opacity', (d: ProcessedCountryData) => d.country === closestCountry!.country ? 1 : opacityValue * 0.7)
+            .style('filter', (d: ProcessedCountryData) => 
+              d.country === closestCountry!.country ? 
+              'drop-shadow(0 5px 15px rgba(0,0,0,0.4))' : 
+              'drop-shadow(0 3px 8px rgba(0,0,0,0.25))'
+            );
+        } else if (tooltipRef.current) {
+          // Hide tooltip if no country is close enough
+          d3.select(tooltipRef.current)
+            .transition()
+            .duration(200)
+            .style('opacity', 0)
+            .style('visibility', 'hidden');
+          
+          // Reset all circles
+          circlesGroup.selectAll('circle')
+            .transition()
+            .duration(200)
+            .attr('stroke-width', 2)
+            .attr('opacity', opacityValue)
+            .style('filter', 'drop-shadow(0 3px 8px rgba(0,0,0,0.25))');
+        }
+      })
+      .on('mouseleave', function() {
+        if (tooltipRef.current) {
+          d3.select(tooltipRef.current)
+            .transition()
+            .duration(200)
+            .style('opacity', 0)
+            .style('visibility', 'hidden');
+        }
+        
+        // Reset all circles
+        circlesGroup.selectAll('circle')
+          .transition()
+          .duration(200)
+          .attr('stroke-width', 2)
+          .attr('opacity', opacityValue)
+          .style('filter', 'drop-shadow(0 3px 8px rgba(0,0,0,0.25))');
+      });
+    
     // Draw circles with enhanced styling and enter/exit animations
     circlesGroup.selectAll<SVGCircleElement, ProcessedCountryData>('circle')
       .data(filteredData, d => d.country)
@@ -342,37 +422,7 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
             .remove()
           )
       )
-      .on('mouseover', function(event, d) {
-        if (tooltipRef.current) {
-          showTooltip(event, d, d3.select(tooltipRef.current), colorScale);
-        }
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr('stroke-width', 4)
-          .attr('opacity', 1)
-          .style('filter', 'drop-shadow(0 5px 15px rgba(0,0,0,0.4))');
-      })
-      .on('mouseout', function() {
-        if (tooltipRef.current) {
-          d3.select(tooltipRef.current)
-            .transition()
-            .duration(200)
-            .style('opacity', 0)
-            .style('visibility', 'hidden');
-        }
-        d3.select(this)
-          .transition()
-          .duration(200)
-          .attr('stroke-width', 2)
-          .attr('opacity', opacityValue)
-          .style('filter', 'drop-shadow(0 3px 8px rgba(0,0,0,0.25))');
-      })
-      .on('mousemove', (event) => {
-        if (tooltipRef.current) {
-          updateTooltipPosition(event, d3.select(tooltipRef.current));
-        }
-      });
+      .style('pointer-events', 'none'); // Disable pointer events on individual circles
 
     // Enhanced country labels with better positioning
     if (!isMobile && (searchTerm || filteredData.length < 12)) {
@@ -398,67 +448,25 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
         .style('opacity', 0.9);
     }
     
-    // Enhanced legend with simplified categories
-    if (!isMobile) {
-      const legendWidth = 170;
-      const legendGroup = svg.append('g')
-        .attr('transform', `translate(${width - legendWidth - 15}, 45)`)
-        .style('opacity', 0);
-      
-      legendGroup.append('rect')
-        .attr('x', -15)
-        .attr('y', -25)
-        .attr('width', legendWidth)
-        .attr('height', 140)
-        .attr('fill', 'rgba(30, 41, 59, 0.95)')
-        .attr('stroke', 'rgba(255, 255, 255, 0.15)')
-        .attr('stroke-width', 1.5)
-        .attr('rx', 12)
-        .style('backdrop-filter', 'blur(20px)');
-      
-      legendGroup.append('text')
-        .attr('x', 0)
-        .attr('y', -5)
-        .attr('font-weight', '700')
-        .attr('font-size', '14px')
-        .attr('fill', '#f8fafc')
-        .text('Political Systems');
-      
-      const simplifiedSystems = ['Monarchies', 'Republics', 'Others'];
-      
-      simplifiedSystems.forEach((system, i) => {
-        const legendRow = legendGroup.append('g')
-          .attr('transform', `translate(0, ${i * 25 + 20})`);
-        
-        legendRow.append('circle')
-          .attr('cx', 10)
-          .attr('cy', 0)
-          .attr('r', 7)
-          .attr('fill', colorScale(system) as string)
-          .attr('stroke', '#ffffff')
-          .attr('stroke-width', 2)
-          .style('filter', 'drop-shadow(0 2px 6px rgba(0,0,0,0.3))');
-        
-        legendRow.append('text')
-          .attr('x', 25)
-          .attr('y', 4)
-          .attr('text-anchor', 'start')
-          .style('font-size', '12px')
-          .style('font-weight', '600')
-          .attr('fill', '#e2e8f0')
-          .text(system);
-      });
-      
-      // Animate legend
-      legendGroup.transition()
-        .duration(800)
-        .delay(1200)
-        .style('opacity', 1);
-    }
+    // No legend - chart takes full width
     
-    // Enhanced stats with animation - responsive positioning
+    // Enhanced axis label - Economic Freedom Index with better positioning
+    const axisLabelGroup = svg.append('g')
+      .attr('transform', `translate(${margin.left + innerWidth / 2}, ${height - (isMobile ? 65 : 55)})`)
+      .style('opacity', 0);
+    
+    axisLabelGroup.append('text')
+      .attr('x', 0)
+      .attr('y', 0)
+      .attr('text-anchor', 'middle')
+      .attr('font-size', isMobile ? '12px' : '14px')
+      .attr('font-weight', '600')
+      .attr('fill', '#e2e8f0')
+      .text('Economic Freedom Index');
+    
+    // Enhanced stats with better positioning and spacing
     const statsGroup = svg.append('g')
-      .attr('transform', `translate(${margin.left}, ${height - (isMobile ? 25 : 20)})`)
+      .attr('transform', `translate(${margin.left}, ${height - (isMobile ? 40 : 30)})`)
       .style('opacity', 0);
     
     // Country count text
@@ -474,7 +482,7 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
       const avgGdp = d3.mean(filteredData, d => d.gdp_per_capita);
       
       if (typeof avgGdp === 'number') {
-        // Responsive positioning for average GDP text
+        // Responsive positioning for average GDP text with proper spacing
         const avgGdpText = `Avg GDP: $${avgGdp.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
         
         if (isMobile) {
@@ -487,9 +495,9 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
             .attr('fill', '#94a3b8')
             .text(avgGdpText);
         } else {
-          // On desktop, place side by side with sufficient spacing
+          // On desktop, place side by side with more spacing
           statsGroup.append('text')
-            .attr('x', Math.min(280, innerWidth - 150)) // Prevent overflow
+            .attr('x', Math.min(350, innerWidth - 120)) // More spacing from left text
             .attr('y', 0)
             .attr('font-size', '12px')
             .attr('font-weight', '600')
@@ -499,10 +507,15 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
       }
     }
     
-    // Animate stats
-    statsGroup.transition()
+    // Animate axis label and stats
+    axisLabelGroup.transition()
       .duration(600)
       .delay(1000)
+      .style('opacity', 1);
+      
+    statsGroup.transition()
+      .duration(600)
+      .delay(1100)
       .style('opacity', 1);
     
   }, [processedData, width, height, isMobile, selectedSystem, searchTerm, minGdpFilter, maxGdpFilter, activeTooltip, colorScale, showTooltip]);

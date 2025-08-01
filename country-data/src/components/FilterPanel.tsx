@@ -158,8 +158,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       </Typography>
       
       <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch">
-        {/* Search Countries */}
-        <Grid item xs={12} sm={6} md={4}>
+        {/* Search Countries - 50% width */}
+        <Grid item xs={12} md={6}>
           <TextField
             label="Search Countries"
             variant="outlined"
@@ -186,8 +186,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           />
         </Grid>
         
-        {/* Political System */}
-        <Grid item xs={12} sm={6} md={4}>
+        {/* Political System - 25% width */}
+        <Grid item xs={12} sm={6} md={3}>
           <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
             <InputLabel 
               sx={{ 
@@ -223,8 +223,8 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           </FormControl>
         </Grid>
         
-        {/* GDP Range */}
-        <Grid item xs={12} sm={12} md={4}>
+        {/* GDP Range - 25% width */}
+        <Grid item xs={12} sm={6} md={3}>
           <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
             <InputLabel 
               sx={{ 

@@ -81,17 +81,22 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
       // Monarchies (all types of monarchies)
       if (systemLower.includes('monarchy') || 
           systemLower.includes('monarch') ||
-          systemLower.includes('kingdom')) {
+          systemLower.includes('kingdom') ||
+          systemLower.includes('co-principality')) {
         return 'Monarchies';
       }
       
-      // Republics (all types of republics)
-      if (systemLower.includes('republic')) {
+      // Republics (all types of republics, democracies, and other democratic systems)
+      if (systemLower.includes('republic') ||
+          systemLower.includes('democracy') ||
+          systemLower.includes('federal') ||
+          systemLower.includes('parliamentary') ||
+          systemLower.includes('presidential')) {
         return 'Republics';
       }
       
-      // Others (everything else)
-      return 'Others';
+      // Default fallback - should not be reached with proper categorization
+      return 'Republics';
     };
 
     // Process data with categories
@@ -187,8 +192,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
     'Republics': '#22c55e',
     'One Party Communism': '#dc2626',
     'Theocracy': '#f59e0b',
-    'No Government': '#6b7280',
-    'Others': '#0ea5e9'
+    'No Government': '#6b7280'
   };
 
   return (

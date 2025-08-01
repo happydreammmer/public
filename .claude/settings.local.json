@@ -11,8 +11,10 @@
       "WebFetch(domain:happydreammmer.github.io)",
       "Bash(npm install:*)",
       "Bash(diff:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(powershell:*)"
     ],
     "deny": []
-  }
+  },
+  "$schema": "https://json.schemastore.org/claude-code-settings.json"
 }
