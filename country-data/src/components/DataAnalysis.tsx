@@ -87,11 +87,9 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
       }
       
       // Republics (all types of republics, democracies, and other democratic systems)
+      // Note: Be specific to avoid catching monarchies that also have these terms
       if (systemLower.includes('republic') ||
-          systemLower.includes('democracy') ||
-          systemLower.includes('federal') ||
-          systemLower.includes('parliamentary') ||
-          systemLower.includes('presidential')) {
+          systemLower.includes('democracy')) {
         return 'Republics';
       }
       
