@@ -123,8 +123,10 @@ const CountryChart: React.FC<CountryChartProps> = ({
       const container = containerRef.current;
       if (container) {
         setWidth(container.clientWidth);
-        setHeight(container.clientWidth * 0.6);
-        setIsMobile(container.clientWidth < 768);
+        const isMobileSize = container.clientWidth < 768;
+        // Mobile: 2.5x taller (1.5 ratio), Desktop: normal (0.6 ratio)
+        setHeight(container.clientWidth * (isMobileSize ? 1.5 : 0.6));
+        setIsMobile(isMobileSize);
       }
     };
 
@@ -273,6 +275,145 @@ const CountryChart: React.FC<CountryChartProps> = ({
     const circlesGroup = chartGroup.append('g')
       .attr('clip-path', 'url(#chart-area)');
     
+    // Interactive overlay for handling mouse/touch events
+    const hoverOverlay = chartGroup.append('rect')
+      .attr('width', innerWidth)
+      .attr('height', innerHeight)
+      .attr('fill', 'transparent')
+      .style('pointer-events', 'all')
+      .style('touch-action', 'none')
+      .on('mousemove', handleInteraction)
+      .on('touchmove', handleInteraction)
+      .on('click', handleClickTap)
+      .on('touchstart', handleClickTap)
+      .on('mouseleave', handleLeave)
+      .on('touchend', function(event) {
+        if (!isPinned) {
+          setTimeout(() => handleLeave(event), 100);
+        }
+      });
+
+    // Interaction handlers
+    function handleInteraction(event: any) {
+      const currentTime = Date.now();
+      if (currentTime - lastInteractionTime < 16) return;
+      setLastInteractionTime(currentTime);
+      
+      if (isPinned && isMobile) return;
+      
+      const [mouseX, mouseY] = d3.pointer(event, hoverOverlay.node());
+      const closestCountry = findClosestCountry(mouseX, mouseY);
+      
+      if (closestCountry) {
+        showCountryTooltip(event, closestCountry);
+        highlightCountry(closestCountry);
+        setActiveTooltip(closestCountry);
+      } else {
+        hideTooltip();
+        resetHighlighting();
+        setActiveTooltip(null);
+      }
+    }
+    
+    function handleClickTap(event: any) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      const [mouseX, mouseY] = d3.pointer(event, hoverOverlay.node());
+      const closestCountry = findClosestCountry(mouseX, mouseY);
+      
+      if (closestCountry) {
+        if (isMobile) {
+          if (isPinned && activeTooltip?.country === closestCountry.country) {
+            setIsPinned(false);
+            hideTooltip();
+            resetHighlighting();
+            setActiveTooltip(null);
+          } else {
+            setIsPinned(true);
+            showCountryTooltip(event, closestCountry);
+            highlightCountry(closestCountry);
+            setActiveTooltip(closestCountry);
+          }
+        } else {
+          showCountryTooltip(event, closestCountry);
+          highlightCountry(closestCountry);
+          setActiveTooltip(closestCountry);
+        }
+      } else if (isMobile && isPinned) {
+        setIsPinned(false);
+        hideTooltip();
+        resetHighlighting();
+        setActiveTooltip(null);
+      }
+    }
+    
+    function handleLeave(event: any) {
+      if (isPinned && isMobile) return;
+      hideTooltip();
+      resetHighlighting();
+      setActiveTooltip(null);
+    }
+    
+    function findClosestCountry(mouseX: number, mouseY: number): ProcessedCountryData | null {
+      let closestCountry: ProcessedCountryData | null = null;
+      let minDistance = Infinity;
+      const hoverRadius = isMobile ? 35 : 25;
+      
+      filteredData.forEach(d => {
+        const x = xScale(d.economic_freedom);
+        const y = yScale(d.gdp_per_capita);
+        const distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
+        
+        if (distance < hoverRadius && distance < minDistance) {
+          minDistance = distance;
+          closestCountry = d;
+        }
+      });
+      
+      return closestCountry;
+    }
+    
+    function showCountryTooltip(event: any, country: ProcessedCountryData) {
+      if (tooltipRef.current) {
+        showTooltip(event, country, d3.select(tooltipRef.current), colorScale);
+      }
+    }
+    
+    function hideTooltip() {
+      if (tooltipRef.current) {
+        d3.select(tooltipRef.current)
+          .transition()
+          .duration(200)
+          .style('opacity', 0)
+          .style('visibility', 'hidden');
+      }
+    }
+    
+    function highlightCountry(country: ProcessedCountryData) {
+      circlesGroup.selectAll('circle').interrupt();
+      circlesGroup.selectAll('circle')
+        .transition()
+        .duration(100)
+        .attr('stroke-width', (d: ProcessedCountryData) => d.country === country.country ? 4 : 2)
+        .attr('opacity', (d: ProcessedCountryData) => d.country === country.country ? 1 : opacityValue * 0.7)
+        .style('filter', (d: ProcessedCountryData) => 
+          d.country === country.country ? 
+          'drop-shadow(0 5px 15px rgba(0,0,0,0.4))' : 
+          'drop-shadow(0 3px 8px rgba(0,0,0,0.25))'
+        );
+    }
+    
+    function resetHighlighting() {
+      circlesGroup.selectAll('circle').interrupt();
+      circlesGroup.selectAll('circle')
+        .transition()
+        .duration(200)
+        .attr('stroke-width', 2)
+        .attr('opacity', opacityValue)
+        .style('filter', 'drop-shadow(0 3px 8px rgba(0,0,0,0.25))');
+    }
+
     // Draw circles
     circlesGroup.selectAll<SVGCircleElement, ProcessedCountryData>('circle')
       .data(filteredData, d => d.country)
@@ -307,7 +448,8 @@ const CountryChart: React.FC<CountryChartProps> = ({
             .style('opacity', 0)
             .remove()
           )
-      );
+      )
+      .style('pointer-events', 'none');
 
     // X-axis label
     const axisLabelGroup = svg.append('g')
@@ -368,6 +510,61 @@ const CountryChart: React.FC<CountryChartProps> = ({
     
   }, [filteredData, width, height, isMobile, colorScale, data]);
 
+  // Tooltip functions
+  const showTooltip = useCallback((event: MouseEvent, d: ProcessedCountryData, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>, colorScale: d3.ScaleOrdinal<string, unknown>) => {
+    const pinIndicator = isPinned && isMobile ? 
+      `<div style="display: flex; align-items: center; justify-content: center; background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 4px 8px; border-radius: 12px; font-size: 10px; margin-bottom: 8px; border: 1px solid rgba(34, 197, 94, 0.3);">
+        📌 Pinned - Tap again to unpin
+      </div>` : '';
+    
+    tooltip
+      .style('visibility', 'visible')
+      .style('opacity', 1)
+      .html(`
+        <div style="padding: 12px; font-family: 'Inter', sans-serif;">
+          ${pinIndicator}
+          <div style="display: flex; align-items: center; margin-bottom: 8px;">
+            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: ${colorScale(d.simplified_political_system)}; margin-right: 8px;"></div>
+            <strong style="font-size: 1.1rem; color: #f8fafc;">${d.country}</strong>
+          </div>
+          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">GDP/Capita:</strong> $${d.gdp_per_capita.toLocaleString()}</p>
+          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Population:</strong> ${d.population.toLocaleString()}</p>
+          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Freedom Index:</strong> ${d.economic_freedom.toFixed(1)}</p>
+          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Political System:</strong> ${d.original_political_system}</p>
+        </div>
+      `);
+    updateTooltipPosition(event, tooltip);
+  }, [isPinned, isMobile]);
+
+  const updateTooltipPosition = (event: MouseEvent, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>) => {
+    const tooltipNode = tooltip.node();
+    const containerNode = containerRef.current;
+
+    if (tooltipNode && containerNode) {
+      const containerRect = containerNode.getBoundingClientRect();
+      const mouseX = event.clientX - containerRect.left;
+      const mouseY = event.clientY - containerRect.top;
+      
+      const tooltipWidth = tooltipNode.offsetWidth;
+      const tooltipHeight = tooltipNode.offsetHeight;
+      
+      let xOffset = 15;
+      let yOffset = -tooltipHeight - 15;
+      
+      if (mouseX + tooltipWidth + 15 > containerRect.width) {
+        xOffset = -tooltipWidth - 15;
+      }
+      
+      if (mouseY - tooltipHeight - 15 < 0) {
+        yOffset = 15;
+      }
+
+      tooltip
+        .style('left', `${mouseX + xOffset}px`)
+        .style('top', `${mouseY + yOffset}px`);
+    }
+  };
+
   return (
     <Box ref={containerRef} sx={{ width: '100%', height: 'auto' }}>
       <svg ref={svgRef}></svg>
@@ -393,27 +590,6 @@ const CountryChart: React.FC<CountryChartProps> = ({
         }}
       />
       
-      {/* Mobile instruction */}
-      {isMobile && !isPinned && (
-        <div style={{
-          position: 'absolute',
-          bottom: '20px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: 'rgba(15, 23, 42, 0.9)',
-          color: '#cbd5e1',
-          padding: '8px 16px',
-          borderRadius: '20px',
-          fontSize: '12px',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          zIndex: 999,
-          pointerEvents: 'none',
-          opacity: activeTooltip ? 0 : 0.7,
-          transition: 'opacity 0.3s ease'
-        }}>
-          💡 Tap a country dot to pin tooltip
-        </div>
-      )}
     </Box>
   );
 };
