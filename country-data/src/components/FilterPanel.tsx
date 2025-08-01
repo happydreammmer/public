@@ -157,9 +157,18 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         🔧 Interactive Filters & Controls
       </Typography>
       
-      <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch" sx={{ width: '100%' }}>
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: { xs: 'column', md: 'row' }, 
+        gap: { xs: 2, md: 3 },
+        width: '100%',
+        alignItems: 'stretch'
+      }}>
         {/* Search Countries - 50% width desktop, full width mobile */}
-        <Grid item xs={12} md={6}>
+        <Box sx={{ 
+          flex: { xs: '1', md: '1 1 50%' },
+          minWidth: 0
+        }}>
           <TextField
             label="Search Countries"
             variant="outlined"
@@ -184,89 +193,92 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               }
             }}
           />
-        </Grid>
+        </Box>
         
         {/* Dropdowns Container - 50% width desktop, full width mobile */}
-        <Grid item xs={12} md={6}>
-          <Grid container spacing={{ xs: 2, md: 2 }} sx={{ height: '100%' }}>
-            {/* Political System - 50% of the dropdown container */}
-            <Grid item xs={6} md={6}>
-              <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
-                <InputLabel 
-                  sx={{ 
+        <Box sx={{ 
+          flex: { xs: '1', md: '1 1 50%' },
+          display: 'flex',
+          gap: { xs: 2, md: 2 },
+          minWidth: 0
+        }}>
+          {/* Political System - 50% of the dropdown container */}
+          <Box sx={{ flex: '1 1 50%', minWidth: 0 }}>
+            <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
+              <InputLabel 
+                sx={{ 
+                  color: '#94a3b8',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  '&.Mui-focused': {
+                    color: '#38bdf8',
+                  },
+                }}
+              >
+                Political System
+              </InputLabel>
+              <Select
+                value={selectedSystem}
+                label="Political System"
+                onChange={(e) => setSelectedSystem(e.target.value as string)}
+                sx={{
+                  ...inputStyles['& .MuiOutlinedInput-root'],
+                  width: '100%',
+                  height: '100%',
+                  '& .MuiSvgIcon-root': {
                     color: '#94a3b8',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    '&.Mui-focused': {
-                      color: '#38bdf8',
-                    },
-                  }}
-                >
-                  Political System
-                </InputLabel>
-                <Select
-                  value={selectedSystem}
-                  label="Political System"
-                  onChange={(e) => setSelectedSystem(e.target.value as string)}
-                  sx={{
-                    ...inputStyles['& .MuiOutlinedInput-root'],
-                    width: '100%',
-                    height: '100%',
-                    '& .MuiSvgIcon-root': {
-                      color: '#94a3b8',
-                    },
-                  }}
-                  MenuProps={selectMenuProps}
-                >
-                  {politicalSystems.map(system => (
-                    <MenuItem key={system} value={system}>
-                      {system}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            
-            {/* GDP Range - 50% of the dropdown container */}
-            <Grid item xs={6} md={6}>
-              <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
-                <InputLabel 
-                  sx={{ 
+                  },
+                }}
+                MenuProps={selectMenuProps}
+              >
+                {politicalSystems.map(system => (
+                  <MenuItem key={system} value={system}>
+                    {system}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+          
+          {/* GDP Range - 50% of the dropdown container */}
+          <Box sx={{ flex: '1 1 50%', minWidth: 0 }}>
+            <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
+              <InputLabel 
+                sx={{ 
+                  color: '#94a3b8',
+                  fontWeight: 600,
+                  fontSize: '1rem',
+                  '&.Mui-focused': {
+                    color: '#38bdf8',
+                  },
+                }}
+              >
+                GDP Range
+              </InputLabel>
+              <Select
+                value={currentGdpRange.label}
+                label="GDP Range"
+                onChange={handleGdpRangeChange}
+                sx={{
+                  ...inputStyles['& .MuiOutlinedInput-root'],
+                  width: '100%',
+                  height: '100%',
+                  '& .MuiSvgIcon-root': {
                     color: '#94a3b8',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    '&.Mui-focused': {
-                      color: '#38bdf8',
-                    },
-                  }}
-                >
-                  GDP Range
-                </InputLabel>
-                <Select
-                  value={currentGdpRange.label}
-                  label="GDP Range"
-                  onChange={handleGdpRangeChange}
-                  sx={{
-                    ...inputStyles['& .MuiOutlinedInput-root'],
-                    width: '100%',
-                    height: '100%',
-                    '& .MuiSvgIcon-root': {
-                      color: '#94a3b8',
-                    },
-                  }}
-                  MenuProps={selectMenuProps}
-                >
-                  {gdpRanges.map(range => (
-                    <MenuItem key={range.label} value={range.label}>
-                      {range.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Grid>
+                  },
+                }}
+                MenuProps={selectMenuProps}
+              >
+                {gdpRanges.map(range => (
+                  <MenuItem key={range.label} value={range.label}>
+                    {range.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Box>
+        </Box>
+      </Box>
     </Box>
   );
 };
