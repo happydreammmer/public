@@ -22,9 +22,19 @@ interface ProcessedCountryData extends CountryData {
 
 interface CountryVisualizationProps {
   data: CountryData[];
+  selectedSystem: string;
+  searchTerm: string;
+  minGdpFilter: number;
+  maxGdpFilter: number;
 }
 
-const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => {
+const CountryVisualization: React.FC<CountryVisualizationProps> = ({ 
+  data, 
+  selectedSystem, 
+  searchTerm, 
+  minGdpFilter, 
+  maxGdpFilter 
+}) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -687,7 +697,6 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
       elevation={3} 
       ref={containerRef}
       sx={{ 
-        p: { xs: 1, sm: 2, md: 3 },
         borderRadius: 3,
         position: 'relative',
         overflow: 'hidden',
@@ -713,7 +722,9 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
         setMinGdpFilter={setMinGdpFilter}
         setMaxGdpFilter={setMaxGdpFilter}
       />
-      <svg ref={svgRef}></svg>
+      <Box sx={{ px: { xs: 1, sm: 2, md: 3 }, pb: { xs: 1, sm: 2, md: 3 } }}>
+        <svg ref={svgRef}></svg>
+      </Box>
       
       {/* Custom tooltip */}
       <div

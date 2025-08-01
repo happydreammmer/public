@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import CountryVisualization from './components/CountryVisualization';
+import CountryDashboard from './components/CountryDashboard';
 import DataAnalysis from './components/DataAnalysis';
 import ErrorBoundary from './components/ErrorBoundary';
 import LoadingSpinner from './components/LoadingSpinner';
@@ -253,7 +253,7 @@ function App() {
                 <Fade in={true} timeout={600} nodeRef={visualizationRef}>
                   <div ref={visualizationRef}>
                     <ErrorBoundary>
-                      <CountryVisualization data={countryData} />
+                      <CountryDashboard data={countryData} />
                       <DataAnalysis data={countryData} />
                     </ErrorBoundary>
                   </div>
