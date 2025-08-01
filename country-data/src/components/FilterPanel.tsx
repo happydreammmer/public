@@ -67,7 +67,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       backgroundColor: 'rgba(15, 23, 42, 0.6)',
       borderRadius: 2,
       color: '#f8fafc',
-      minHeight: '64px', // Increased consistent height for all inputs
+      minHeight: '56px', // Consistent height for all inputs
       '& fieldset': {
         borderColor: 'rgba(255, 255, 255, 0.2)',
       },
@@ -82,14 +82,15 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     '& .MuiInputLabel-root': {
       color: '#94a3b8',
       fontWeight: 600,
-      fontSize: '1rem',
+      fontSize: '0.95rem',
       '&.Mui-focused': {
         color: '#38bdf8',
       },
     },
     '& .MuiOutlinedInput-input': {
-      fontSize: '1rem',
+      fontSize: '0.95rem',
       fontWeight: 500,
+      padding: '12px 14px',
       '&::placeholder': {
         color: '#64748b',
         opacity: 1,
@@ -123,7 +124,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <Paper 
       elevation={0} 
       sx={{ 
-        p: { xs: 2, md: 2.5 }, 
+        p: { xs: 2, sm: 2.5, md: 3 }, 
         borderRadius: 2,
         background: 'rgba(30, 41, 59, 0.6)',
         backdropFilter: 'blur(20px)',
@@ -156,9 +157,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         🔧 Interactive Filters & Controls
       </Typography>
       
-      <Grid container spacing={3} alignItems="stretch">
+      <Grid container spacing={{ xs: 2, md: 3 }} alignItems="stretch">
         {/* Search Countries */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <TextField
             label="Search Countries"
             variant="outlined"
@@ -186,20 +187,19 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         </Grid>
         
         {/* Political System */}
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} sm={6} md={4}>
           <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
             <InputLabel 
               sx={{ 
                 color: '#94a3b8',
+                fontWeight: 600,
+                fontSize: '1rem',
                 '&.Mui-focused': {
                   color: '#38bdf8',
                 },
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <PoliticalIcon fontSize="small" />
-                Political System
-              </Box>
+              Political System
             </InputLabel>
             <Select
               value={selectedSystem}
@@ -223,25 +223,24 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           </FormControl>
         </Grid>
         
-        {/* GDP Per Capita Range */}
-        <Grid item xs={12} md={4}>
+        {/* GDP Range */}
+        <Grid item xs={12} sm={12} md={4}>
           <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
             <InputLabel 
               sx={{ 
                 color: '#94a3b8',
+                fontWeight: 600,
+                fontSize: '1rem',
                 '&.Mui-focused': {
                   color: '#38bdf8',
                 },
               }}
             >
-              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <TrendingUpIcon fontSize="small" />
-                GDP Per Capita Range
-              </Box>
+              GDP Range
             </InputLabel>
             <Select
               value={currentGdpRange.label}
-              label="GDP Per Capita Range"
+              label="GDP Range"
               onChange={handleGdpRangeChange}
               sx={{
                 ...inputStyles['& .MuiOutlinedInput-root'],

@@ -62,8 +62,35 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
     // Categorize political systems
     const categorizePoliticalSystem = (system: string): string => {
       const systemLower = system.toLowerCase();
-      if (systemLower.includes('monarchy') || systemLower.includes('monarch')) return 'Monarchies';
-      if (systemLower.includes('republic')) return 'Republics';
+      
+      // One Party Communism
+      if (systemLower.includes('one party communism')) {
+        return 'One Party Communism';
+      }
+      
+      // Theocracy
+      if (systemLower.includes('theocracy')) {
+        return 'Theocracy';
+      }
+      
+      // No Government
+      if (systemLower.includes('no government')) {
+        return 'No Government';
+      }
+      
+      // Monarchies (all types of monarchies)
+      if (systemLower.includes('monarchy') || 
+          systemLower.includes('monarch') ||
+          systemLower.includes('kingdom')) {
+        return 'Monarchies';
+      }
+      
+      // Republics (all types of republics)
+      if (systemLower.includes('republic')) {
+        return 'Republics';
+      }
+      
+      // Others (everything else)
       return 'Others';
     };
 
@@ -158,7 +185,10 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
   const colors = {
     'Monarchies': '#8b5cf6',
     'Republics': '#22c55e',
-    'Others': '#f59e0b'
+    'One Party Communism': '#dc2626',
+    'Theocracy': '#f59e0b',
+    'No Government': '#6b7280',
+    'Others': '#0ea5e9'
   };
 
   return (
@@ -188,8 +218,9 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <InsightsIcon sx={{ fontSize: 32, color: '#38bdf8', mr: 2 }} />
-          <Typography variant="h4" sx={{ 
-            fontWeight: 900, 
+          <Typography variant="h5" sx={{ 
+            fontWeight: 700, 
+            fontSize: { xs: '1.5rem', md: '2rem' },
             background: 'linear-gradient(135deg, #38bdf8 0%, #8b5cf6 100%)',
             backgroundClip: 'text',
             WebkitBackgroundClip: 'text',
@@ -358,7 +389,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
               <List dense>
                 {analysis.richestCountries.map((country, index) => (
                   <ListItem key={index} dense sx={{ py: 0.5 }}>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
+                    <ListItemIcon sx={{ minWidth: 48 }}>
                       <Chip label={`#${index + 1}`} size="small" sx={{ backgroundColor: '#22c55e', color: 'white' }} />
                     </ListItemIcon>
                     <ListItemText primary={country.country} secondary={`$${country.gdp_per_capita.toLocaleString()}`} />
@@ -375,7 +406,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
               <List dense>
                 {analysis.mostFree.map((country, index) => (
                   <ListItem key={index} dense sx={{ py: 0.5 }}>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
+                    <ListItemIcon sx={{ minWidth: 48 }}>
                       <Chip label={`#${index + 1}`} size="small" sx={{ backgroundColor: '#f59e0b', color: 'white' }} />
                     </ListItemIcon>
                     <ListItemText primary={country.country} secondary={country.economic_freedom.toFixed(1)} />
@@ -392,7 +423,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
               <List dense>
                 {analysis.mostPopulous.map((country, index) => (
                   <ListItem key={index} dense sx={{ py: 0.5 }}>
-                    <ListItemIcon sx={{ minWidth: 32 }}>
+                    <ListItemIcon sx={{ minWidth: 48 }}>
                       <Chip label={`#${index + 1}`} size="small" sx={{ backgroundColor: '#38bdf8', color: 'white' }} />
                     </ListItemIcon>
                     <ListItemText primary={country.country} secondary={`${(country.population / 1e6).toFixed(1)}M`} />
@@ -409,6 +440,7 @@ const DataAnalysis: React.FC<DataAnalysisProps> = ({ data }) => {
         elevation={0} 
         sx={{ 
           p: 4, 
+          mt: { xs: 3, md: 4 },
           borderRadius: 3,
           background: 'linear-gradient(135deg, rgba(30, 41, 59, 0.9) 0%, rgba(15, 23, 42, 0.9) 100%)',
           border: '1px solid rgba(139, 92, 246, 0.3)',

@@ -44,6 +44,21 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
   const categorizePoliticalSystem = (system: string): string => {
     const systemLower = system.toLowerCase();
     
+    // One Party Communism
+    if (systemLower.includes('one party communism')) {
+      return 'One Party Communism';
+    }
+    
+    // Theocracy
+    if (systemLower.includes('theocracy')) {
+      return 'Theocracy';
+    }
+    
+    // No Government
+    if (systemLower.includes('no government')) {
+      return 'No Government';
+    }
+    
     // Monarchies (all types of monarchies)
     if (systemLower.includes('monarchy') || 
         systemLower.includes('monarch') ||
@@ -68,12 +83,12 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
   }));
   
   // Extract simplified political systems for filtering
-  const politicalSystems = ['All', 'Monarchies', 'Republics', 'Others'];
+  const politicalSystems = ['All', 'Monarchies', 'Republics', 'One Party Communism', 'Theocracy', 'No Government', 'Others'];
   
   // Refined color palette with better contrast and accessibility
   const colorScale = d3.scaleOrdinal<string>()
-    .domain(['Monarchies', 'Republics', 'Others'])
-    .range(['#8b5cf6', '#22c55e', '#f59e0b']);
+    .domain(['Monarchies', 'Republics', 'One Party Communism', 'Theocracy', 'No Government', 'Others'])
+    .range(['#8b5cf6', '#22c55e', '#dc2626', '#f59e0b', '#6b7280', '#0ea5e9']);
   
   const showTooltip = useCallback((event: MouseEvent, d: ProcessedCountryData, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>, colorScale: d3.ScaleOrdinal<string, unknown>) => {
     tooltip
@@ -441,15 +456,16 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
         .style('opacity', 1);
     }
     
-    // Enhanced stats with animation
+    // Enhanced stats with animation - responsive positioning
     const statsGroup = svg.append('g')
-      .attr('transform', `translate(${margin.left}, ${height - 20})`)
+      .attr('transform', `translate(${margin.left}, ${height - (isMobile ? 25 : 20)})`)
       .style('opacity', 0);
     
+    // Country count text
     statsGroup.append('text')
       .attr('x', 0)
       .attr('y', 0)
-      .attr('font-size', '12px')
+      .attr('font-size', isMobile ? '11px' : '12px')
       .attr('font-weight', '600')
       .attr('fill', '#94a3b8')
       .text(`${filteredData.length} of ${processedData.length} countries shown`);
@@ -458,13 +474,28 @@ const CountryVisualization: React.FC<CountryVisualizationProps> = ({ data }) => 
       const avgGdp = d3.mean(filteredData, d => d.gdp_per_capita);
       
       if (typeof avgGdp === 'number') {
-        statsGroup.append('text')
-          .attr('x', 200)
-          .attr('y', 0)
-          .attr('font-size', '12px')
-          .attr('font-weight', '600')
-          .attr('fill', '#94a3b8')
-          .text(`Avg GDP: $${avgGdp.toLocaleString('en-US', { maximumFractionDigits: 0 })}`);
+        // Responsive positioning for average GDP text
+        const avgGdpText = `Avg GDP: $${avgGdp.toLocaleString('en-US', { maximumFractionDigits: 0 })}`;
+        
+        if (isMobile) {
+          // On mobile, place on next line
+          statsGroup.append('text')
+            .attr('x', 0)
+            .attr('y', 16)
+            .attr('font-size', '11px')
+            .attr('font-weight', '600')
+            .attr('fill', '#94a3b8')
+            .text(avgGdpText);
+        } else {
+          // On desktop, place side by side with sufficient spacing
+          statsGroup.append('text')
+            .attr('x', Math.min(280, innerWidth - 150)) // Prevent overflow
+            .attr('y', 0)
+            .attr('font-size', '12px')
+            .attr('font-weight', '600')
+            .attr('fill', '#94a3b8')
+            .text(avgGdpText);
+        }
       }
     }
     
