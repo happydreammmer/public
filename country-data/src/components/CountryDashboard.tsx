@@ -44,18 +44,20 @@ const CountryDashboard: React.FC<CountryDashboardProps> = ({ data }) => {
         </Typography>
       </Box>
 
-      {/* Filters Section - Full Width */}
-      <FilterPanel 
-        politicalSystems={politicalSystems}
-        selectedSystem={selectedSystem}
-        setSelectedSystem={setSelectedSystem}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        minGdpFilter={minGdpFilter}
-        maxGdpFilter={maxGdpFilter}
-        setMinGdpFilter={setMinGdpFilter}
-        setMaxGdpFilter={setMaxGdpFilter}
-      />
+      {/* Filters Section - Same padding as other sections */}
+      <Box sx={{ px: { xs: 2, sm: 3, md: 4 }, pb: 0 }}>
+        <FilterPanel 
+          politicalSystems={politicalSystems}
+          selectedSystem={selectedSystem}
+          setSelectedSystem={setSelectedSystem}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          minGdpFilter={minGdpFilter}
+          maxGdpFilter={maxGdpFilter}
+          setMinGdpFilter={setMinGdpFilter}
+          setMaxGdpFilter={setMaxGdpFilter}
+        />
+      </Box>
 
       {/* Visualization Section */}
       <Box sx={{ px: { xs: 2, sm: 3, md: 4 }, pb: { xs: 2, sm: 3, md: 4 } }}>

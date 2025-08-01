@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState, useCallback, useMemo } from 'react';
+import React, { useRef, useEffect, useState, useCallback, useMemo, memo } from 'react';
 import * as d3 from 'd3';
 import { Box } from '@mui/material';
 
@@ -39,6 +39,16 @@ const CountryChart: React.FC<CountryChartProps> = ({
   const [activeTooltip, setActiveTooltip] = useState<ProcessedCountryData | null>(null);
   const [isPinned, setIsPinned] = useState<boolean>(false);
   const [lastInteractionTime, setLastInteractionTime] = useState<number>(0);
+  
+  // Use refs to maintain stable references to current state values
+  const activeTooltipRef = useRef(activeTooltip);
+  const isPinnedRef = useRef(isPinned);
+  const lastInteractionTimeRef = useRef(lastInteractionTime);
+  
+  // Keep refs up to date
+  useEffect(() => { activeTooltipRef.current = activeTooltip; }, [activeTooltip]);
+  useEffect(() => { isPinnedRef.current = isPinned; }, [isPinned]);
+  useEffect(() => { lastInteractionTimeRef.current = lastInteractionTime; }, [lastInteractionTime]);
   
   const opacityValue = 0.9;
   
@@ -141,12 +151,15 @@ const CountryChart: React.FC<CountryChartProps> = ({
   useEffect(() => {
     if (!svgRef.current || filteredData.length === 0) return;
 
-    // Clear previous visualization
-    d3.select(svgRef.current).selectAll('*')
-      .transition()
-      .duration(300)
-      .style('opacity', 0)
-      .remove();
+    // Clear previous visualization ONLY when data actually changes
+    const svg = d3.select(svgRef.current);
+    if (svg.selectAll('*').size() > 0) {
+      svg.selectAll('*')
+        .transition()
+        .duration(300)
+        .style('opacity', 0)
+        .remove();
+    }
     
     const margin = { top: 25, right: isMobile ? 25 : 60, bottom: isMobile ? 90 : 80, left: isMobile ? 70 : 90 };
     const innerWidth = width - margin.left - margin.right;
@@ -288,7 +301,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
       .on('touchstart', handleClickTap)
       .on('mouseleave', handleLeave)
       .on('touchend', function(event) {
-        if (!isPinned) {
+        if (!isPinnedRef.current) {
           setTimeout(() => handleLeave(event), 100);
         }
       });
@@ -296,10 +309,10 @@ const CountryChart: React.FC<CountryChartProps> = ({
     // Interaction handlers
     function handleInteraction(event: any) {
       const currentTime = Date.now();
-      if (currentTime - lastInteractionTime < 16) return;
+      if (currentTime - lastInteractionTimeRef.current < 16) return;
       setLastInteractionTime(currentTime);
       
-      if (isPinned && isMobile) return;
+      if (isPinnedRef.current && isMobile) return;
       
       const [mouseX, mouseY] = d3.pointer(event, hoverOverlay.node());
       const closestCountry = findClosestCountry(mouseX, mouseY);
@@ -324,7 +337,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
       
       if (closestCountry) {
         if (isMobile) {
-          if (isPinned && activeTooltip?.country === closestCountry.country) {
+          if (isPinnedRef.current && activeTooltipRef.current?.country === closestCountry.country) {
             setIsPinned(false);
             hideTooltip();
             resetHighlighting();
@@ -340,7 +353,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
           highlightCountry(closestCountry);
           setActiveTooltip(closestCountry);
         }
-      } else if (isMobile && isPinned) {
+      } else if (isMobile && isPinnedRef.current) {
         setIsPinned(false);
         hideTooltip();
         resetHighlighting();
@@ -349,7 +362,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
     }
     
     function handleLeave(event: any) {
-      if (isPinned && isMobile) return;
+      if (isPinnedRef.current && isMobile) return;
       hideTooltip();
       resetHighlighting();
       setActiveTooltip(null);
@@ -508,11 +521,11 @@ const CountryChart: React.FC<CountryChartProps> = ({
     axisLabelGroup.transition().duration(600).delay(1000).style('opacity', 1);
     statsGroup.transition().duration(600).delay(1100).style('opacity', 1);
     
-  }, [filteredData, width, height, isMobile, colorScale, data]);
+  }, [filteredData, width, height, isMobile]);
 
   // Tooltip functions
   const showTooltip = useCallback((event: MouseEvent, d: ProcessedCountryData, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>, colorScale: d3.ScaleOrdinal<string, unknown>) => {
-    const pinIndicator = isPinned && isMobile ? 
+    const pinIndicator = isPinnedRef.current && isMobile ? 
       `<div style="display: flex; align-items: center; justify-content: center; background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 4px 8px; border-radius: 12px; font-size: 10px; margin-bottom: 8px; border: 1px solid rgba(34, 197, 94, 0.3);">
         📌 Pinned - Tap again to unpin
       </div>` : '';
@@ -534,7 +547,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
         </div>
       `);
     updateTooltipPosition(event, tooltip);
-  }, [isPinned, isMobile]);
+  }, [isMobile]);
 
   const updateTooltipPosition = (event: MouseEvent, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>) => {
     const tooltipNode = tooltip.node();
@@ -594,4 +607,4 @@ const CountryChart: React.FC<CountryChartProps> = ({
   );
 };
 
-export default CountryChart;
+export default memo(CountryChart);
