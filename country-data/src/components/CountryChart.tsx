@@ -151,16 +151,6 @@ const CountryChart: React.FC<CountryChartProps> = ({
   useEffect(() => {
     if (!svgRef.current || filteredData.length === 0) return;
 
-    // Clear previous visualization ONLY when data actually changes
-    const svg = d3.select(svgRef.current);
-    if (svg.selectAll('*').size() > 0) {
-      svg.selectAll('*')
-        .transition()
-        .duration(300)
-        .style('opacity', 0)
-        .remove();
-    }
-    
     const margin = { top: 25, right: isMobile ? 25 : 60, bottom: isMobile ? 90 : 80, left: isMobile ? 70 : 90 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -168,6 +158,15 @@ const CountryChart: React.FC<CountryChartProps> = ({
     const svg = d3.select(svgRef.current)
       .attr('width', width)
       .attr('height', height);
+
+    // Clear previous visualization ONLY when data actually changes
+    if (svg.selectAll('*').size() > 0) {
+      svg.selectAll('*')
+        .transition()
+        .duration(300)
+        .style('opacity', 0)
+        .remove();
+    }
     
     // Enhanced gradient background
     const defs = svg.append('defs');
