@@ -160,13 +160,14 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
       <Box sx={{ 
         display: 'flex', 
         flexDirection: { xs: 'column', md: 'row' }, 
-        gap: { xs: 2, md: 3 },
+        gap: { xs: 2, md: 2 },
         width: '100%',
         alignItems: 'stretch'
       }}>
         {/* Search Countries - 50% width desktop, full width mobile */}
         <Box sx={{ 
-          flex: { xs: '1', md: '1 1 50%' },
+          flex: { xs: '1 1 auto', md: '0 0 50%' },
+          maxWidth: { xs: '100%', md: '50%' },
           minWidth: 0
         }}>
           <TextField
@@ -184,27 +185,25 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 </InputAdornment>
               ),
             }}
-            sx={{
-              ...inputStyles,
-              width: '100%',
-              '& .MuiOutlinedInput-root': {
-                ...inputStyles['& .MuiOutlinedInput-root'],
-                width: '100%'
-              }
-            }}
+            sx={inputStyles}
           />
         </Box>
         
         {/* Dropdowns Container - 50% width desktop, full width mobile */}
         <Box sx={{ 
-          flex: { xs: '1', md: '1 1 50%' },
+          flex: { xs: '1 1 auto', md: '0 0 50%' },
+          maxWidth: { xs: '100%', md: '50%' },
           display: 'flex',
-          gap: { xs: 2, md: 2 },
+          gap: { xs: 2, md: 1.5 },
           minWidth: 0
         }}>
           {/* Political System - 50% of the dropdown container */}
-          <Box sx={{ flex: '1 1 50%', minWidth: 0 }}>
-            <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
+          <Box sx={{ 
+            flex: '1 1 50%', 
+            maxWidth: '50%',
+            minWidth: 0 
+          }}>
+            <FormControl fullWidth size="medium">
               <InputLabel 
                 sx={{ 
                   color: '#94a3b8',
@@ -221,14 +220,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 value={selectedSystem}
                 label="Political System"
                 onChange={(e) => setSelectedSystem(e.target.value as string)}
-                sx={{
-                  ...inputStyles['& .MuiOutlinedInput-root'],
-                  width: '100%',
-                  height: '100%',
-                  '& .MuiSvgIcon-root': {
-                    color: '#94a3b8',
-                  },
-                }}
+                sx={inputStyles}
                 MenuProps={selectMenuProps}
               >
                 {politicalSystems.map(system => (
@@ -241,8 +233,12 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           </Box>
           
           {/* GDP Range - 50% of the dropdown container */}
-          <Box sx={{ flex: '1 1 50%', minWidth: 0 }}>
-            <FormControl fullWidth size="medium" sx={{ height: '100%' }}>
+          <Box sx={{ 
+            flex: '1 1 50%',
+            maxWidth: '50%', 
+            minWidth: 0 
+          }}>
+            <FormControl fullWidth size="medium">
               <InputLabel 
                 sx={{ 
                   color: '#94a3b8',
@@ -259,14 +255,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 value={currentGdpRange.label}
                 label="GDP Range"
                 onChange={handleGdpRangeChange}
-                sx={{
-                  ...inputStyles['& .MuiOutlinedInput-root'],
-                  width: '100%',
-                  height: '100%',
-                  '& .MuiSvgIcon-root': {
-                    color: '#94a3b8',
-                  },
-                }}
+                sx={inputStyles}
                 MenuProps={selectMenuProps}
               >
                 {gdpRanges.map(range => (

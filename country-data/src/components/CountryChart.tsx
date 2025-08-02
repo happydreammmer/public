@@ -314,12 +314,12 @@ const CountryChart: React.FC<CountryChartProps> = ({
       if (isPinnedRef.current && isMobile) return;
       
       const [mouseX, mouseY] = d3.pointer(event, hoverOverlay.node());
-      const closestCountry = findClosestCountry(mouseX, mouseY);
+      const nearbyCountries = findNearbyCountries(mouseX, mouseY);
       
-      if (closestCountry) {
-        showCountryTooltip(event, closestCountry);
-        highlightCountry(closestCountry);
-        setActiveTooltip(closestCountry);
+      if (nearbyCountries.length > 0) {
+        showCountriesTooltip(event, nearbyCountries);
+        highlightCountries(nearbyCountries);
+        setActiveTooltip(nearbyCountries[0]); // Keep first country as active for state tracking
       } else {
         hideTooltip();
         resetHighlighting();
@@ -332,25 +332,26 @@ const CountryChart: React.FC<CountryChartProps> = ({
       event.stopPropagation();
       
       const [mouseX, mouseY] = d3.pointer(event, hoverOverlay.node());
-      const closestCountry = findClosestCountry(mouseX, mouseY);
+      const nearbyCountries = findNearbyCountries(mouseX, mouseY);
       
-      if (closestCountry) {
+      if (nearbyCountries.length > 0) {
+        const primaryCountry = nearbyCountries[0];
         if (isMobile) {
-          if (isPinnedRef.current && activeTooltipRef.current?.country === closestCountry.country) {
+          if (isPinnedRef.current && activeTooltipRef.current?.country === primaryCountry.country) {
             setIsPinned(false);
             hideTooltip();
             resetHighlighting();
             setActiveTooltip(null);
           } else {
             setIsPinned(true);
-            showCountryTooltip(event, closestCountry);
-            highlightCountry(closestCountry);
-            setActiveTooltip(closestCountry);
+            showCountriesTooltip(event, nearbyCountries);
+            highlightCountries(nearbyCountries);
+            setActiveTooltip(primaryCountry);
           }
         } else {
-          showCountryTooltip(event, closestCountry);
-          highlightCountry(closestCountry);
-          setActiveTooltip(closestCountry);
+          showCountriesTooltip(event, nearbyCountries);
+          highlightCountries(nearbyCountries);
+          setActiveTooltip(primaryCountry);
         }
       } else if (isMobile && isPinnedRef.current) {
         setIsPinned(false);
@@ -367,28 +368,30 @@ const CountryChart: React.FC<CountryChartProps> = ({
       setActiveTooltip(null);
     }
     
-    function findClosestCountry(mouseX: number, mouseY: number): ProcessedCountryData | null {
-      let closestCountry: ProcessedCountryData | null = null;
-      let minDistance = Infinity;
+    function findNearbyCountries(mouseX: number, mouseY: number): ProcessedCountryData[] {
       const hoverRadius = isMobile ? 35 : 25;
+      const nearbyCountries: { country: ProcessedCountryData; distance: number }[] = [];
       
       filteredData.forEach(d => {
         const x = xScale(d.economic_freedom);
         const y = yScale(d.gdp_per_capita);
         const distance = Math.sqrt(Math.pow(mouseX - x, 2) + Math.pow(mouseY - y, 2));
         
-        if (distance < hoverRadius && distance < minDistance) {
-          minDistance = distance;
-          closestCountry = d;
+        if (distance < hoverRadius) {
+          nearbyCountries.push({ country: d, distance });
         }
       });
       
-      return closestCountry;
+      // Sort by distance and return up to 5 closest countries
+      return nearbyCountries
+        .sort((a, b) => a.distance - b.distance)
+        .slice(0, 5)
+        .map(item => item.country);
     }
     
-    function showCountryTooltip(event: any, country: ProcessedCountryData) {
+    function showCountriesTooltip(event: any, countries: ProcessedCountryData[]) {
       if (tooltipRef.current) {
-        showTooltip(event, country, d3.select(tooltipRef.current), colorScale);
+        showMultipleTooltip(event, countries, d3.select(tooltipRef.current), colorScale);
       }
     }
     
@@ -402,15 +405,16 @@ const CountryChart: React.FC<CountryChartProps> = ({
       }
     }
     
-    function highlightCountry(country: ProcessedCountryData) {
+    function highlightCountries(countries: ProcessedCountryData[]) {
+      const countryNames = countries.map(c => c.country);
       circlesGroup.selectAll('circle').interrupt();
       circlesGroup.selectAll('circle')
         .transition()
         .duration(100)
-        .attr('stroke-width', (d: ProcessedCountryData) => d.country === country.country ? 4 : 2)
-        .attr('opacity', (d: ProcessedCountryData) => d.country === country.country ? 1 : opacityValue * 0.7)
+        .attr('stroke-width', (d: ProcessedCountryData) => countryNames.includes(d.country) ? 4 : 2)
+        .attr('opacity', (d: ProcessedCountryData) => countryNames.includes(d.country) ? 1 : opacityValue * 0.7)
         .style('filter', (d: ProcessedCountryData) => 
-          d.country === country.country ? 
+          countryNames.includes(d.country) ? 
           'drop-shadow(0 5px 15px rgba(0,0,0,0.4))' : 
           'drop-shadow(0 3px 8px rgba(0,0,0,0.25))'
         );
@@ -523,26 +527,38 @@ const CountryChart: React.FC<CountryChartProps> = ({
   }, [filteredData, width, height, isMobile]);
 
   // Tooltip functions
-  const showTooltip = useCallback((event: MouseEvent, d: ProcessedCountryData, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>, colorScale: d3.ScaleOrdinal<string, unknown>) => {
+  const showMultipleTooltip = useCallback((event: MouseEvent, countries: ProcessedCountryData[], tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>, colorScale: d3.ScaleOrdinal<string, unknown>) => {
     const pinIndicator = isPinnedRef.current && isMobile ? 
       `<div style="display: flex; align-items: center; justify-content: center; background: rgba(34, 197, 94, 0.2); color: #22c55e; padding: 4px 8px; border-radius: 12px; font-size: 10px; margin-bottom: 8px; border: 1px solid rgba(34, 197, 94, 0.3);">
         📌 Pinned - Tap again to unpin
       </div>` : '';
     
+    const countryHeader = countries.length > 1 ? 
+      `<div style="color: #94a3b8; font-size: 0.9rem; margin-bottom: 8px; text-align: center; font-weight: 600;">${countries.length} Countries</div>` : '';
+    
+    const countryItems = countries.map(d => `
+      <div style="margin-bottom: ${countries.length > 1 ? '12px' : '8px'}; padding: ${countries.length > 1 ? '8px' : '0'}; ${countries.length > 1 ? 'border-left: 3px solid ' + colorScale(d.simplified_political_system) + '; padding-left: 8px;' : ''}">
+        <div style="display: flex; align-items: center; margin-bottom: 6px;">
+          <div style="width: 12px; height: 12px; border-radius: 50%; background-color: ${colorScale(d.simplified_political_system)}; margin-right: 8px;"></div>
+          <strong style="font-size: ${countries.length > 1 ? '1rem' : '1.1rem'}; color: #f8fafc;">${d.country}</strong>
+        </div>
+        <div style="font-size: ${countries.length > 1 ? '12px' : '14px'}; line-height: 1.4;">
+          <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">GDP:</strong> $${d.gdp_per_capita.toLocaleString()}</p>
+          <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Pop:</strong> ${d.population.toLocaleString()}</p>
+          <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Freedom:</strong> ${d.economic_freedom.toFixed(1)}</p>
+          ${countries.length === 1 ? `<p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Political System:</strong> ${d.original_political_system}</p>` : ''}
+        </div>
+      </div>
+    `).join('');
+    
     tooltip
       .style('visibility', 'visible')
       .style('opacity', 1)
       .html(`
-        <div style="padding: 12px; font-family: 'Inter', sans-serif;">
+        <div style="padding: 12px; font-family: 'Inter', sans-serif; max-height: 400px; overflow-y: auto;">
           ${pinIndicator}
-          <div style="display: flex; align-items: center; margin-bottom: 8px;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: ${colorScale(d.simplified_political_system)}; margin-right: 8px;"></div>
-            <strong style="font-size: 1.1rem; color: #f8fafc;">${d.country}</strong>
-          </div>
-          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">GDP/Capita:</strong> $${d.gdp_per_capita.toLocaleString()}</p>
-          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Population:</strong> ${d.population.toLocaleString()}</p>
-          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Freedom Index:</strong> ${d.economic_freedom.toFixed(1)}</p>
-          <p style="margin: 4px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Political System:</strong> ${d.original_political_system}</p>
+          ${countryHeader}
+          ${countryItems}
         </div>
       `);
     updateTooltipPosition(event, tooltip);
@@ -554,8 +570,8 @@ const CountryChart: React.FC<CountryChartProps> = ({
 
     if (tooltipNode && containerNode) {
       const containerRect = containerNode.getBoundingClientRect();
-      const mouseX = event.clientX - containerRect.left;
-      const mouseY = event.clientY - containerRect.top;
+      const mouseX = event.pageX - containerRect.left;
+      const mouseY = event.pageY - containerRect.top;
       
       const tooltipWidth = tooltipNode.offsetWidth;
       const tooltipHeight = tooltipNode.offsetHeight;
