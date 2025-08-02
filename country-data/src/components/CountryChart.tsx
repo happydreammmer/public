@@ -215,7 +215,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
     
     const radiusScale = d3.scaleSqrt()
       .domain([minPopulation, maxPopulation])
-      .range([isMobile ? 6 : 8, isMobile ? 18 : 28])
+      .range([isMobile ? 3 : 4, isMobile ? 18 : 28])
       .clamp(true);
     
     // Axes
@@ -566,25 +566,33 @@ const CountryChart: React.FC<CountryChartProps> = ({
 
   const updateTooltipPosition = (event: MouseEvent, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>) => {
     const tooltipNode = tooltip.node();
-    const containerNode = containerRef.current;
 
-    if (tooltipNode && containerNode) {
-      const containerRect = containerNode.getBoundingClientRect();
-      const mouseX = event.pageX - containerRect.left;
-      const mouseY = event.pageY - containerRect.top;
+    if (tooltipNode) {
+      const mouseX = event.pageX;
+      const mouseY = event.pageY;
       
       const tooltipWidth = tooltipNode.offsetWidth;
       const tooltipHeight = tooltipNode.offsetHeight;
       
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      
       let xOffset = 15;
       let yOffset = -tooltipHeight - 15;
       
-      if (mouseX + tooltipWidth + 15 > containerRect.width) {
+      // Adjust horizontal positioning if tooltip would go off-screen
+      if (mouseX + tooltipWidth + 15 > viewportWidth) {
         xOffset = -tooltipWidth - 15;
       }
       
+      // Adjust vertical positioning if tooltip would go off-screen
       if (mouseY - tooltipHeight - 15 < 0) {
         yOffset = 15;
+      }
+      
+      // Ensure tooltip doesn't go below viewport
+      if (mouseY + yOffset + tooltipHeight > viewportHeight) {
+        yOffset = viewportHeight - mouseY - tooltipHeight - 10;
       }
 
       tooltip
@@ -601,7 +609,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
       <div
         ref={tooltipRef}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           pointerEvents: 'none',
           visibility: 'hidden',
           opacity: 0,
@@ -612,7 +620,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
           boxShadow: isPinned ? '0 12px 40px rgba(34, 197, 94, 0.3)' : '0 8px 32px rgba(0, 0, 0, 0.4)',
           fontSize: '14px',
           fontWeight: 500,
-          zIndex: 1000,
+          zIndex: 9999,
           maxWidth: '280px',
           transition: 'all 0.15s ease-out'
         }}
