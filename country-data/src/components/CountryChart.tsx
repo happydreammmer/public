@@ -576,28 +576,40 @@ const CountryChart: React.FC<CountryChartProps> = ({
       
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
+      const padding = 10; // Padding from viewport edges
       
-      let xOffset = 15;
-      let yOffset = -tooltipHeight - 15;
+      let finalX = mouseX + 15; // Default: right of cursor
+      let finalY = mouseY - tooltipHeight - 15; // Default: above cursor
       
-      // Adjust horizontal positioning if tooltip would go off-screen
-      if (mouseX + tooltipWidth + 15 > viewportWidth) {
-        xOffset = -tooltipWidth - 15;
+      // Horizontal positioning
+      if (finalX + tooltipWidth + padding > viewportWidth) {
+        // Too far right, position to left of cursor
+        finalX = mouseX - tooltipWidth - 15;
       }
       
-      // Adjust vertical positioning if tooltip would go off-screen
-      if (mouseY - tooltipHeight - 15 < 0) {
-        yOffset = 15;
+      // If still off-screen on left, clamp to viewport
+      if (finalX < padding) {
+        finalX = padding;
       }
       
-      // Ensure tooltip doesn't go below viewport
-      if (mouseY + yOffset + tooltipHeight > viewportHeight) {
-        yOffset = viewportHeight - mouseY - tooltipHeight - 10;
+      // Vertical positioning
+      if (finalY < padding) {
+        // Too high, position below cursor
+        finalY = mouseY + 15;
       }
+      
+      // If tooltip would go below viewport, adjust upward
+      if (finalY + tooltipHeight + padding > viewportHeight) {
+        finalY = viewportHeight - tooltipHeight - padding;
+      }
+      
+      // Final bounds check to ensure tooltip is always visible
+      finalX = Math.max(padding, Math.min(finalX, viewportWidth - tooltipWidth - padding));
+      finalY = Math.max(padding, Math.min(finalY, viewportHeight - tooltipHeight - padding));
 
       tooltip
-        .style('left', `${mouseX + xOffset}px`)
-        .style('top', `${mouseY + yOffset}px`);
+        .style('left', `${finalX}px`)
+        .style('top', `${finalY}px`);
     }
   };
 
