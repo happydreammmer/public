@@ -598,33 +598,38 @@ const CountryChart: React.FC<CountryChartProps> = ({
       const chartRightThreshold = chartRect.left + (chartRect.width * 0.7); // Rightmost 30%
       
       // Reduced offsets for closer positioning (70-80% closer)
-      const horizontalOffset = 5; // Was 15, now much closer
-      const verticalOffset = 5; // Was 15, now much closer
+      const horizontalOffset = 5;
+      const verticalOffset = 5;
       
-      // Smart horizontal positioning - show on left when in rightmost 30% of chart
+      // Determine if we should show tooltip on left or right based on position
+      const shouldShowLeft = mouseX > chartRightThreshold;
+      
+      // Smart horizontal positioning
       let finalX: number;
-      if (mouseX > chartRightThreshold) {
-        // Mouse is in rightmost 30% of chart - always position tooltip to the left
+      if (shouldShowLeft) {
+        // Position tooltip to the left of cursor
         finalX = mouseX - tooltipWidth - horizontalOffset;
+        
+        // Only adjust if it goes off the left edge
+        if (finalX < padding) {
+          finalX = padding;
+        }
       } else {
-        // Mouse is in leftmost 70% of chart - position tooltip to the right
+        // Position tooltip to the right of cursor
         finalX = mouseX + horizontalOffset;
+        
+        // Only adjust if it goes off the right edge
+        if (finalX + tooltipWidth + padding > viewportWidth) {
+          finalX = mouseX - tooltipWidth - horizontalOffset;
+          // If still doesn't fit on left, clamp to left edge
+          if (finalX < padding) {
+            finalX = padding;
+          }
+        }
       }
       
       // Smart vertical positioning - prefer above cursor
       let finalY = mouseY - tooltipHeight - verticalOffset;
-      
-      // Horizontal bounds checking
-      if (finalX + tooltipWidth + padding > viewportWidth) {
-        finalX = mouseX - tooltipWidth - horizontalOffset;
-      }
-      if (finalX < padding) {
-        finalX = mouseX + horizontalOffset;
-        // If still doesn't fit, clamp to viewport
-        if (finalX + tooltipWidth + padding > viewportWidth) {
-          finalX = padding;
-        }
-      }
       
       // Vertical bounds checking
       if (finalY < padding) {
@@ -637,8 +642,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
         finalY = viewportHeight - tooltipHeight - padding;
       }
       
-      // Final safety bounds check
-      finalX = Math.max(padding, Math.min(finalX, viewportWidth - tooltipWidth - padding));
+      // Final vertical bounds check only (don't override horizontal positioning)
       finalY = Math.max(padding, Math.min(finalY, viewportHeight - tooltipHeight - padding));
 
       tooltip
