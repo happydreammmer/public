@@ -604,13 +604,14 @@ const CountryChart: React.FC<CountryChartProps> = ({
       // Determine if we should show tooltip on left or right based on position
       const shouldShowLeft = mouseX > chartRightThreshold;
       
-      // Smart horizontal positioning
+      // Smart horizontal positioning with proper bounds checking
       let finalX: number;
+      
       if (shouldShowLeft) {
         // Position tooltip to the left of cursor
         finalX = mouseX - tooltipWidth - horizontalOffset;
         
-        // Only adjust if it goes off the left edge
+        // Ensure it doesn't go off the left edge, but keep it left-aligned
         if (finalX < padding) {
           finalX = padding;
         }
@@ -618,15 +619,19 @@ const CountryChart: React.FC<CountryChartProps> = ({
         // Position tooltip to the right of cursor
         finalX = mouseX + horizontalOffset;
         
-        // Only adjust if it goes off the right edge
+        // If tooltip would go off the right edge, position it to the left instead
         if (finalX + tooltipWidth + padding > viewportWidth) {
           finalX = mouseX - tooltipWidth - horizontalOffset;
-          // If still doesn't fit on left, clamp to left edge
+          
+          // If left positioning also goes off screen, clamp to right edge (not left edge)
           if (finalX < padding) {
-            finalX = padding;
+            finalX = viewportWidth - tooltipWidth - padding;
           }
         }
       }
+      
+      // Final safety check to ensure tooltip stays within viewport bounds
+      finalX = Math.max(padding, Math.min(finalX, viewportWidth - tooltipWidth - padding));
       
       // Smart vertical positioning - prefer above cursor
       let finalY = mouseY - tooltipHeight - verticalOffset;
