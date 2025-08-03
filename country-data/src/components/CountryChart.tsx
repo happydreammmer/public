@@ -595,19 +595,19 @@ const CountryChart: React.FC<CountryChartProps> = ({
       
       // Get chart container bounds for smart positioning
       const chartRect = containerRef.current.getBoundingClientRect();
-      const chartCenterX = chartRect.left + chartRect.width / 2;
+      const chartRightThreshold = chartRect.left + (chartRect.width * 0.7); // Rightmost 30%
       
       // Reduced offsets for closer positioning (70-80% closer)
       const horizontalOffset = 5; // Was 15, now much closer
       const verticalOffset = 5; // Was 15, now much closer
       
-      // Smart horizontal positioning based on chart position
+      // Smart horizontal positioning - show on left when in rightmost 30% of chart
       let finalX: number;
-      if (mouseX > chartCenterX) {
-        // Mouse is on right side of chart - position tooltip to the left
+      if (mouseX > chartRightThreshold) {
+        // Mouse is in rightmost 30% of chart - always position tooltip to the left
         finalX = mouseX - tooltipWidth - horizontalOffset;
       } else {
-        // Mouse is on left side of chart - position tooltip to the right
+        // Mouse is in leftmost 70% of chart - position tooltip to the right
         finalX = mouseX + horizontalOffset;
       }
       
@@ -656,7 +656,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
         ref={tooltipRef}
         style={{
           position: 'fixed',
-          pointerEvents: 'none',
+          pointerEvents: isPinned ? 'auto' : 'none', // Enable pointer events when pinned
           visibility: 'hidden',
           opacity: 0,
           backgroundColor: 'rgba(15, 23, 42, 0.95)',
