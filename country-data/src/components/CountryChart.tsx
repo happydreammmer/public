@@ -134,8 +134,8 @@ const CountryChart: React.FC<CountryChartProps> = ({
       if (container) {
         setWidth(container.clientWidth);
         const isMobileSize = container.clientWidth < 768;
-        // Mobile: 2.5x taller (1.5 ratio), Desktop: normal (0.6 ratio)
-        setHeight(container.clientWidth * (isMobileSize ? 1.5 : 0.6));
+        // Mobile: 2.5x taller (1.5 ratio), Desktop: smaller (0.48 ratio for 80% size)
+        setHeight(container.clientWidth * (isMobileSize ? 1.5 : 0.48));
         setIsMobile(isMobileSize);
       }
     };
@@ -586,52 +586,54 @@ const CountryChart: React.FC<CountryChartProps> = ({
       const mouseX = event.pageX;
       const mouseY = event.pageY;
       
-      const tooltipWidth = tooltipNode.offsetWidth;
-      const tooltipHeight = tooltipNode.offsetHeight;
+      // Force tooltip to be visible to get accurate measurements
+      tooltip.style('visibility', 'visible').style('opacity', 0);
+      const tooltipWidth = tooltipNode.offsetWidth || 280; // Fallback to maxWidth
+      const tooltipHeight = tooltipNode.offsetHeight || 100; // Reasonable fallback
       
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      const padding = 10;
+      const padding = 15; // Increased padding for safety
       
       // Get chart container bounds for smart positioning
       const chartRect = containerRef.current.getBoundingClientRect();
-      const chartRightThreshold = chartRect.left + (chartRect.width * 0.7); // Rightmost 30%
       
-      // Reduced offsets for closer positioning (70-80% closer)
+      // Convert mouse position to chart-relative coordinates
+      const mouseXRelativeToChart = mouseX - chartRect.left;
+      const chartRightThreshold = chartRect.width * 0.75; // Rightmost 25% (was 30%)
+      
+      // Reduced offsets for closer positioning
       const horizontalOffset = 5;
       const verticalOffset = 5;
       
-      // Determine if we should show tooltip on left or right based on position
-      const shouldShowLeft = mouseX > chartRightThreshold;
+      // Use chart-relative coordinates for accurate threshold comparison
+      const shouldShowLeft = mouseXRelativeToChart > chartRightThreshold;
       
-      // Smart horizontal positioning with proper bounds checking
+      // Smart horizontal positioning with proper coordinate handling
       let finalX: number;
       
       if (shouldShowLeft) {
-        // Position tooltip to the left of cursor
+        // ALWAYS position tooltip to the left when in rightmost 25%
         finalX = mouseX - tooltipWidth - horizontalOffset;
         
-        // Ensure it doesn't go off the left edge, but keep it left-aligned
+        // Ensure it doesn't go off the left edge
         if (finalX < padding) {
           finalX = padding;
         }
       } else {
-        // Position tooltip to the right of cursor
+        // Position tooltip to the right of cursor for left 75% of chart
         finalX = mouseX + horizontalOffset;
         
-        // If tooltip would go off the right edge, position it to the left instead
+        // Only if it goes off the right edge, then switch to left
         if (finalX + tooltipWidth + padding > viewportWidth) {
           finalX = mouseX - tooltipWidth - horizontalOffset;
           
-          // If left positioning also goes off screen, clamp to right edge (not left edge)
+          // Final fallback: clamp to viewport
           if (finalX < padding) {
-            finalX = viewportWidth - tooltipWidth - padding;
+            finalX = Math.max(padding, viewportWidth - tooltipWidth - padding);
           }
         }
       }
-      
-      // Final safety check to ensure tooltip stays within viewport bounds
-      finalX = Math.max(padding, Math.min(finalX, viewportWidth - tooltipWidth - padding));
       
       // Smart vertical positioning - prefer above cursor
       let finalY = mouseY - tooltipHeight - verticalOffset;
@@ -647,12 +649,13 @@ const CountryChart: React.FC<CountryChartProps> = ({
         finalY = viewportHeight - tooltipHeight - padding;
       }
       
-      // Final vertical bounds check only (don't override horizontal positioning)
+      // Final vertical bounds check
       finalY = Math.max(padding, Math.min(finalY, viewportHeight - tooltipHeight - padding));
 
       tooltip
         .style('left', `${finalX}px`)
-        .style('top', `${finalY}px`);
+        .style('top', `${finalY}px`)
+        .style('opacity', 1); // Restore opacity
     }
   };
 
