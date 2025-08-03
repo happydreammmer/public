@@ -298,6 +298,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
       .on('touchmove', handleInteraction)
       .on('click', handleClickTap)
       .on('touchstart', handleClickTap)
+      .on('contextmenu', handleRightClick)
       .on('mouseleave', handleLeave)
       .on('touchend', function(event) {
         if (!isPinnedRef.current) {
@@ -311,7 +312,8 @@ const CountryChart: React.FC<CountryChartProps> = ({
       if (currentTime - lastInteractionTimeRef.current < 16) return;
       setLastInteractionTime(currentTime);
       
-      if (isPinnedRef.current && isMobile) return;
+      // Skip hover interactions if tooltip is pinned
+      if (isPinnedRef.current) return;
       
       const [mouseX, mouseY] = d3.pointer(event, hoverOverlay.node());
       const nearbyCountries = findNearbyCountries(mouseX, mouseY);
@@ -336,24 +338,23 @@ const CountryChart: React.FC<CountryChartProps> = ({
       
       if (nearbyCountries.length > 0) {
         const primaryCountry = nearbyCountries[0];
-        if (isMobile) {
-          if (isPinnedRef.current && activeTooltipRef.current?.country === primaryCountry.country) {
-            setIsPinned(false);
-            hideTooltip();
-            resetHighlighting();
-            setActiveTooltip(null);
-          } else {
-            setIsPinned(true);
-            showCountriesTooltip(event, nearbyCountries);
-            highlightCountries(nearbyCountries);
-            setActiveTooltip(primaryCountry);
-          }
+        
+        // Check if clicking the same country that's already pinned
+        if (isPinnedRef.current && activeTooltipRef.current?.country === primaryCountry.country) {
+          // Unpin if clicking same country
+          setIsPinned(false);
+          hideTooltip();
+          resetHighlighting();
+          setActiveTooltip(null);
         } else {
+          // Pin new country (works for both mobile and desktop)
+          setIsPinned(true);
           showCountriesTooltip(event, nearbyCountries);
           highlightCountries(nearbyCountries);
           setActiveTooltip(primaryCountry);
         }
-      } else if (isMobile && isPinnedRef.current) {
+      } else if (isPinnedRef.current) {
+        // Clicking empty space unpins tooltip (both mobile and desktop)
         setIsPinned(false);
         hideTooltip();
         resetHighlighting();
@@ -362,10 +363,24 @@ const CountryChart: React.FC<CountryChartProps> = ({
     }
     
     function handleLeave(event: any) {
-      if (isPinnedRef.current && isMobile) return;
+      // Don't hide if tooltip is pinned (both mobile and desktop)
+      if (isPinnedRef.current) return;
       hideTooltip();
       resetHighlighting();
       setActiveTooltip(null);
+    }
+    
+    function handleRightClick(event: any) {
+      event.preventDefault();
+      event.stopPropagation();
+      
+      // Right-click cancels pinned tooltip
+      if (isPinnedRef.current) {
+        setIsPinned(false);
+        hideTooltip();
+        resetHighlighting();
+        setActiveTooltip(null);
+      }
     }
     
     function findNearbyCountries(mouseX: number, mouseY: number): ProcessedCountryData[] {
@@ -546,7 +561,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
           <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">GDP:</strong> $${d.gdp_per_capita.toLocaleString()}</p>
           <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Pop:</strong> ${d.population.toLocaleString()}</p>
           <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Freedom:</strong> ${d.economic_freedom.toFixed(1)}</p>
-          ${countries.length === 1 ? `<p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Political System:</strong> ${d.original_political_system}</p>` : ''}
+          <p style="margin: 2px 0; color: #cbd5e1;"><strong style="color: #94a3b8;">Political System:</strong> ${d.original_political_system}</p>
         </div>
       </div>
     `).join('');
@@ -567,7 +582,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
   const updateTooltipPosition = (event: MouseEvent, tooltip: d3.Selection<HTMLDivElement, unknown, null, undefined>) => {
     const tooltipNode = tooltip.node();
 
-    if (tooltipNode) {
+    if (tooltipNode && containerRef.current) {
       const mouseX = event.pageX;
       const mouseY = event.pageY;
       
@@ -576,26 +591,45 @@ const CountryChart: React.FC<CountryChartProps> = ({
       
       const viewportWidth = window.innerWidth;
       const viewportHeight = window.innerHeight;
-      const padding = 10; // Padding from viewport edges
+      const padding = 10;
       
-      let finalX = mouseX + 15; // Default: right of cursor
-      let finalY = mouseY - tooltipHeight - 15; // Default: above cursor
+      // Get chart container bounds for smart positioning
+      const chartRect = containerRef.current.getBoundingClientRect();
+      const chartCenterX = chartRect.left + chartRect.width / 2;
       
-      // Horizontal positioning
+      // Reduced offsets for closer positioning (70-80% closer)
+      const horizontalOffset = 5; // Was 15, now much closer
+      const verticalOffset = 5; // Was 15, now much closer
+      
+      // Smart horizontal positioning based on chart position
+      let finalX: number;
+      if (mouseX > chartCenterX) {
+        // Mouse is on right side of chart - position tooltip to the left
+        finalX = mouseX - tooltipWidth - horizontalOffset;
+      } else {
+        // Mouse is on left side of chart - position tooltip to the right
+        finalX = mouseX + horizontalOffset;
+      }
+      
+      // Smart vertical positioning - prefer above cursor
+      let finalY = mouseY - tooltipHeight - verticalOffset;
+      
+      // Horizontal bounds checking
       if (finalX + tooltipWidth + padding > viewportWidth) {
-        // Too far right, position to left of cursor
-        finalX = mouseX - tooltipWidth - 15;
+        finalX = mouseX - tooltipWidth - horizontalOffset;
       }
-      
-      // If still off-screen on left, clamp to viewport
       if (finalX < padding) {
-        finalX = padding;
+        finalX = mouseX + horizontalOffset;
+        // If still doesn't fit, clamp to viewport
+        if (finalX + tooltipWidth + padding > viewportWidth) {
+          finalX = padding;
+        }
       }
       
-      // Vertical positioning
+      // Vertical bounds checking
       if (finalY < padding) {
-        // Too high, position below cursor
-        finalY = mouseY + 15;
+        // Not enough space above, position below cursor
+        finalY = mouseY + verticalOffset;
       }
       
       // If tooltip would go below viewport, adjust upward
@@ -603,7 +637,7 @@ const CountryChart: React.FC<CountryChartProps> = ({
         finalY = viewportHeight - tooltipHeight - padding;
       }
       
-      // Final bounds check to ensure tooltip is always visible
+      // Final safety bounds check
       finalX = Math.max(padding, Math.min(finalX, viewportWidth - tooltipWidth - padding));
       finalY = Math.max(padding, Math.min(finalY, viewportHeight - tooltipHeight - padding));
 
