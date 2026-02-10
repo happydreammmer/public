@@ -39,8 +39,8 @@ jobs:
 
       - name: Clear build directories
         run: |
-          rm -rf deeptube/build osee/build country-data/build dictator/build meeting-agent/build gemini-js-sdk-doc/build
-          rm -rf deeptube/dist osee/dist country-data/dist dictator/dist meeting-agent/dist gemini-js-sdk-doc/dist
+          rm -rf deeptube/build osee/build country-data/build dictator/build meeting-agent/build
+          rm -rf deeptube/dist osee/dist country-data/dist dictator/dist meeting-agent/dist
           rm -rf */node_modules/.vite
           ls -la */build || echo "No build directories found"
 
@@ -54,7 +54,6 @@ jobs:
           npm run build:country-data
           npm run build:dictator
           npm run build:meeting-agent
-          npm run build:gemini-js-sdk-doc
           
       - name: Verify build outputs
         run: |
@@ -68,7 +67,7 @@ jobs:
 
       - name: Create deployment directory
         run: |
-          mkdir -p public/deeptube public/dictator public/meeting-agent public/osee public/country-data public/gemini-js-sdk-doc
+          mkdir -p public/deeptube public/dictator public/meeting-agent public/osee public/country-data
           mkdir -p public/country-data/data
           mkdir -p public/
           mkdir -p public/business-data
@@ -80,7 +79,6 @@ jobs:
           cp -r meeting-agent/build/. public/meeting-agent/
           cp -r osee/build/. public/osee/
           cp -r country-data/build/. public/country-data/
-          cp -r gemini-js-sdk-doc/build/. public/gemini-js-sdk-doc/
           cp -r country-data/public/data/* public/country-data/data/
           cp -r cv public/
           cp -r dm/* public/dm/

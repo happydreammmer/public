@@ -70,15 +70,6 @@ Access all applications through the main portfolio dashboard with beautiful anim
 - **AI Opportunities**: Mapped potential for each company
 - **Interactive Filtering**: Search by sector, location, size, priority
 
-### 📊 Strategic Analysis
-
-#### 📚 [Gemini JS SDK Documentation](./gemini-js-sdk-doc/)
-**Developer Resource Hub**
-- **SDK Examples**: Practical implementation guides
-- **Interactive Demos**: Live code examples
-- **Documentation**: Comprehensive API reference
-- **Getting Started**: Quick setup tutorials
-
 ### 🔧 Additional Tools
 
 #### 📄 [CV/Resume](./cv/)
@@ -109,7 +100,7 @@ Access all applications through the main portfolio dashboard with beautiful anim
 ### Monorepo Structure
 This repository uses npm workspaces to manage multiple React/TypeScript applications:
 
-- **Workspace Projects**: deeptube, osee, meeting-agent, dictator, country-data, gemini-js-sdk-doc
+- **Workspace Projects**: deeptube, osee, meeting-agent, dictator, country-data
 - **Static Projects**: event-hunter, companies-data, business-data, cv, dm, portfolio
 - **Shared Dependencies**: Common build tools and deployment configuration
 
@@ -136,8 +127,7 @@ public-directory/
 │   ├── 🎥 deeptube/                  # YouTube analysis (React/TS)
 │   ├── 👁️ osee/                      # Visual content analysis (React/TS)
 │   ├── 🎤 meeting-agent/             # Meeting analysis (React/TS)
-│   ├── 📊 dictator/                  # Content strategy (React/TS)
-│   └── 📚 gemini-js-sdk-doc/         # SDK documentation (React/TS)
+│   └── 📊 dictator/                  # Content strategy (React/TS)
 │
 ├── 📈 Data Visualization/
 │   ├── 🌍 country-data/              # Global data dashboard (React/TS)
@@ -178,7 +168,7 @@ python -m http.server 8000
 ### Individual Project Development
 **React/TypeScript Projects**:
 ```bash
-cd [project-name]  # deeptube, osee, meeting-agent, dictator, country-data, gemini-js-sdk-doc
+cd [project-name]  # deeptube, osee, meeting-agent, dictator, country-data
 npm install
 npm run dev      # Development server
 npm run build    # Production build
@@ -200,7 +190,6 @@ npm run build:osee
 npm run build:country-data
 npm run build:dictator
 npm run build:meeting-agent
-npm run build:gemini-js-sdk-doc
 
 # Deploy to GitHub Pages
 npm run deploy

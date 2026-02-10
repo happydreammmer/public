@@ -21,14 +21,12 @@ npm run build:meeting-agent
 npm run build:osee
 npm run build:country-data
 npm run build:deeptube
-npm run build:gemini-js-sdk-doc
-
 # Deploy to GitHub Pages
 npm run deploy
 ```
 
 ### Individual Project Development
-For React/TypeScript projects (osee, meeting-agent, dictator, deeptube, country-data, gemini-js-sdk-doc):
+For React/TypeScript projects (osee, meeting-agent, dictator, deeptube, country-data):
 ```bash
 cd [project-name]
 npm install
@@ -46,7 +44,7 @@ For HTML/JS projects (companies-data, event-hunter, business-data, cv, portfolio
 ### Monorepo Structure
 - Uses npm workspaces defined in root `package.json`
 - Each React project has its own dependencies but shares common tooling
-- Workspace projects: osee, meeting-agent, dictator, country-data, deeptube, gemini-js-sdk-doc
+- Workspace projects: osee, meeting-agent, dictator, country-data, deeptube
 
 ### Technology Stack
 - **Frontend Framework**: React 18+ with TypeScript
@@ -80,7 +78,7 @@ Projects using external APIs follow this pattern:
 
 ## Project-Specific Notes
 
-### AI-Powered Projects (osee, meeting-agent, dictator, deeptube, gemini-js-sdk-doc)
+### AI-Powered Projects (osee, meeting-agent, dictator, deeptube)
 - Require Google Gemini API key
 - Handle file uploads, audio recording, video analysis, or documentation generation
 - Include real-time processing capabilities
@@ -137,7 +135,6 @@ npm run build
 # Individual project builds
 npm run build:deeptube
 npm run build:osee
-npm run build:gemini-js-sdk-doc
 # ... etc
 
 # Deploy to GitHub Pages
@@ -151,7 +148,6 @@ public-directory/
 ├── deeptube/dist/                # Built React app
 ├── osee/dist/                    # Built React app
 ├── country-data/dist/            # Built React app
-├── gemini-js-sdk-doc/dist/       # Built React app
 ├── dictator/dist/                # Built React app
 ├── meeting-agent/dist/           # Built React app
 ├── event-hunter/index.html       # Static app
