@@ -72,13 +72,6 @@ Access all applications through the main portfolio dashboard with beautiful anim
 
 ### 📊 Strategic Analysis
 
-#### 🎯 [Israel-Iran Crisis Dashboard](./israel-iran-war/)
-**Strategic Analysis Platform**
-- **Game Theory Framework**: Strategic decision analysis
-- **Interactive Polling**: Community sentiment tracking
-- **Multi-Language**: English, Arabic, Persian support
-- **Real-time Data**: Dynamic probability calculations
-
 #### 📚 [Gemini JS SDK Documentation](./gemini-js-sdk-doc/)
 **Developer Resource Hub**
 - **SDK Examples**: Practical implementation guides
@@ -99,6 +92,12 @@ Access all applications through the main portfolio dashboard with beautiful anim
 - **Simple Interface**: A clean and simple page
 - **PDF Download**: Easy way to download resume
 
+#### 🎨 [Design Portfolio](./portfolio/)
+**Creative Designer & Content Creator**
+- **Social Media & Ads**: Video content, display ads, carousels
+- **Presentations**: Sales decks, pitch decks, data visualization
+- **Website Portfolio**: Web design and UI/UX projects
+
 #### 📊 [Business Data](./business-data/)
 **Business Analytics Hub**
 - **AI Scaling Analysis**: Business growth insights
@@ -111,7 +110,7 @@ Access all applications through the main portfolio dashboard with beautiful anim
 This repository uses npm workspaces to manage multiple React/TypeScript applications:
 
 - **Workspace Projects**: deeptube, osee, meeting-agent, dictator, country-data, gemini-js-sdk-doc
-- **Static Projects**: event-hunter, companies-data, israel-iran-war, business-data, cv, dm
+- **Static Projects**: event-hunter, companies-data, business-data, cv, dm, portfolio
 - **Shared Dependencies**: Common build tools and deployment configuration
 
 ### Technology Stack
@@ -143,12 +142,12 @@ public-directory/
 ├── 📈 Data Visualization/
 │   ├── 🌍 country-data/              # Global data dashboard (React/TS)
 │   ├── 🔎 event-hunter/              # Events platform (HTML/JS)
-│   ├── 🏢 companies-data/            # Business intelligence (HTML/JS)
-│   └── 🎯 israel-iran-war/           # Strategic analysis (HTML/JS)
+│   └── 🏢 companies-data/            # Business intelligence (HTML/JS)
 │
 ├── 🔧 Additional Tools/
 │   ├── 📄 cv/                        # Professional resume (HTML/JS)
 │   ├── 💬 dm/                        # Digital Marketing resume
+│   ├── 🎨 portfolio/                 # Design portfolio (HTML/JS)
 │   └── 📊 business-data/             # Business analytics (HTML/JS)
 │
 └── 🚀 Deployment/

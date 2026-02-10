@@ -37,7 +37,7 @@ npm run build    # Build for production
 npm run preview  # Preview production build
 ```
 
-For HTML/JS projects (companies-data, event-hunter, israel-iran-war, business-data, cv):
+For HTML/JS projects (companies-data, event-hunter, business-data, cv, portfolio):
 - Open index.html directly or use a local server
 - No build process required
 
@@ -85,7 +85,7 @@ Projects using external APIs follow this pattern:
 - Handle file uploads, audio recording, video analysis, or documentation generation
 - Include real-time processing capabilities
 
-### Data Visualization Projects (country-data, israel-iran-war)
+### Data Visualization Projects (country-data)
 - Heavy use of D3.js and charting libraries
 - Responsive charts that adapt to screen size
 - Interactive filtering and data exploration
@@ -158,7 +158,7 @@ public-directory/
 ├── companies-data/index.html     # Static app
 ├── business-data/                # Static app directory
 ├── cv/index.html                 # Static app
-└── israel-iran-war/index.html    # Static app
+└── portfolio/index.html         # Design portfolio (static)
 ```
 
 ## Development Workflow

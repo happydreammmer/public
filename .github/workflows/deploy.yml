@@ -74,7 +74,6 @@ jobs:
           mkdir -p public/business-data
           mkdir -p public/companies-data
           mkdir -p public/event-hunter
-          mkdir -p public/israel-iran-war
           mkdir -p public/dm
           cp -r deeptube/build/. public/deeptube/
           cp -r dictator/build/. public/dictator/
@@ -88,7 +87,8 @@ jobs:
           cp -r business-data/* public/business-data/
           cp -r companies-data/* public/companies-data/
           cp -r event-hunter/* public/event-hunter/
-          cp -r israel-iran-war/* public/israel-iran-war/
+          mkdir -p public/portfolio
+          cp -r portfolio/* public/portfolio/
           cp index.html public/
           cp 404.html public/
 
