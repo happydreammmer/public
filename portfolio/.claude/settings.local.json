@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "Bash(npx:*)",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "PowerShell(python -c \"from pypdf import PdfReader; r = PdfReader\\('C:/Users/Hatef/Downloads/My CV/Portfolio Website/Hatef Mohammad Ali - Designer.pdf'\\); [print\\(p.extract_text\\(\\)\\) for p in r.pages]\")",
+      "PowerShell(python -m pdfminer.high_level -o - \"C:/Users/Hatef/Downloads/My CV/Portfolio Website/Hatef Mohammad Ali - Designer.pdf\")",
+      "PowerShell(python -c \"import PyPDF2; r = PyPDF2.PdfReader\\('C:/Users/Hatef/Downloads/My CV/Portfolio Website/Hatef Mohammad Ali - Designer.pdf'\\); [print\\(p.extract_text\\(\\)\\) for p in r.pages]\")",
+      "PowerShell([System.IO.File]::ReadAllText\\(\"C:\\\\Users\\\\Hatef\\\\Downloads\\\\My CV\\\\Portfolio Website\\\\Hatef Mohammad Ali - Designer.pdf\"\\) | Select-String -Pattern \"[A-Za-z0-9\\\\s\\\\.]+\" | ForEach-Object { $_.Matches } | ForEach-Object { $_.Value } | Select-Object -First 500)",
+      "PowerShell(pip install *)"
+    ]
+  }
+}

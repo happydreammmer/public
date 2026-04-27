@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "allow": [
       "Bash(ls:*)",
@@ -12,9 +13,9 @@
       "Bash(npm install:*)",
       "Bash(diff:*)",
       "Bash(mkdir:*)",
-      "Bash(powershell:*)"
+      "Bash(powershell:*)",
+      "Bash(python3 *)"
     ],
     "deny": []
-  },
-  "$schema": "https://json.schemastore.org/claude-code-settings.json"
+  }
 }

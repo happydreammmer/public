@@ -93,6 +93,15 @@ Projects using external APIs follow this pattern:
 - No build process required
 - Can be served from any static host
 
+### Portfolio & CV (portfolio/)
+- Static HTML/CSS/JS — no build step required
+- `portfolio/index.html` — main portfolio page with four tab sections (Overview, Social Media & Ads, Presentations, Website Portfolio)
+- `portfolio/cv.html` — standalone CV/resume page; shares `styles.css`; has PDF download via html2pdf.js CDN
+- `portfolio/styles.css` — shared stylesheet; CV styles scoped under `body.cv-body` and `.cv-*` class selectors
+- `portfolio/script.js` — loaded only by `index.html` (navigation, lightbox, skill-bar animations)
+- `portfolio/assets/` — static images (jpg/png/webp), videos (mp4), and PDFs referenced by the portfolio cards
+- `portfolio/hatef.jpg` — profile photo used by both `index.html` and `cv.html`
+
 ## Deployment
 
 ### GitHub Pages Setup
@@ -154,7 +163,13 @@ public-directory/
 ├── companies-data/index.html     # Static app
 ├── business-data/                # Static app directory
 ├── cv/index.html                 # Static app
-└── portfolio/index.html         # Design portfolio (static)
+└── portfolio/                   # Design portfolio (static)
+    ├── index.html               # Main portfolio page (4 tab sections)
+    ├── cv.html                  # CV/resume page with PDF download
+    ├── styles.css               # Shared stylesheet (portfolio + CV)
+    ├── script.js                # Portfolio JS (navigation, lightbox, animations)
+    ├── hatef.jpg                # Profile photo (shared by both pages)
+    └── assets/                  # Images, videos, and PDFs for portfolio cards
 ```
 
 ## Development Workflow

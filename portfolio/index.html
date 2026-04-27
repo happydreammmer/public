@@ -5,8 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Creative Digital Marketing Designer & Content Creator with 12+ years of experience. Expert in visual storytelling, performance marketing, and software development.">
     <meta name="author" content="Hatef Mohammad Ali">
-    <title>Hatef Mohammad Ali | Designer & Content Creator</title>
-    
+    <title>Hatef Mohammad Ali | Creative & AI Designer</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="hatef.jpg">
+    <link rel="apple-touch-icon" href="hatef.jpg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,12 +26,12 @@
             <img src="hatef.jpg" alt="Hatef Mohammad Ali" class="profile-img">
             <div>
                 <div class="name">Hatef Mohammad Ali</div>
-                <div class="role">Designer & Content Creator</div>
+                <div class="role">Creative & AI Designer</div>
             </div>
         </div>
 
         <div class="sidebar-contact">
-            <a href="mailto:hatef@wadiwadi.net" title="Email">📧 hatef@wadiwadi.net</a>
+            <a href="mailto:hatef.mohammadali92@gmail.com" title="Email">📧 hatef.mohammadali92@gmail.com</a>
             <a href="tel:+96877407956" title="Phone">📱 +968 77407956</a>
             <a href="https://linkedin.com/in/hkouzechi/" target="_blank" title="LinkedIn">🔗 LinkedIn</a>
         </div>
@@ -35,8 +39,8 @@
         <nav>
             <button onclick="navigate('home')" class="active" id="btn-home">Overview</button>
             <button onclick="navigate('graphics')" id="btn-graphics">Social Media & Ads</button>
+            <button onclick="navigate('web')" id="btn-web">Websites</button>
             <button onclick="navigate('presentations')" id="btn-presentations">Presentations</button>
-            <button onclick="navigate('web')" id="btn-web">Website Portfolio</button>
         </nav>
     </aside>
 
@@ -50,13 +54,13 @@
                 <div class="hero-header">
                     <div>
                         <h1 class="hero-title">Hatef Mohammad Ali</h1>
-                        <p class="hero-subtitle">Designer & Content Creator | Muscat, Oman</p>
+                        <p class="hero-subtitle">Creative & AI Designer | Muscat, Oman</p>
                     </div>
-                    <a href="Hatef Mohammad Ali - Designer.pdf" class="btn-secondary" download>
+                    <a href="cv.html" class="btn-secondary">
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M10 12.5V2.5M10 12.5L7.5 10M10 12.5L12.5 10M2.5 17.5H17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M3 10h14M11 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                        <span>Download Resume</span>
+                        <span>View CV</span>
                     </a>
                 </div>
 
@@ -175,6 +179,8 @@
             <p class="intro">High-performance visuals and video content designed to stop the scroll and drive clicks.</p>
 
             <div class="social-grid">
+
+            <!-- VIDEOS: 3 cols × 2 rows (auto-placed) -->
             <div class="social-row social-row-1">
                 <!-- Video 1 -->
                 <div class="card" onclick="openLightbox('Maslenitsa Festival 2026 Collaboration', 'A strategic collaboration reel featuring the Ministry of Heritage and Tourism of Oman. Highlighted the cultural fusion at Al Mouj Muscat to drive event awareness.', 'assets/video-1.mp4', ['Video Editing', 'Social Media'], null, 'video')">
@@ -212,7 +218,31 @@
                     </div>
                 </div>
 
-                <!-- Spring Festival Story -->
+                <!-- Video 4 - Date Production & Protection Campaign -->
+                <div class="card" onclick="openLightbox('Date Production &amp; Protection Campaign', 'This strategic campaign for Oman\'s Ministry of Agriculture, Fisheries Wealth &amp; Water Resources focuses on combating the destructive Dubas bug to safeguard the nation\'s vital palm trees.', 'assets/video-4.mp4', ['Video Editing', 'Agriculture'], null, 'video')">
+                    <div class="card-img-container vertical-video">
+                        <video src="assets/video-4.mp4" muted loop playsinline></video>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Date Production & Protection Campaign</div>
+                        <p class="card-desc">This strategic campaign for Oman's Ministry of Agriculture, Fisheries Wealth & Water Resources focuses on combating the destructive Dubas bug to safeguard the nation's vital palm trees.</p>
+                        <div class="tags"><span class="tag">Video Editing</span><span class="tag">Agriculture</span></div>
+                    </div>
+                </div>
+
+                <!-- Video 5 - Maslenitsa Festival B2B Campaign -->
+                <div class="card" onclick="openLightbox('Maslenitsa Festival B2B Campaign', 'A targeted B2B outreach campaign for the Maslenitsa Spring Festival 2026, designed to attract corporate sponsors, trade exhibitors, and business partners to Oman\'s premier annual cultural event.', 'assets/video-5.mp4', ['Video Editing', 'B2B'], null, 'video')">
+                    <div class="card-img-container vertical-video">
+                        <video src="assets/video-5.mp4" muted loop playsinline></video>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Maslenitsa Festival B2B Campaign</div>
+                        <p class="card-desc">A targeted B2B outreach campaign for the Maslenitsa Spring Festival 2026, designed to attract corporate sponsors, trade exhibitors, and business partners to Oman's premier annual cultural event.</p>
+                        <div class="tags"><span class="tag">Video Editing</span><span class="tag">B2B</span></div>
+                    </div>
+                </div>
+
+                <!-- Story -->
                 <div class="card" onclick="openLightbox('Daily Event Coverage Stories', 'Vertical story assets used for real-time updates and &quot;Don\'t Miss It&quot; countdowns. Optimized for mobile viewing to maintain high engagement during the event.', 'assets/story-1.jpg', ['Social Media', 'Story Design'], null, 'image')">
                     <div class="card-img-container vertical-video">
                         <img src="assets/story-1.jpg" alt="Daily Event Coverage Stories">
@@ -224,20 +254,22 @@
                     </div>
                 </div>
             </div>
+
+            <!-- IMAGES: 3 cols × 2 rows (5 items, last slot empty) -->
             <div class="social-row social-row-2">
-                <!-- Beauty Brand Engagement Campaigns -->
-                <div class="card" onclick="openLightbox('Beauty Brand Engagement Campaigns', 'Engagement-driven assets for Khanoumi, including educational skincare carousels and gamified &quot;Spin the Wheel&quot; concepts designed to boost sales conversion.', 'assets/post-1.jpg', ['Photoshop', 'Social Media'], null, 'image')">
+                <!-- Date Production & Protection Campaign (new, first) -->
+                <div class="card" onclick="openLightbox('Date Production &amp; Protection Campaign', 'This strategic campaign for Oman\'s Ministry of Agriculture, Fisheries Wealth &amp; Water Resources focuses on combating the destructive Dubas bug to safeguard the nation\'s vital palm trees.', 'assets/post-4.jpg', ['Agriculture', 'Campaign'], null, 'image')">
                     <div class="card-img-container square-image">
-                        <img src="assets/post-1.jpg" alt="Beauty Brand Engagement Campaigns">
+                        <img src="assets/post-4.jpg" alt="Date Production &amp; Protection Campaign" style="object-position: top">
                     </div>
                     <div class="card-body">
-                        <div class="card-title">Beauty Brand Engagement Campaigns</div>
-                        <p class="card-desc">Engagement-driven assets for Khanoumi, including educational skincare carousels and gamified "Spin the Wheel" concepts designed to boost sales conversion.</p>
-                        <div class="tags"><span class="tag">Photoshop</span><span class="tag">Social Media</span></div>
+                        <div class="card-title">Date Production & Protection Campaign</div>
+                        <p class="card-desc">This strategic campaign for Oman's Ministry of Agriculture, Fisheries Wealth & Water Resources focuses on combating the destructive Dubas bug to safeguard the nation's vital palm trees.</p>
+                        <div class="tags"><span class="tag">Agriculture</span><span class="tag">Campaign</span></div>
                     </div>
                 </div>
 
-                <!-- Spring Festival Ads -->
+                <!-- High-CTR Display Ads -->
                 <div class="card" onclick="openLightbox('High-CTR Display Ads', 'Performance marketing assets for Google Display, Meta, and LinkedIn. Optimized for high click-through rates to drive registration for Maslenitsa 2026.', 'assets/ad-a.jpg', ['Photoshop', 'Paid Ads'], null, 'image')">
                     <div class="card-img-container square-image">
                         <img src="assets/ad-a.jpg" alt="High-CTR Display Ads">
@@ -249,7 +281,7 @@
                     </div>
                 </div>
 
-                <!-- Spring Festival Carousel Album -->
+                <!-- Festival Schedule & Guide -->
                 <div class="card" onclick="openLightbox('Festival Schedule &amp; Guide', 'An informative carousel post detailing the Trade Fair schedule and daily activities. Designed to simplify complex event timelines for Instagram users.', 'assets/album-1.webp', ['Info Design', 'Carousel'], null, 'image')">
                     <div class="card-img-container square-image">
                         <img src="assets/album-1.webp" alt="Festival Schedule &amp; Guide">
@@ -260,7 +292,32 @@
                         <div class="tags"><span class="tag">Info Design</span><span class="tag">Carousel</span></div>
                     </div>
                 </div>
+
+                <!-- MEM Interior Design - horizontal video (first of last row) -->
+                <div class="card" onclick="openLightbox('MEM Interior Design', 'This project for Oman\'s Ministry of Energy and Minerals focuses on translating the Ministry\'s approved visual identity into a cohesive, physical work environment.', 'assets/video-horiz-1.mp4', ['Interior Design', 'Branding'], null, 'video')">
+                    <div class="card-img-container square-image">
+                        <video src="assets/video-horiz-1.mp4" muted loop playsinline></video>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">MEM Interior Design</div>
+                        <p class="card-desc">This project for Oman's Ministry of Energy and Minerals focuses on translating the Ministry's approved visual identity into a cohesive, physical work environment.</p>
+                        <div class="tags"><span class="tag">Interior Design</span><span class="tag">Branding</span></div>
+                    </div>
+                </div>
+
+                <!-- Beauty Brand Engagement Campaigns (moved to last) -->
+                <div class="card" onclick="openLightbox('Beauty Brand Engagement Campaigns', 'Engagement-driven assets for Khanoumi, including educational skincare carousels and gamified &quot;Spin the Wheel&quot; concepts designed to boost sales conversion.', 'assets/post-1.jpg', ['Photoshop', 'Social Media'], null, 'image')">
+                    <div class="card-img-container square-image">
+                        <img src="assets/post-1.jpg" alt="Beauty Brand Engagement Campaigns">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Beauty Brand Engagement Campaigns</div>
+                        <p class="card-desc">Engagement-driven assets for Khanoumi, including educational skincare carousels and gamified "Spin the Wheel" concepts designed to boost sales conversion.</p>
+                        <div class="tags"><span class="tag">Photoshop</span><span class="tag">Social Media</span></div>
+                    </div>
+                </div>
             </div>
+
             </div>
         </section>
 
@@ -294,7 +351,19 @@
                     </div>
                 </div>
 
-                <!-- Project 3: Interactive Global Data Dashboard -->
+                <!-- Project 3: Innovation Park Muscat -->
+                <div class="card" onclick="openLightbox('Innovation Park Muscat - Exterior Design', 'The IPM exterior design project transforms Oman\'s premier science and technology hub into a highly interactive, futuristic &quot;Digital Canvas&quot; that reflects its mission to drive global scientific advancement; by integrating dynamic, high-tech elements such as 3D projection mapping on building facades, kinetic LED entrance sculptures, and interactive LED mosaic walkways.', 'assets/presentation-3.png', ['Spatial Design', 'Digital Experience'], null, 'image')">
+                    <div class="card-img-container">
+                        <img src="assets/presentation-3.png" alt="Innovation Park Muscat - Exterior Design">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Innovation Park Muscat - Exterior Design</div>
+                        <p class="card-desc">The IPM exterior design project transforms Oman's premier science and technology hub into a futuristic "Digital Canvas" - integrating 3D projection mapping on building facades, kinetic LED entrance sculptures, and interactive LED mosaic walkways.</p>
+                        <div class="tags"><span class="tag">Spatial Design</span><span class="tag">Digital Experience</span></div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Interactive Global Data Dashboard -->
                 <div class="card" onclick="openLightbox('Interactive Global Data Dashboard', 'A data visualization project correlating GDP per Capita with Economic Freedom across 194 countries. Features real-time filtering controls and scatter plot analysis.', 'assets/data-1.png', ['Data Viz', 'Analytics'], null, 'image')">
                     <div class="card-img-container">
                         <img src="assets/data-1.png" alt="Interactive Global Data Dashboard">
@@ -310,7 +379,7 @@
 
         <!-- WEB PORTFOLIO -->
         <section id="web" class="page">
-            <h1>Website Portfolio</h1>
+            <h1>Websites</h1>
             <p class="intro">Full-stack and frontend development projects.</p>
 
             <div class="grid">
@@ -323,6 +392,7 @@
                         <div class="card-title">Wadi Wadi AI Agency Platform</div>
                         <p class="card-desc">High-conversion landing page for an AI automation agency. Features a clean UI designed to explain lead qualification tools and drive user sign-ups.</p>
                         <div class="tags"><span class="tag">Web Design</span><span class="tag">SaaS</span><span class="tag">UI/UX</span></div>
+                        <a href="https://wadiwadi.net/" target="_blank" rel="noopener" class="card-visit-link" onclick="event.stopPropagation()">↗ Visit Site</a>
                     </div>
                 </div>
 
@@ -335,6 +405,7 @@
                         <div class="card-title">Spring Festival 2026 Event Hub</div>
                         <p class="card-desc">Comprehensive event website for the Maslenitsa festival. Integrates live schedules, "Kids Zone" details, and cultural guides for a major international audience.</p>
                         <div class="tags"><span class="tag">Web Dev</span><span class="tag">Event Marketing</span></div>
+                        <a href="https://springfestival.me/" target="_blank" rel="noopener" class="card-visit-link" onclick="event.stopPropagation()">↗ Visit Site</a>
                     </div>
                 </div>
 
@@ -347,6 +418,33 @@
                         <div class="card-title">Gates of Arabia B2B Portal</div>
                         <p class="card-desc">Trade-focused landing page connecting Moscow manufacturers with the Omani market. Features supplier verification details and direct access points for importers.</p>
                         <div class="tags"><span class="tag">Web Design</span><span class="tag">B2B Trade</span></div>
+                        <a href="https://gatesofarabia.com/spring-festival" target="_blank" rel="noopener" class="card-visit-link" onclick="event.stopPropagation()">↗ Visit Site</a>
+                    </div>
+                </div>
+
+                <!-- Project 4: Nabiqasim Pharma -->
+                <div class="card" onclick="openLightbox('Nabiqasim Pharma', 'The website for Nabiqasim Industries, a prominent Pakistan-based pharmaceutical manufacturer with over 50 years of experience, has transitioned from its legacy design to a completely revitalized, modernized digital platform.', 'assets/website-4.jpg', ['Web Design', 'Pharma', 'UI/UX'], null, 'image')">
+                    <div class="card-img-container">
+                        <img src="assets/website-4.jpg" alt="Nabiqasim Pharma">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Nabiqasim Pharma</div>
+                        <p class="card-desc">The website for Nabiqasim Industries, a prominent Pakistan-based pharmaceutical manufacturer with over 50 years of experience, has transitioned from its legacy design to a completely revitalized, modernized digital platform.</p>
+                        <div class="tags"><span class="tag">Web Design</span><span class="tag">Pharma</span><span class="tag">UI/UX</span></div>
+                        <a href="https://panafricanpharma.com/" target="_blank" rel="noopener" class="card-visit-link" onclick="event.stopPropagation()">↗ Visit Site</a>
+                    </div>
+                </div>
+
+                <!-- Project 5: Darb CRM & Accounting -->
+                <div class="card" onclick="openLightbox('Darb CRM &amp; Accounting', 'Darb is an integrated CRM and accounting software platform. Built with Next JS and React JS, tailored for modern workflows, Darb offers a user-friendly digital solution for driving business growth and operational efficiency.', 'assets/website-5.png', ['Next.js', 'React', 'SaaS'], null, 'image')">
+                    <div class="card-img-container">
+                        <img src="assets/website-5.png" alt="Darb CRM &amp; Accounting">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title">Darb CRM & Accounting</div>
+                        <p class="card-desc">Darb is an integrated CRM and accounting software platform. Built with Next JS and React JS, tailored for modern workflows, Darb offers a user-friendly digital solution for driving business growth and operational efficiency.</p>
+                        <div class="tags"><span class="tag">Next.js</span><span class="tag">React</span><span class="tag">SaaS</span></div>
+                        <a href="https://stage.darb.om/" target="_blank" rel="noopener" class="card-visit-link" onclick="event.stopPropagation()">↗ Visit Site</a>
                     </div>
                 </div>
             </div>
