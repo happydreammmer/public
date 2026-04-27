@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -69,7 +69,7 @@
                         <svg class="cv-contact-icon" viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                         hatef.mohammadali92@gmail.com
                     </a>
-                    <a href="https://linkedin.com/in/hkouzechi/" target="_blank" rel="noopener">
+                    <a href="https://www.linkedin.com/in/hkouzechi/" target="_blank" rel="noopener">
                         <svg class="cv-contact-icon" viewBox="0 0 24 24" fill="currentColor" width="13" height="13" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                         LinkedIn Profile
                     </a>
@@ -327,18 +327,369 @@
         </div><!-- /.cv-page -->
     </div><!-- /.cv-wrapper -->
 
+    <!-- html2canvas + jsPDF: render CV to canvas then to PDF.
+         Avoids Chrome's glyph-encoding bug that garbles text on
+         coloured backgrounds when using window.print(). -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script>
-    function downloadCV() {
-        const btn = document.getElementById('pdf-btn');
-        const text = btn.querySelector('span');
+    async function downloadCV() {
+        const btn    = document.getElementById('pdf-btn');
+        const label  = btn.querySelector('span');
+        const topbar = document.querySelector('.cv-topbar');
+        const page   = document.querySelector('.cv-page');
+
         btn.disabled = true;
-        text.textContent = 'Opening…';
-        // Small delay lets the button state render before the print dialog blocks the thread
-        setTimeout(() => {
+        label.textContent = 'Generating…';
+        topbar.style.display = 'none';
+        const prevShadow = page.style.boxShadow;
+        const prevRadius = page.style.borderRadius;
+        page.style.boxShadow   = 'none';
+        page.style.borderRadius = '0';
+
+        // 1. Force system font inline on every element so html2canvas uses
+        //    Arial (a system font) — no web-font loading, no cross-origin requests.
+        const cvEls    = [page, ...page.querySelectorAll('*')];
+        const prevFont = cvEls.map(el => el.style.fontFamily);
+        cvEls.forEach(el => { el.style.fontFamily = 'Arial, Helvetica, sans-serif'; });
+        await new Promise(r => requestAnimationFrame(r));
+
+        // 2. Record page-break position BEFORE capture (after font reflow).
+        const pageBreakEl = page.querySelector('.cv-page-break');
+        let breakY = -1;
+        if (pageBreakEl) {
+            const pageRect  = page.getBoundingClientRect();
+            const breakRect = pageBreakEl.getBoundingClientRect();
+            breakY = Math.round((breakRect.top - pageRect.top) * 2); // ×2 for scale:2
+        }
+
+        // 3. Inline the profile photo as a data URL BEFORE html2canvas captures.
+        //    html2canvas renders in a sandboxed iframe (origin: null / blob:).
+        //    Any src="hatef.jpg" is cross-origin from that iframe; without CORS
+        //    headers on the local server the canvas gets tainted and toDataURL()
+        //    throws a SecurityError. A data URL has no origin — never taints.
+        const photoEl      = page.querySelector('.cv-photo');
+        const photoOrigSrc = photoEl ? photoEl.getAttribute('src') : null;
+        const embeddedPhotoDataUrl = 'data:image/jpeg;base64,' +
+            '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';
+        const makeSafePhotoPlaceholder = () => {
+            if (embeddedPhotoDataUrl) return embeddedPhotoDataUrl;
+            const tmp = document.createElement('canvas');
+            tmp.width = 260;
+            tmp.height = 260;
+            const ctx = tmp.getContext('2d');
+            ctx.fillStyle = '#bdeff4';
+            ctx.fillRect(0, 0, tmp.width, tmp.height);
+            ctx.fillStyle = '#2196f3';
+            ctx.beginPath();
+            ctx.arc(130, 130, 112, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = '700 82px Arial, Helvetica, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('HM', 130, 132);
+            return tmp.toDataURL('image/png');
+        };
+        if (photoEl && photoOrigSrc && !photoOrigSrc.startsWith('data:')) {
+            let photoDataUrl = null;
+            if (location.protocol === 'file:') {
+                photoDataUrl = embeddedPhotoDataUrl;
+            } else {
+                try {
+                    const res  = await fetch(photoOrigSrc);
+                    const blob = await res.blob();
+                    photoDataUrl = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload  = () => resolve(reader.result);
+                        reader.onerror = reject;
+                        reader.readAsDataURL(blob);
+                    });
+                } catch (_) {
+                    // fetch failed — draw the already-rendered <img> to a temp canvas instead
+                    try {
+                        const tmp = document.createElement('canvas');
+                        tmp.width  = photoEl.naturalWidth  || 260;
+                        tmp.height = photoEl.naturalHeight || 260;
+                        tmp.getContext('2d').drawImage(photoEl, 0, 0);
+                        photoDataUrl = tmp.toDataURL('image/jpeg', 0.92);
+                    } catch (_2) {
+                        photoDataUrl = makeSafePhotoPlaceholder();
+                        console.warn('Photo inline failed; using the embedded photo fallback in the PDF export');
+                    }
+                }
+            }
+            if (photoDataUrl) {
+                photoEl.setAttribute('src', photoDataUrl);
+                await new Promise(r => {
+                    if (photoEl.complete && photoEl.naturalHeight > 0) { r(); return; }
+                    photoEl.onload  = r;
+                    photoEl.onerror = r;
+                });
+                await new Promise(r => requestAnimationFrame(r));
+            }
+        }
+
+        let pdfLinkRects = [];
+
+        try {
+            const canvas = await html2canvas(page, {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                logging: false,
+                onclone: (clonedDoc) => {
+                    // Keep layout CSS without letting the html2canvas iframe
+                    // resolve Inter/Outfit or external font stylesheets.
+                    const clonedHead = clonedDoc.head || clonedDoc.documentElement;
+                    const localCss = [...document.styleSheets]
+                        .filter(sheet => {
+                            const owner = sheet.ownerNode;
+                            const href = owner && owner.getAttribute && owner.getAttribute('href');
+                            return href && /(^|\/)styles\.css(\?|#|$)/.test(href);
+                        })
+                        .map(sheet => {
+                            try {
+                                return [...sheet.cssRules].map(rule => rule.cssText).join('\n');
+                            } catch (err) {
+                                return '';
+                            }
+                        })
+                        .join('\n')
+                        .replace(/(['"]?)(Inter|Outfit)\1/g, 'Arial');
+
+                    clonedDoc
+                        .querySelectorAll('link[rel="stylesheet"][href*="fonts.googleapis.com"], link[rel="stylesheet"][href*="fonts.gstatic.com"]')
+                        .forEach(l => l.remove());
+
+                    if (localCss) {
+                        clonedDoc
+                            .querySelectorAll('link[rel="stylesheet"][href*="styles.css"]')
+                            .forEach(l => l.remove());
+
+                        const css = clonedDoc.createElement('style');
+                        css.textContent = localCss;
+                        clonedHead.appendChild(css);
+                    }
+
+                    const fontFix = clonedDoc.createElement('style');
+                    fontFix.textContent = '* { font-family: Arial, Helvetica, sans-serif !important; }';
+                    clonedHead.appendChild(fontFix);
+
+                    const readableExport = clonedDoc.createElement('style');
+                    readableExport.textContent = `
+                        .cv-sidebar,
+                        .cv-skills-box {
+                            background: #ffffff !important;
+                            color: #30343b !important;
+                            border: 1px solid #d8dde3 !important;
+                            box-shadow: none !important;
+                        }
+
+                        .cv-sidebar {
+                            border-radius: 0 0 28px 0 !important;
+                            padding: 36px 26px 46px !important;
+                        }
+
+                        .cv-sidebar *,
+                        .cv-skills-box * {
+                            color: #3f4652 !important;
+                            -webkit-text-fill-color: #3f4652 !important;
+                            text-shadow: none !important;
+                            filter: none !important;
+                        }
+
+                        .cv-sidebar-name,
+                        .cv-sidebar-section-title,
+                        .cv-edu-school,
+                        .cv-skills-box .cv-section-heading,
+                        .cv-skills-cat-title,
+                        .cv-skills-item strong {
+                            color: #20242a !important;
+                            -webkit-text-fill-color: #20242a !important;
+                        }
+
+                        .cv-contact a,
+                        .cv-skill-list li,
+                        .cv-edu-entry,
+                        .cv-skills-item {
+                            font-size: 0.82rem !important;
+                            line-height: 1.55 !important;
+                        }
+
+                        .cv-contact {
+                            gap: 4px !important;
+                        }
+
+                        .cv-contact a[href^="mailto:"] {
+                            font-size: 0.68rem !important;
+                            letter-spacing: -0.01em !important;
+                            white-space: nowrap !important;
+                            word-break: normal !important;
+                            gap: 5px !important;
+                        }
+
+                        .cv-sidebar-rule {
+                            margin: 14px 0 !important;
+                        }
+
+                        .cv-photo-wrap {
+                            margin-bottom: 16px !important;
+                        }
+
+                        .cv-sidebar-name {
+                            margin-bottom: 2px !important;
+                        }
+
+                        .cv-main {
+                            padding-top: 38px !important;
+                            padding-bottom: 40px !important;
+                        }
+
+                        .cv-section {
+                            margin-bottom: 22px !important;
+                        }
+
+                        .cv-jobs {
+                            gap: 12px !important;
+                        }
+
+                        .cv-job {
+                            padding-bottom: 12px !important;
+                        }
+
+                        .cv-section-rule {
+                            margin-bottom: 12px !important;
+                        }
+
+                        .cv-page-break {
+                            margin-top: 96px !important;
+                        }
+
+                        .cv-sidebar-rule,
+                        .cv-skills-cat-title {
+                            border-color: #d8dde3 !important;
+                        }
+
+                        .cv-skills-box .cv-section-rule {
+                            border-top-color: #20242a !important;
+                        }
+
+                        .cv-skill-list li::before {
+                            background: #2196f3 !important;
+                        }
+                    `;
+                    clonedHead.appendChild(readableExport);
+
+                    const clonedPage = clonedDoc.querySelector('.cv-page');
+                    if (clonedPage) {
+                        const pageBox = clonedPage.getBoundingClientRect();
+                        pdfLinkRects = [...clonedPage.querySelectorAll('a[href]')]
+                            .map(link => {
+                                const box = link.getBoundingClientRect();
+                                const href = link.href || link.getAttribute('href');
+                                return {
+                                    href,
+                                    x: (box.left - pageBox.left) * 2,
+                                    y: (box.top - pageBox.top) * 2,
+                                    w: box.width * 2,
+                                    h: box.height * 2,
+                                };
+                            })
+                            .filter(link =>
+                                link.href &&
+                                /^(https?:|mailto:|tel:)/.test(link.href) &&
+                                link.w > 0 &&
+                                link.h > 0
+                            );
+                    }
+                }
+            });
+
+            const { jsPDF } = window.jspdf;
+            const PAGE_W  = 210;
+            const TOP_PAD = 112; // canvas px at scale:2 — matches print CSS padding-top:56px
+
+            const slices =
+                (breakY > 0 && breakY < canvas.height)
+                ? [
+                    { start: 0,      end: breakY,        pad: 0       },
+                    { start: breakY, end: canvas.height, pad: TOP_PAD },
+                  ]
+                : (() => {
+                    const sliceH = Math.round(canvas.width * (297 / PAGE_W));
+                    const n      = Math.ceil(canvas.height / sliceH);
+                    return Array.from({ length: n }, (_, i) => ({
+                        start: i * sliceH,
+                        end:   Math.min((i + 1) * sliceH, canvas.height),
+                        pad:   0,
+                    }));
+                  })();
+
+            // Build each page canvas, then create the PDF with per-page custom heights
+            // so content is never clipped (page 1 may be taller than A4).
+            const sliceCanvases = slices.map(({ start, end, pad }) => {
+                const contentH = end - start;
+                const sl       = document.createElement('canvas');
+                sl.width       = canvas.width;
+                sl.height      = contentH + pad;
+                const ctx      = sl.getContext('2d');
+                ctx.fillStyle  = '#ffffff';
+                ctx.fillRect(0, 0, sl.width, sl.height);
+                ctx.drawImage(canvas, 0, start, canvas.width, contentH, 0, pad, canvas.width, contentH);
+                return sl;
+            });
+
+            const firstImgH = (sliceCanvases[0].height / canvas.width) * PAGE_W;
+            const pdf = new jsPDF({ unit: 'mm', format: [PAGE_W, firstImgH], orientation: 'portrait' });
+            pdf.addImage(sliceCanvases[0].toDataURL('image/png'), 'PNG', 0, 0, PAGE_W, firstImgH);
+
+            const addLinksForSlice = (slice) => {
+                const pxToMm = PAGE_W / canvas.width;
+                pdfLinkRects.forEach(link => {
+                    const clippedTop = Math.max(link.y, slice.start);
+                    const clippedBottom = Math.min(link.y + link.h, slice.end);
+                    const clippedLeft = Math.max(link.x, 0);
+                    const clippedRight = Math.min(link.x + link.w, canvas.width);
+                    if (clippedBottom <= clippedTop || clippedRight <= clippedLeft) return;
+
+                    pdf.link(
+                        clippedLeft * pxToMm,
+                        (clippedTop - slice.start + slice.pad) * pxToMm,
+                        (clippedRight - clippedLeft) * pxToMm,
+                        (clippedBottom - clippedTop) * pxToMm,
+                        { url: link.href }
+                    );
+                });
+            };
+
+            addLinksForSlice(slices[0]);
+
+            for (let i = 1; i < sliceCanvases.length; i++) {
+                const sl   = sliceCanvases[i];
+                const imgH = (sl.height / canvas.width) * PAGE_W;
+                pdf.addPage([PAGE_W, imgH]);
+                pdf.addImage(sl.toDataURL('image/png'), 'PNG', 0, 0, PAGE_W, imgH);
+                addLinksForSlice(slices[i]);
+            }
+
+            pdf.save('Hatef Mohammad Ali - CV.pdf');
+        } catch (err) {
+            console.error('PDF generation failed, falling back to print dialog:', err);
             window.print();
-            text.textContent = 'Download PDF';
+        } finally {
+            cvEls.forEach((el, i) => { el.style.fontFamily = prevFont[i]; });
+            if (photoEl && photoOrigSrc) {
+                photoEl.setAttribute('src', photoOrigSrc);
+                photoEl.style.visibility = '';
+            }
+            topbar.style.display    = '';
+            page.style.boxShadow    = prevShadow;
+            page.style.borderRadius = prevRadius;
+            label.textContent = 'Download PDF';
             btn.disabled = false;
-        }, 80);
+        }
     }
     </script>
 </body>

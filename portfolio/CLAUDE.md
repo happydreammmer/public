@@ -35,7 +35,7 @@ A fully static portfolio. Four files do all the work:
 
 ### CV PDF Download
 
-`cv.html` uses html2pdf.js (loaded from cdnjs CDN) to generate a PDF from `.cv-page`. The `downloadCV()` function strips box-shadow and border-radius before render and restores them after. Print styles hide `.cv-topbar` for clean output.
+`cv.html` uses **html2canvas + jsPDF** (both loaded from cdnjs CDN) to render `.cv-page` to a canvas and export it as a JPEG-image PDF. This bypasses Chrome's glyph-encoding bug that garbles text on coloured backgrounds when using `window.print()`. `downloadCV()` hides the topbar, strips box-shadow/border-radius, awaits `document.fonts.ready`, captures at `scale: 2`, slices the canvas into A4 pages, then restores all styles. Falls back to `window.print()` on error. Print styles in `styles.css` remain for Ctrl+P direct printing.
 
 ### CSS scope — shared stylesheet
 

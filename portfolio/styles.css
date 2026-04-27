@@ -1403,6 +1403,7 @@ p.intro {
    ============================================ */
 
 body.cv-body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     display: block;
     height: auto;
     overflow-x: hidden;
@@ -1654,7 +1655,7 @@ body.cv-body {
 .cv-contact a {
     color: rgba(255,255,255,0.95);
     text-decoration: none;
-    font-size: 0.78rem;
+    font-size: 0.72rem;
     display: flex;
     align-items: center;
     gap: 7px;
