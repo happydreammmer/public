@@ -90,6 +90,7 @@ body.cv-body {
 .cv-pdf-btn {
     background: var(--primary-blue);
     color: white;
+    text-decoration: none;
     border: 2px solid transparent;
     border-radius: 8px;
     padding: 9px 20px;
@@ -106,7 +107,7 @@ body.cv-body {
     line-height: 1;
 }
 
-.cv-pdf-btn:hover { background: var(--dark-blue); transform: translateY(-1px); }
+.cv-pdf-btn:hover { background: var(--dark-blue); color: white; transform: translateY(-1px); }
 
 /* --- WRAPPER & PAGE CARD --- */
 .cv-wrapper { padding: 36px 20px 60px; }
